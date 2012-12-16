@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>MechCheck v0.1</title>
+		<script type="text/javascript" src="/scripts/knockout-2.2.0.debug.js"></script>
+		<script type="text/javascript" src="/scripts/jquery-1.8.3.js"></script>
+	</head>
+	<body>
+		<script type="text/javascript">
+			var hunchbackTest = {
+
+			};
+
+			var vm = function() {
+				var self = this;
+
+				self.mechChassis = ko.observableArray([
+					"Hunchback",
+					"Centurion"
+				]);
+
+				self.mechVariants = ko.observableArray([
+					"HBK-4P",
+					"CN9-A"
+				]);
+
+				self.selectMech = function() {
+					console.log('select');
+				};
+
+				self.testtext = ko.observable('test!');
+			};
+
+			var testVM = new vm();
+
+			$(document).ready(function() {
+			  ko.applyBindings(testVM, $('div#primary')[0]);
+			});
+			
+		</script>
+		<div id="primary">
+			<h1>MechCheck (0.1)</h1>
+			<hr />
+			<span>Select chassis + variant:</span>
+			<select id="chassisSelect" data-bind="options: mechChassis" />
+			<select id="variantSelect" data-bind="options: mechVariants" />
+			<button data-bind="click: selectMech">Go</button>
+			<hr />
+			<h2>Configuration</h2>
+			
+		</div>
+	</body>
+</html>
