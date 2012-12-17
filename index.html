@@ -9,12 +9,13 @@
  	</head>
 	<body>
 		<script type="text/javascript">
-
-
-			var testVM = new mechlab.coreVM();
-
 			$(document).ready(function() {
-			  ko.applyBindings(testVM, $('div#primary')[0]);
+				// $.get('/mwoxml/itemStats.xml', function(data, textStatus, jqXhr) {
+				// });
+
+				var testVM = new mechlab.coreVM();
+
+			  	ko.applyBindings(testVM, $('div#primary')[0]);
 			});
 			
 		</script>
@@ -58,8 +59,17 @@
 			</div>
 			<hr />
 			<h2>Loadout</h2>
+			<h3>Items</h3>
+			<!-- <div>
+				<ul data-bind="foreach: weapons">
+					<li>
+						<span data-bind="text: name"></span>
+					</li>
+				</ul>
+			</div> -->
 			<div>
-
+				<p>Right Arm</p>
+				
 			</div>
 		</div>
 	</body>

@@ -19,19 +19,19 @@
 			"CN9-A"
 		]);
 
-		self.activeMech = {
-			name: 'Hunchback HBK-4P',
-			tonnage: 50,
-			engine: { },
-			slots: [
-				rightArm: {
-					energyHardpoints: 1,
-					ballisticHardpoints: 0,
-					missileHardpoints: 0,
-					criticalSlots: 10
-				}
-			]
-		};
+		// self.activeMech = {
+		// 	name: 'Hunchback HBK-4P',
+		// 	tonnage: 50,
+		// 	engine: { },
+		// 	slots: [
+		// 		rightArm: {
+		// 			energyHardpoints: 1,
+		// 			ballisticHardpoints: 0,
+		// 			missileHardpoints: 0,
+		// 			criticalSlots: 10
+		// 		}
+		// 	]
+		// };
 
 		self.weapons = ko.observableArray([
 			{
