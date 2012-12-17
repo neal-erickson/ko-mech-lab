@@ -1,5 +1,5 @@
 (function($){
-	if(mechlab_items == undefined) return;
+	if(mechlab_items !== undefined) return;
 
 	mechlab_items = {};
 
