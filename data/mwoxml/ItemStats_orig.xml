@@ -1,3 +1,20 @@
+﻿<!--
+TEMP ID LIST
+Autocannon 20 = 1000
+MediumLaser = 1001
+LRM (Missile) = 1002
+SmallLaser = 1003
+AC20Ammo = 2000
+Heatsink = 3000
+InfoTech = 4000
+
+type
+0 = BALLISTIC
+1 = BEAM
+2 = MISSILE
+4 = AMS
+
+-->
 <ItemStats>
 	<MechList>
 		<!-- All mech chassis need a mech tag. Case matters !-->
