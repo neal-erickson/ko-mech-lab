@@ -2,7 +2,7 @@
 	<xsl:template match="/">
 		<items>
 			<weapons>
-				<xsl:for-each select="">
+				<xsl:for-each select="/Weapons/Weapon">
 					<p>WEAPONS!</p>
 				</xsl:for-each>
 			</weapons>
