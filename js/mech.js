@@ -12,6 +12,10 @@
 		self.heatSinks = ko.observable('single');
 		self.artemis = ko.observable('none');
 
+		// Mech slots
+		self.leftArmSlots = ko.observableArray();
+		//self.engine = 
+
 		// Calculated values
 		self.finalArmor = ko.computed(function() {
 			return 0; // TODO, obviously.

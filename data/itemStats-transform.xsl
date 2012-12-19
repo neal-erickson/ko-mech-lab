@@ -2,7 +2,7 @@
 	<xsl:template match="/ItemStats">
 		<html>
 			<body>
-				<textarea style="width:100%;height:1200px;">
+				<textarea style="width:100%;height:600px;">
 					<itemStats>
 						<mechs>
 							<xsl:for-each select="MechList/Mech">
@@ -59,6 +59,23 @@
 								</ammoType>
 							</xsl:for-each>
 						</ammoTypes>
+						<modules>
+							<xsl:for-each select="ModuleList/Module">
+								<module>
+									<id><xsl:value-of select="@id" /></id>
+									<name><xsl:value-of select="@name" /></name>
+									<cType><xsl:value-of select="@CType" /></cType>
+									<moduleStats>
+										<slots><xsl:value-of select="ModuleStats/@slots" /></slots>
+										<tons><xsl:value-of select="ModuleStats/@tons" /></tons>
+										<health><xsl:value-of select="ModuleStats/@health" /></health>
+									</moduleStats>
+									<xsl:if test="JumpJetStats">
+										<span>JumpJets</span>
+									</xsl:if>
+								</module>
+							</xsl:for-each>
+						</modules>
 					</itemStats>
 				</textarea>
 			</body>
