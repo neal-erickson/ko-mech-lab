@@ -5,7 +5,10 @@
 		<title>MechCheck v0.1</title>
 		<script type="text/javascript" src="/scripts/knockout-2.2.0.debug.js"></script>
 		<script type="text/javascript" src="/scripts/jquery-1.8.3.js"></script>
+		<script type="text/javascript" src="/js/items.js"></script>
 		<script type="text/javascript" src="/js/core.js"></script>
+		<script type="text/javascript" src="/js/mech.js"></script>
+		<link href="site.css" rel="stylesheet" type="text/css"></link>
  	</head>
 	<body>
 		<script type="text/javascript">
@@ -22,54 +25,47 @@
 		<div id="primary">
 			<h2>MechCheck (0.1)</h2>
 			<div>
-				<span>Select chassis + variant:</span>
-				<select id="chassisSelect" data-bind="options: mechChassis" />
-				<select id="variantSelect" data-bind="options: mechVariants" />
+				<span>Select mech:</span>
+				<select id="chassisSelect" data-bind="
+					options: items.mechs, 
+					optionsText: function(option){ return option.name.toUpperCase(); }, 
+					value: selectedMech">
+				</select>
 				<button data-bind="click: selectMech">Go</button>
 			</div>
 			<hr />
-			<h2>Configuration</h2>
-			<div>
-				<label>Internal Structure</label>
-				<select id="structureSelect" data-bind="value: structure">
-					<option value="standard">Standard</option>
-					<option value="endosteel">Endo Steel</option>
-				</select>
-			</div>
-			<div>
-				<label>Heat Sinks</label>
-				<select id="heatSinkSelect" data-bind="value: heatSinks">
-					<option value="single">Single</option>
-					<option value="double">Double</option>
-				</select>
-			</div>
-			<div>
-				<label>Armor Type</label>
-				<select id="armorSelect" data-bind="value: armor">
-					<option value="standard">Standard</option>
-					<option value="ferroFibrous">Ferro-Fibrous</option>
-				</select>
-			</div>
-			<div>
-				<label>Artemis</label>
-				<select id="artemisSelect" data-bind="value: artemis">
-					<option value="none">None</option>
-					<option value="equipped">Equipped</option>
-				</select>
-			</div>
-			<hr />
-			<h2>Loadout</h2>
-			<h3>Items</h3>
-			<!-- <div>
-				<ul data-bind="foreach: weapons">
-					<li>
-						<span data-bind="text: name"></span>
-					</li>
-				</ul>
-			</div> -->
-			<div>
-				<p>Right Arm</p>
-				
+
+			<div data-bind="with: activeMech">
+				<h2>Configuring <span data-bind="text: name.toUpperCase()" /></h2>
+				<!-- <h2>Configuration</h2>
+				<div>
+					<label>Internal Structure</label>
+					<select id="structureSelect" data-bind="value: structure">
+						<option value="standard">Standard</option>
+						<option value="endosteel">Endo Steel</option>
+					</select>
+				</div>
+				<div>
+					<label>Heat Sinks</label>
+					<select id="heatSinkSelect" data-bind="value: heatSinks">
+						<option value="single">Single</option>
+						<option value="double">Double</option>
+					</select>
+				</div>
+				<div>
+					<label>Armor Type</label>
+					<select id="armorSelect" data-bind="value: armor">
+						<option value="standard">Standard</option>
+						<option value="ferroFibrous">Ferro-Fibrous</option>
+					</select>
+				</div>
+				<div>
+					<label>Artemis</label>
+					<select id="artemisSelect" data-bind="value: artemis">
+						<option value="none">None</option>
+						<option value="equipped">Equipped</option>
+					</select>
+				</div> -->
 			</div>
 		</div>
 	</body>
