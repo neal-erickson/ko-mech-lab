@@ -5,6 +5,7 @@
 		<title>MechCheck v0.1</title>
 		<script type="text/javascript" src="/scripts/knockout-2.2.0.debug.js"></script>
 		<script type="text/javascript" src="/scripts/jquery-1.8.3.js"></script>
+		<script type="text/javascript" src="/scripts/jquery-ui-1.9.2.custom.js"></script>
 		<script type="text/javascript" src="/js/items.js"></script>
 		<script type="text/javascript" src="/js/core.js"></script>
 		<script type="text/javascript" src="/js/mech.js"></script>
@@ -13,12 +14,12 @@
 	<body>
 		<script type="text/javascript">
 			$(document).ready(function() {
-				// $.get('/mwoxml/itemStats.xml', function(data, textStatus, jqXhr) {
-				// });
 
-				var testVM = new mechlab.coreVM();
+				$('#itemTabs').tabs();
 
-			  	ko.applyBindings(testVM, $('div#primary')[0]);
+				window.testVM = new mechlab.coreVM();
+
+			  	ko.applyBindings(window.testVM, $('div#primary')[0]);
 			});
 		</script>
 		<div id="primary">
@@ -35,55 +36,87 @@
 			<hr />
 
 			<div data-bind="with: activeMech">
-				<h2>Configuring <span data-bind="text: name.toUpperCase()" /></h2>
-				<table>
-					<tbody>
-						<tr>
-							<td>
-								<label>Internal Structure</label>
-							</td>
-							<td>
-								<select id="structureSelect" data-bind="value: structure">
-									<option value="standard">Standard</option>
-									<option value="endosteel">Endo Steel</option>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<label>Heat Sinks</label>
-							</td>
-							<td>
-								<select id="heatSinkSelect" data-bind="value: heatSinks">
-									<option value="single">Single</option>
-									<option value="double">Double</option>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<label>Armor Type</label>
-							</td>
-							<td>
-								<select id="armorSelect" data-bind="value: armor">
-									<option value="standard">Standard</option>
-									<option value="ferroFibrous">Ferro-Fibrous</option>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<label>Artemis</label>
-							</td>
-							<td>
-								<select id="artemisSelect" data-bind="value: artemis">
-									<option value="none">None</option>
-									<option value="equipped">Equipped</option>
-								</select>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+				<h2>Configuring <span data-bind="text: name" /></h2>
+				<div style="float:right;" class="area">
+					<h3>Upgrades</h3>
+					<table>
+						<tbody>
+							<tr>
+								<td>
+									<label>Internal Structure</label>
+								</td>
+								<td>
+									<select id="structureSelect" data-bind="value: structure">
+										<option value="standard">Standard</option>
+										<option value="endosteel">Endo Steel</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label>Heat Sinks</label>
+								</td>
+								<td>
+									<select id="heatSinkSelect" data-bind="value: heatSinks">
+										<option value="single">Single</option>
+										<option value="double">Double</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label>Armor Type</label>
+								</td>
+								<td>
+									<select id="armorSelect" data-bind="value: armor">
+										<option value="standard">Standard</option>
+										<option value="ferroFibrous">Ferro-Fibrous</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<label>Artemis</label>
+								</td>
+								<td>
+									<select id="artemisSelect" data-bind="value: artemis">
+										<option value="none">None</option>
+										<option value="equipped">Equipped</option>
+									</select>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div style="float:right;" class="area">
+					<h3>Armor</h3>
+					<table>
+						<tbody>
+							<tr>
+								<td>Head</td>
+								<td>
+									<span data-bind="text: armorHead" />
+								</td>
+							</tr>
+							<tr>
+								<td>Total</td>
+								<td><span data-bind="text: overallArmorValue" /></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div style="float:right;" id="itemTabs">
+					<ul>
+						<li><a href="#weapons">Weapons</a></li>
+						<li><a href="#Ammo">Ammo</a></li>
+					</ul>
+					<div id="#weapons">
+						WEAPONS
+					</div>
+					<div id="#ammo">
+						AMMO
+					</div>
+				</div>
 			</div>
 		</div>
 	</body>

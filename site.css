@@ -10,3 +10,8 @@ hr {
 	margin-top:15px;
 	margin-bottom: 15px;
 }
+
+div.area {
+	border: solid 1px black;
+	padding:15px;
+}

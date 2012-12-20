@@ -15,7 +15,7 @@
 
 		self.loadMech = function(mech){
 			// TODO
-			return new mechlab.mechViewModel();
+			return new mechlab.mechViewModel(mech);
 		};
 
 		// Callback for selecting mech variant
