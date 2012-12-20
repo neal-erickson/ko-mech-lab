@@ -13,11 +13,18 @@
 		// The actual mech
 		self.activeMech = ko.observable();
 
+		self.loadMech = function(mech){
+			// TODO
+			return new mechlab.mechViewModel();
+		};
+
+		// Callback for selecting mech variant
 		self.selectMech = function() {
-			console.log('building mech:', self.selectedMech());
+			// Load the mech (async?)
+			var mech = self.loadMech(self.selectedMech());
 
-			self.activeMech(self.selectedMech());
-
+			// Start editing
+			self.activeMech(mech);
 		};
 	};
 })(jQuery);

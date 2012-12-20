@@ -3,5 +3,10 @@ body {
 }
 
 div#primary {
-	padding: 40px;
+	padding: 20px;
+}
+
+hr {
+	margin-top:15px;
+	margin-bottom: 15px;
 }

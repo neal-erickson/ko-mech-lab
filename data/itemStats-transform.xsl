@@ -60,7 +60,7 @@
 							</xsl:for-each>
 						</ammoTypes>
 						<modules>
-							<xsl:for-each select="ModuleList/Module">
+							<xsl:for-each select="ModuleList/Module[@CType!='CCockpitItemStats']">
 								<module>
 									<id><xsl:value-of select="@id" /></id>
 									<name><xsl:value-of select="@name" /></name>
@@ -71,7 +71,43 @@
 										<health><xsl:value-of select="ModuleStats/@health" /></health>
 									</moduleStats>
 									<xsl:if test="JumpJetStats">
-										<span>JumpJets</span>
+										<jumpJetStats>
+											<cooldown><xsl:value-of select="JumpJetStats/@cooldown" /></cooldown>
+											<duration><xsl:value-of select="JumpJetStats/@duration" /></duration>
+											<boost_fwd><xsl:value-of select="JumpJetStats/@boost_fwd" /></boost_fwd>
+											<boost_z><xsl:value-of select="JumpJetStats/@boost_z" /></boost_z>
+											<heat><xsl:value-of select="JumpJetStats/@heat" /></heat>
+											<minTons><xsl:value-of select="JumpJetStats/@minTons" /></minTons>
+											<maxTons><xsl:value-of select="JumpJetStats/@maxTons" /></maxTons>
+										</jumpJetStats>
+									</xsl:if>
+									<xsl:if test="HeatSinkStats">
+										<heatSinkStats>
+											<cooling><xsl:value-of select="HeatSinkStats/@cooling" /></cooling>
+											<heatbase><xsl:value-of select="HeatSinkStats/@heatbase" /></heatbase>
+										</heatSinkStats>
+									</xsl:if>
+									<xsl:if test="EngineStats">
+										<engineStats>
+											<slots><xsl:value-of select="EngineStats/@slots" /></slots>
+											<rating><xsl:value-of select="EngineStats/@rating" /></rating>
+											<weight><xsl:value-of select="EngineStats/@weight" /></weight>
+											<type><xsl:value-of select="EngineStats/@type" /></type>
+											<heatsinks><xsl:value-of select="EngineStats/@heatsinks" /></heatsinks>
+											<health><xsl:value-of select="EngineStats/@health" /></health>
+										</engineStats>
+									</xsl:if>
+									<xsl:if test="ArtemisStats">
+										<artemisStats>
+											<lockTime><xsl:value-of select="ArtemisStats/@lockTime" /></lockTime>
+											<trackingStrength><xsl:value-of select="ArtemisStats/@trackingStrength" /></trackingStrength>
+											<missileSpread><xsl:value-of select="ArtemisStats/@missileSpread" /></missileSpread>
+										</artemisStats>
+									</xsl:if>
+									<xsl:if test="PilotModuleStats">
+										<pilotModuleStats>
+											<talentid><xsl:value-of select="PilotModuleStats/@talentid" /></talentid>
+										</pilotModuleStats>
 									</xsl:if>
 								</module>
 							</xsl:for-each>
