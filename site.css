@@ -15,3 +15,7 @@ div.area {
 	border: solid 1px black;
 	padding:15px;
 }
+
+ul.dropHighlight {
+	background-color: fuchsia;
+}

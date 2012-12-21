@@ -39,6 +39,58 @@
 
 			<div data-bind="with: activeMech">
 				<h2>Configuring <span data-bind="text: name" /></h2>
+				<div>
+					<span>Tons:</span>
+					<span data-bind="text: maxTonnage"></span>
+					<br />
+					<span>Current Tons:</span>
+					<span data-bind="text: tonnage"></span>					
+				</div>
+				<div>
+					<span>Engine:</span>
+					<select data-bind="options: $parent.items.engines, optionsText: 'name', value: engine">
+					</select>
+				</div>
+				<div>
+					<h2>Loadout</h2>
+					<hr />
+					<p>Left Arm:</p>
+					<ul data-bind="foreach: leftArmSlots, jqueryui : { widget: 'droppable', options: { accept: testAccept, activeClass: 'dropHighlight' } }">
+						<li>
+							<span data-bind="text: $data"></span>
+						</li>
+					</ul>
+				</div>
+				<br />
+				<div id="itemTabs" data-bind="jqueryui: { widget: 'tabs' }" style="width:500px;">
+					<ul>
+						<li><a href="#fragment-1">Weapons</a></li>
+						<li><a href="#fragment-2">Ammo</a></li>
+						<li><a href="#fragment-3">Equipment</a></li>
+					</ul>
+					<div id="fragment-1">
+						<ul data-bind="foreach: $parent.items.weapons">
+							<li data-bind="jqueryui: { widget: 'draggable', options: { revert: true, distance: 20, helper: 'clone', revertDuration: 0 } }">
+								<span data-bind="text: name"></span>
+							</li>
+						</ul>
+					</div>
+					<div id="fragment-2">
+						<ul data-bind="foreach: $parent.items.ammoTypes">
+							<li>
+								<span data-bind="text: name"></span>
+							</li>
+						</ul>
+					</div>
+					<div id="fragment-3">
+						<ul data-bind="foreach: $parent.items.equipment">
+							<li>
+								<span data-bind="text: name"></span>
+							</li>
+						</ul>
+					</div>
+				</div>
+
 				<div class="area">
 					<h3>Upgrades</h3>
 					<table>
@@ -90,6 +142,7 @@
 						</tbody>
 					</table>
 				</div>
+
 				<div class="area">
 					<h3>Armor</h3>
 					<table>
@@ -97,7 +150,7 @@
 							<tr>
 								<td>Head</td>
 								<td>
-									<input data-bind="value: armorHead, jqueryui: { widget: 'spinner' }" />
+									<input data-bind="value: armorHead" />
 								</td>
 							</tr>
 							<tr>
@@ -106,46 +159,6 @@
 							</tr>
 						</tbody>
 					</table>
-				</div>
-				<div>
-					<span>Tons:</span>
-					<span data-bind="text: maxTonnage"></span>
-					<br />
-					<span>Current Tons:</span>
-					<span data-bind="text: tonnage"></span>					
-				</div>
-				<div>
-					<span>Engine:</span>
-					<select data-bind="options: $parent.items.engines, optionsText: 'name', value: engine">
-					</select>
-				</div>
-				<div id="itemTabs" data-bind="jqueryui: { widget: 'tabs' }">
-					<ul>
-						<li><a href="#fragment-1">Weapons</a></li>
-						<li><a href="#fragment-2">Ammo</a></li>
-						<li><a href="#fragment-3">Equipment</a></li>
-					</ul>
-					<div id="fragment-1">
-						<ul data-bind="foreach: $parent.items.weapons">
-							<li>
-								<span data-bind="text: name"></span>
-							</li>
-						</ul>
-					</div>
-					<div id="fragment-2">
-						<ul data-bind="foreach: $parent.items.ammoTypes">
-							<li>
-								<span data-bind="text: name"></span>
-							</li>
-						</ul>
-					</div>
-					<div id="fragment-3">
-						<ul data-bind="foreach: $parent.items.equipment">
-							<li>
-								<span data-bind="text: name"></span>
-							</li>
-						</ul>
-					</div>
 				</div>
 			</div>
 		</div>

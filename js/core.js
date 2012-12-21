@@ -4,6 +4,24 @@
 	mechlab.coreVM = function() {
 		var self = this;
 
+		// Convenience function for conversion.
+		// TODO : should probably live elsewhere
+		String.prototype.toFloat = function(){
+			return parseFloat(this);
+		};
+
+		Number.prototype.toFloat = function() {
+			return this;
+		};
+
+		// TODO : Move this
+		ko.extenders.logChange = function(target, option) {
+		    target.subscribe(function(newValue) {
+		       console.log(option + ": " + newValue);
+		    });
+		    return target;
+		};
+
 		// Load items from separate namespace
 		self.items = mechlab_items;
 		
