@@ -3,6 +3,10 @@
 		mechlab = { };
 	}
 
+	String.prototype.toFloat = function(){
+		return parseFloat(this);
+	};
+
 	mechlab.mechViewModel = function(mech) {
 		var self = this;
 
@@ -14,33 +18,29 @@
 		self.heatSinks = ko.observable('single');
 		self.artemis = ko.observable('none');
 
-		// Mech slots
-		self.leftArmSlots = ko.observableArray();
-
-
 		// Core components
 		// (hardcoded right now)
-		self.engine = 
-		{
-             "id": "3238",
-             "name": "Engine_Std_200",
-             "cType": "CEngineStats",
-             "moduleStats": {
-                "slots": [],
-                "tons": [],
-                "health": []
-             },
-             "engineStats": {
-                "slots": "6",
-                "rating": "200",
-                "weight": "11.5",
-                "type": "0",
-                "heatsinks": "8",
-                "health": "15"
-             }
-          };
+		self.engine = ko.observable();
 
-    	// Armor
+    	self.maxTonnage = ko.observable(50);
+    	
+    	self.engineWeight = ko.computed(function() {
+    		if(self.engine()){
+    			return self.engine().engineStats.weight.toFloat();	
+    		}
+    		return 0; // no engine
+    	});
+
+    	// Mech slots
+		self.leftArmItems = ko.observableArray();
+		self.leftArmSlots = ko.observableArray();
+
+    	self.criticalSlots = ko.observable(20); // ???
+    	self.criticalSlotsOpen = ko.computed(function() {
+    		return 0; // todo
+    	});
+
+    	// Armor values for each location
     	self.armorHead = ko.observable(10);
     	self.armorCenterTorso = ko.observable(10);
     	self.armorRightArm = ko.observable(10);
@@ -52,8 +52,7 @@
 
 		// Calculated values
 		self.overallArmorValue = ko.computed(function() {
-			return 
-				self.armorHead() +
+			return self.armorHead() +
 				self.armorCenterTorso() + 
 				self.armorRightArm() +
 				self.armorLeftArm() +
@@ -62,5 +61,29 @@
 				self.armorRightLeg() + 
 				self.armorLeftLeg();
 		});
+
+		self.armorWeight = ko.computed(function() {
+			var armorPerTon = self.armor() === 'standard' ? 32.0 : 34.85; // TODO : Double check value
+			return self.overallArmorValue() / armorPerTon;
+		});
+
+
+		// This will be a complicated equation.
+		//
+		// weight of all armor (armor points sum * armor type modifier)
+		// +
+		// weight of all weapons 
+		// +
+		// weight of all ammunition
+		// + 
+		// weight of all equipment
+		// -
+		// endo steel structure if applicable
+		// +
+		// engine weight
+		self.tonnage = ko.computed(function() {
+    		return self.engineWeight() 
+    			+ self.armorWeight();
+    	});
 	};
 })(jQuery);

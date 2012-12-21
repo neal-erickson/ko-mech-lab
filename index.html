@@ -6,16 +6,18 @@
 		<script type="text/javascript" src="/scripts/knockout-2.2.0.debug.js"></script>
 		<script type="text/javascript" src="/scripts/jquery-1.8.3.js"></script>
 		<script type="text/javascript" src="/scripts/jquery-ui-1.9.2.custom.js"></script>
+		<script type="text/javascript" src="/scripts/knockout-jquery-ui-widget.js"></script>
 		<script type="text/javascript" src="/js/items.js"></script>
 		<script type="text/javascript" src="/js/core.js"></script>
 		<script type="text/javascript" src="/js/mech.js"></script>
 		<link href="site.css" rel="stylesheet" type="text/css"></link>
+		<link href="/css/overcast/jquery-ui-1.9.2.custom.css" rel="stylesheet" type="text/css"><link>
  	</head>
 	<body>
 		<script type="text/javascript">
 			$(document).ready(function() {
 
-				$('#itemTabs').tabs();
+				//$('#itemTabs').tabs();
 
 				window.testVM = new mechlab.coreVM();
 
@@ -37,7 +39,7 @@
 
 			<div data-bind="with: activeMech">
 				<h2>Configuring <span data-bind="text: name" /></h2>
-				<div style="float:right;" class="area">
+				<div class="area">
 					<h3>Upgrades</h3>
 					<table>
 						<tbody>
@@ -88,14 +90,14 @@
 						</tbody>
 					</table>
 				</div>
-				<div style="float:right;" class="area">
+				<div class="area">
 					<h3>Armor</h3>
 					<table>
 						<tbody>
 							<tr>
 								<td>Head</td>
 								<td>
-									<span data-bind="text: armorHead" />
+									<input data-bind="value: armorHead, jqueryui: { widget: 'spinner' }" />
 								</td>
 							</tr>
 							<tr>
@@ -105,16 +107,44 @@
 						</tbody>
 					</table>
 				</div>
-				<div style="float:right;" id="itemTabs">
+				<div>
+					<span>Tons:</span>
+					<span data-bind="text: maxTonnage"></span>
+					<br />
+					<span>Current Tons:</span>
+					<span data-bind="text: tonnage"></span>					
+				</div>
+				<div>
+					<span>Engine:</span>
+					<select data-bind="options: $parent.items.engines, optionsText: 'name', value: engine">
+					</select>
+				</div>
+				<div id="itemTabs" data-bind="jqueryui: { widget: 'tabs' }">
 					<ul>
-						<li><a href="#weapons">Weapons</a></li>
-						<li><a href="#Ammo">Ammo</a></li>
+						<li><a href="#fragment-1">Weapons</a></li>
+						<li><a href="#fragment-2">Ammo</a></li>
+						<li><a href="#fragment-3">Equipment</a></li>
 					</ul>
-					<div id="#weapons">
-						WEAPONS
+					<div id="fragment-1">
+						<ul data-bind="foreach: $parent.items.weapons">
+							<li>
+								<span data-bind="text: name"></span>
+							</li>
+						</ul>
 					</div>
-					<div id="#ammo">
-						AMMO
+					<div id="fragment-2">
+						<ul data-bind="foreach: $parent.items.ammoTypes">
+							<li>
+								<span data-bind="text: name"></span>
+							</li>
+						</ul>
+					</div>
+					<div id="fragment-3">
+						<ul data-bind="foreach: $parent.items.equipment">
+							<li>
+								<span data-bind="text: name"></span>
+							</li>
+						</ul>
 					</div>
 				</div>
 			</div>
