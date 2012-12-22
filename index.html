@@ -55,7 +55,7 @@
 					<h2>Loadout</h2>
 					<hr />
 					<p>Left Arm:</p>
-					<ul data-bind="foreach: leftArmSlots, jqueryui : { widget: 'droppable', options: { accept: testAccept, activeClass: 'dropHighlight' } }">
+					<ul data-bind="foreach: leftArmSlots, jqueryui : { widget: 'droppable', options: { accept: testAccept, activeClass: 'dropHighlight', drop: testDrop } }">
 						<li>
 							<span data-bind="text: $data"></span>
 						</li>

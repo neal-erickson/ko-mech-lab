@@ -34,7 +34,7 @@
     		energy: 1,
     		ballistic: 1,
     		missile: 0,
-    		criticalSlots: 12
+    		criticalSlots: 6
     	};
 
     	// Mech slots
@@ -42,16 +42,11 @@
     	// This represents the internal calculation of items per component
 		self.leftArmItems = ko.observableArray([
 			{
-				name: 'Large Laser',
+				name: 'LargeLaser',
 				slots: 3,
 				tons: 5
-			},	
-			{
-				name: 'Small Laser',
-				slots: 1,
-				tons: 1
 			}
-		]);
+		]).extend({ logChange: 'leftArmItems' });
 
 		// This is the 'display' value
 		self.leftArmSlots = ko.computed(function() {
@@ -60,13 +55,17 @@
 			// Iterate through the items, adding the slots based on the number
 			// each one takes up
 			$.each(self.leftArmItems(), function(index, item) {
-				for(var i = 0; i < item.slots; i++){
-					if(i === 0){
-						slots.push(item.name);
-					} else{
-						slots.push('(occupied)');
-					}
-				};
+				console.log(item);
+				// TODO : Re-enable multi slot thing
+
+				// for(var i = 0; i < item.slots; i++){
+				// 	if(i === 0){
+				// 		slots.push(item.name);
+				// 	} else{
+				// 		slots.push('(occupied)');
+				// 	}
+				// };
+				slots.push(item.name);
 			});
 
 			// Pad out empty critical slots
@@ -131,16 +130,15 @@
     	// testing
 
     	self.testAccept = function(incoming) {
-    		console.log('testAccept', incoming);
+    		//console.log('testAccept', incoming);
     		var droppedItem = ko.dataFor(incoming[0]);
-
-
-
     		return true; // for now
     	};
 
-    	self.testDrop = function(event, ui){
-
+    	self.testDrop = function(event, ui) {
+    		var droppedItem = ko.dataFor(ui.draggable[0]);
+    		//console.log(droppedItem);
+    		self.leftArmItems.push(droppedItem);
     	};
 	};
 })(jQuery);
