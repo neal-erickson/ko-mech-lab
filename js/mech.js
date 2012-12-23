@@ -155,42 +155,36 @@
     		return function(incoming){
     			var item = ko.dataFor(incoming[0]);
 
-				var openSlots = component.criticalSlots;
-				$.each(items, function(index, item) {
-					openSlots -= item.slots;
-				});
-
-				// TODO finish
+    			// TODO finish
+				// var openSlots = component.criticalSlots;
+				// $.each(items, function(index, item) {
+				// 	openSlots -= item.slots;
+				// });
 				// if(openSlots > item.slots){
 				// 	return true;
 				// }
-
 	   			// return false;
 	   			return true;
     		};
     	};
 
-    	self.testAccept = function(incoming) {
-    		//console.log('testAccept', incoming);
-			var item = ko.dataFor(incoming[0]);
+    	self.leftArmAccept = createDropAccept(self.leftArm, self.leftArmItems());
+    	self.centerTorsoAccept = createDropAccept(self.centerTorso, self.centerTorsoItems());
 
-			var openSlots = self.leftArm.criticalSlots;
-			$.each(self.leftArmItems(), function(index, item) {
-				openSlots -= item.slots;
-			});
-			// TODO finish
-			// if(openSlots > item.slots){
-			// 	return true;
-			// }
-
-   			// return false;
-   			return true;	
+    	var createDropTarget = function(component, items) {
+    		return function(event, ui) {
+    			var droppedItem = ko.dataFor(ui.draggable[0]);
+	    		items.push(droppedItem);
+    		};
     	};
 
-    	self.testDrop = function(event, ui) {
-    		var droppedItem = ko.dataFor(ui.draggable[0]);
-    		//console.log(droppedItem);
-    		self.leftArmItems.push(droppedItem);
-    	};
+    	self.leftArmTarget = createDropTarget(self.leftArm, self.leftArmItems);
+    	self.centerTorsoTarget = createDropTarget(self.centerTorso, self.centerTorsoItems);
+
+    	// self.testDrop = function(event, ui) {
+    	// 	var droppedItem = ko.dataFor(ui.draggable[0]);
+    	// 	//console.log(droppedItem);
+    	// 	self.leftArmItems.push(droppedItem);
+    	// };
 	};
 })(jQuery);

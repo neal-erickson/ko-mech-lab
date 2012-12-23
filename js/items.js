@@ -1,18 +1,25 @@
 (function($){
-	//mechlab_items = {};
 
-    $.getJSON('data/item-stats.json', function(data) {
-        //debugger;
-        mechlab_items = data;
-    });
+    loadMechlabItems = function(callback){
+        $.getJSON('data/item-stats.json', function(data) {
+            //debugger;
+            //mechlab_items = data;
+            var cleaned= cleanupItems(data);
+            callback(cleaned);
+        });
+    };
 
-    // Additional processing for convenience
-    // mechlab_items.engines = ko.utils.arrayFilter(mechlab_items.modules, function(item) {
-    //     return item.cType === 'CEngineStats';
-    // });
+    var cleanupItems = function(items) {
+        // Remove unnecessary things
 
-    // mechlab_items.equipment = ko.utils.arrayFilter(mechlab_items.modules, function(item) {
-    //     return item.cType !== 'CEngineStats' && item.cType !== 'CPilotModule';
-    // });
+        // mechlab_items.engines = ko.utils.arrayFilter(mechlab_items.modules, function(item) {
+        //     return item.cType === 'CEngineStats';
+        // });
+
+        // mechlab_items.equipment = ko.utils.arrayFilter(mechlab_items.modules, function(item) {
+        //     return item.cType !== 'CEngineStats' && item.cType !== 'CPilotModule';
+        // });
+        return items;
+    };
 
 })(jQuery);

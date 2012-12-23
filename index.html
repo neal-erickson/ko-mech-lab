@@ -17,11 +17,11 @@
 		<script type="text/javascript">
 			$(document).ready(function() {
 
-				//$('#itemTabs').tabs();
-
-				window.testVM = new mechlab.coreVM();
-
-			  	ko.applyBindings(window.testVM, $('div#primary')[0]);
+				loadMechlabItems(function(items){
+					mechlab_items = items;
+					window.testVM = new mechlab.coreVM();
+			  		ko.applyBindings(window.testVM, $('div#primary')[0]);
+				});
 			});
 		</script>
 		<div id="primary">
@@ -42,7 +42,7 @@
 				
 				<div class="loadout-area">
 					<p>Left Arm:</p>
-					<ul data-bind="foreach: leftArmSlots, jqueryui : { widget: 'droppable', options: { accept: testAccept, activeClass: 'dropHighlight', drop: testDrop } }">
+					<ul data-bind="foreach: leftArmSlots, jqueryui : { widget: 'droppable', options: { accept: leftArmAccept, activeClass: 'dropHighlight', drop: leftArmTarget } }">
 						<li>
 							<span data-bind="text: $data"></span>
 						</li>
@@ -51,7 +51,7 @@
 
 				<div class="loadout-area">
 					<p>Center Torso:</p>
-					<ul data-bind="foreach: centerTorsoSlots, jqueryui : { widget: 'droppable', options: { accept: testAccept, activeClass: 'dropHighlight', drop: testDrop } }">
+					<ul data-bind="foreach: centerTorsoSlots, jqueryui : { widget: 'droppable', options: { accept: centerTorsoAccept, activeClass: 'dropHighlight', drop: centerTorsoTarget } }">
 						<li>
 							<span data-bind="text: $data"></span>
 						</li>
