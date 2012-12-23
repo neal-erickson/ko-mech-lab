@@ -39,29 +39,27 @@
 
 			<div data-bind="with: activeMech">
 				<h2>Configuring <span data-bind="text: name" /></h2>
-				<div>
-					<span>Tons:</span>
-					<span data-bind="text: maxTonnage"></span>
-					<br />
-					<span>Current Tons:</span>
-					<span data-bind="text: tonnage"></span>					
-				</div>
-				<div>
-					<span>Engine:</span>
-					<select data-bind="options: $parent.items.engines, optionsText: 'name', value: engine">
-					</select>
-				</div>
-				<div>
-					<h2>Loadout</h2>
-					<hr />
+				
+				<div class="loadout-area">
 					<p>Left Arm:</p>
 					<ul data-bind="foreach: leftArmSlots, jqueryui : { widget: 'droppable', options: { accept: testAccept, activeClass: 'dropHighlight', drop: testDrop } }">
 						<li>
 							<span data-bind="text: $data"></span>
 						</li>
-					</ul>
+					</ul>	
 				</div>
-				<br />
+
+				<div class="loadout-area">
+					<p>Center Torso:</p>
+					<ul data-bind="foreach: centerTorsoSlots, jqueryui : { widget: 'droppable', options: { accept: testAccept, activeClass: 'dropHighlight', drop: testDrop } }">
+						<li>
+							<span data-bind="text: $data"></span>
+						</li>
+					</ul>	
+				</div>
+
+				<div style="clear:both;"></div>
+
 				<div id="itemTabs" data-bind="jqueryui: { widget: 'tabs' }" style="width:500px;">
 					<ul>
 						<li><a href="#fragment-1">Weapons</a></li>
@@ -89,6 +87,19 @@
 							</li>
 						</ul>
 					</div>
+				</div>
+
+				<div>
+					<span>Tons:</span>
+					<span data-bind="text: maxTonnage"></span>
+					<br />
+					<span>Current Tons:</span>
+					<span data-bind="text: tonnage"></span>					
+				</div>
+				<div>
+					<span>Engine:</span>
+					<select data-bind="options: $parent.items.engines, optionsText: 'name', value: engine">
+					</select>
 				</div>
 
 				<div class="area">

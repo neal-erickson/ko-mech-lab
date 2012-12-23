@@ -18,10 +18,13 @@
 								<weapon>
 									<id><xsl:value-of select="@id" /></id>
 									<name><xsl:value-of select="@name" /></name>
+									<slots><xsl:value-of select="WeaponStats/@slots" /></slots>
+									<tons><xsl:value-of select="WeaponStats/@tons" /></tons>
 									<weaponStats>
 										<health><xsl:value-of select="WeaponStats/@Health" /></health>
 										<slots><xsl:value-of select="WeaponStats/@slots" /></slots>
 										<type><xsl:value-of select="WeaponStats/@type" /></type>
+										<tons><xsl:value-of select="WeaponStats/@tons" /></tons>
 										<projectileclass><xsl:value-of select="WeaponStats/@projectileclass" /></projectileclass>
 										<numFiring><xsl:value-of select="WeaponStats/@numFiring" /></numFiring>
 										<damage><xsl:value-of select="WeaponStats/@damage" /></damage>
@@ -42,7 +45,6 @@
 										<maxDepth><xsl:value-of select="WeaponStats/@maxDepth" /></maxDepth>
 									</weaponStats>
 								</weapon>
-								
 							</xsl:for-each>
 						</weapons>
 						<ammoTypes>
@@ -50,6 +52,7 @@
 								<ammoType>
 									<id><xsl:value-of select="@id" /></id>
 									<name><xsl:value-of select="@name" /></name>
+									<tons>1</tons>
 									<ammoTypeStats>
 										<type><xsl:value-of select="AmmoTypeStats/@type" /></type>
 										<internalDamage><xsl:value-of select="AmmoTypeStats/@internalDamage" /></internalDamage>
@@ -64,6 +67,8 @@
 								<module>
 									<id><xsl:value-of select="@id" /></id>
 									<name><xsl:value-of select="@name" /></name>
+									<slots><xsl:value-of select="ModuleStats/@slots" /></slots>
+									<tons><xsl:value-of select="ModuleStats/@tons" /></tons>
 									<cType><xsl:value-of select="@CType" /></cType>
 									<moduleStats>
 										<slots><xsl:value-of select="ModuleStats/@slots" /></slots>

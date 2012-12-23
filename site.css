@@ -16,6 +16,18 @@ div.area {
 	padding:15px;
 }
 
+div.loadout-area {
+	float:left;
+	width:200px;
+}
+
+div.loadout-area ul {
+	
+	list-style-type: none;
+	border: solid 1px #666666;
+
+}
+
 ul.dropHighlight {
 	background-color: fuchsia;
 }
