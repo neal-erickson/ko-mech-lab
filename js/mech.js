@@ -40,25 +40,11 @@
     	};
 
     	// Mech hardpoints
-    	// self.leftArmHardpoints = {
-    	// 	energy: 1,
-    	// 	ballistic: 1,
-    	// 	missile: 0,
-    	// 	criticalSlots: 6
-    	// };
     	self.leftArm = new Component(10, 1, 1, 0);
     	self.centerTorso = new Component(12, 0, 0, 0);
 
-    	// Mech slots
-
     	// This represents the internal calculation of items per component
-		self.leftArmItems = ko.observableArray([
-			{
-				name: 'LargeLaser',
-				slots: 3,
-				tons: 5
-			}
-		]).extend({ logChange: 'leftArmItems' });
+		self.leftArmItems = ko.observableArray();//.extend({ logChange: 'leftArmItems' });
 
 		// This function calculates the slots to display based on the items
 		// and the specific components (hardpoints)
@@ -68,32 +54,44 @@
 			// Iterate through the items, adding the slots based on the number
 			// each one takes up
 			$.each(items, function(index, item) {
-				//console.log(item);
 				// Make items occupy x number of slots for display
-				// for(var i = 0; i < item.slots; i++){
-				// 	if(i === 0){
-				// 		slots.push(item.name);
-				// 	} else{
-				// 		slots.push('(occupied)');
-				// 	}
-				// };
-				slots.push(item.name);
+				for(var i = 0; i < item.slots; i++){
+					// if(i === 0){
+					// 	slots.push(item.name);
+					// } else {
+					// 	slots.push('(' + item.name + ')');
+					// }
+					slots.push('[' + item.name + ']');
+				};
 			});
 
 			// Pad out empty critical slots
 			while(slots.length < component.criticalSlots){
-				slots.push('(empty)');
+				slots.push('-- empty --');
 			}
 			
 			return slots;
 		};
+
+		// Mech slots
+
+		// This represents the internal calculation of items per component
+		self.leftArmItems = ko.observableArray();//.extend({ logChange: 'leftArmItems' });
 
 		// This is the 'display' value
 		self.leftArmSlots = ko.computed(function() {
 			return calculateComponentSlotDisplay(self.leftArm, self.leftArmItems());
 		});//.extend({ logChange: 'leftArmSlots'});
 
-		self.centerTorsoItems = ko.observableArray();
+		self.centerTorsoItemsInternal = ko.observableArray();
+		self.centerTorsoItems = ko.computed(function() {
+			return [{
+				name: 'Gyro', 
+				slots: "2",
+				tons: "0"
+			}].concat(self.centerTorsoItemsInternal());
+		});
+		
 		self.centerTorsoSlots = ko.computed(function() {
 			return calculateComponentSlotDisplay(self.centerTorso, self.centerTorsoItems());
 		});
@@ -149,28 +147,22 @@
     			+ self.armorWeight();
     	});
 
-    	// Drag + drop
+    	// Drag + drop ////////////////////////////////////////////////////////////
 
+    	// Factory functions for bindings sharing
     	var createDropAccept = function(component, items) {
     		return function(incoming){
     			var item = ko.dataFor(incoming[0]);
-
-    			// TODO finish
-				// var openSlots = component.criticalSlots;
-				// $.each(items, function(index, item) {
-				// 	openSlots -= item.slots;
-				// });
-				// if(openSlots > item.slots){
-				// 	return true;
-				// }
-	   			// return false;
-	   			return true;
+				var openSlots = component.criticalSlots;
+				$.each(items(), function(index, item) {
+					openSlots -= item.slots;
+				});
+				if(openSlots >= item.slots){
+					return true;
+				}
+	   			return false;
     		};
     	};
-
-    	self.leftArmAccept = createDropAccept(self.leftArm, self.leftArmItems());
-    	self.centerTorsoAccept = createDropAccept(self.centerTorso, self.centerTorsoItems());
-
     	var createDropTarget = function(component, items) {
     		return function(event, ui) {
     			var droppedItem = ko.dataFor(ui.draggable[0]);
@@ -178,13 +170,12 @@
     		};
     	};
 
-    	self.leftArmTarget = createDropTarget(self.leftArm, self.leftArmItems);
-    	self.centerTorsoTarget = createDropTarget(self.centerTorso, self.centerTorsoItems);
+    	self.leftArmAccept = createDropAccept(self.leftArm, self.leftArmItems);
+		self.leftArmTarget = createDropTarget(self.leftArm, self.leftArmItems);
 
-    	// self.testDrop = function(event, ui) {
-    	// 	var droppedItem = ko.dataFor(ui.draggable[0]);
-    	// 	//console.log(droppedItem);
-    	// 	self.leftArmItems.push(droppedItem);
-    	// };
-	};
+    	self.centerTorsoAccept = createDropAccept(self.centerTorso, self.centerTorsoItems);
+    	self.centerTorsoTarget = createDropTarget(self.centerTorso, self.centerTorsoItemsInternal);
+
+	}; // end of core vm xtor
+	
 })(jQuery);
