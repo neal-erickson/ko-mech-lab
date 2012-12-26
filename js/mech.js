@@ -41,6 +41,10 @@
 
     	// Mech hardpoints
     	self.leftArm = new Component(10, 1, 1, 0);
+
+
+
+
     	self.centerTorso = new Component(12, 0, 0, 0);
 
     	// This represents the internal calculation of items per component
@@ -75,6 +79,7 @@
 
 		// Mech slots
 
+
 		// This represents the internal calculation of items per component
 		self.leftArmItems = ko.observableArray();//.extend({ logChange: 'leftArmItems' });
 
@@ -82,6 +87,9 @@
 		self.leftArmSlots = ko.computed(function() {
 			return calculateComponentSlotDisplay(self.leftArm, self.leftArmItems());
 		});//.extend({ logChange: 'leftArmSlots'});
+
+
+
 
 		self.centerTorsoItemsInternal = ko.observableArray();
 		self.centerTorsoItems = ko.computed(function() {
@@ -98,7 +106,7 @@
 
     	self.criticalSlots = ko.observable(20); // ???
     	self.criticalSlotsOpen = ko.computed(function() {
-    		return 0; // todo
+    		return self.criticalSlots(); // todo
     	});
 
     	// Armor values for each location
@@ -149,18 +157,43 @@
 
     	// Drag + drop ////////////////////////////////////////////////////////////
 
+    	var checkWeaponHardpoints = function(component, item){
+    		if(!item.weaponStats){ return true; } // pass-through
+
+    		// Grab weapon type enum
+    		var weaponType = item.weaponStats.type;
+			
+			// Return a check expression
+			// switch(weaponType){
+			// 	case '0': 
+			// 		return 
+			// }
+
+			return true; // testing
+    	}
+
+    	var checkOpenSlots = function(component, item){
+    		var openSlots = component.hardpoints.criticalSlots;
+    		$.each(component.items(), function(index, item) {
+				openSlots -= item.slots;
+			});
+			if(openSlots < item.slots){
+				return false;
+			}
+			return true;
+    	};
+
     	// Factory functions for bindings sharing
+    	// TODO : Component possesses its own items
     	var createDropAccept = function(component, items) {
     		return function(incoming){
     			var item = ko.dataFor(incoming[0]);
-				var openSlots = component.criticalSlots;
-				$.each(items(), function(index, item) {
-					openSlots -= item.slots;
-				});
-				if(openSlots >= item.slots){
-					return true;
-				}
-	   			return false;
+
+    			// Check tonnage - TODO : Display invalid state or prevent?
+
+    			// Return '&&'' of slots, hardpoints, etc 
+    			return checkOpenSlots(component, item) 
+    				&& checkWeaponHardpoints(component, items);
     		};
     	};
     	var createDropTarget = function(component, items) {
@@ -170,11 +203,21 @@
     		};
     	};
 
-    	self.leftArmAccept = createDropAccept(self.leftArm, self.leftArmItems);
-		self.leftArmTarget = createDropTarget(self.leftArm, self.leftArmItems);
+    	//self.leftArmAccept = createDropAccept(self.leftArmNew, self.leftArmItems);
+		//self.leftArmTarget = createDropTarget(self.leftArmNew, self.leftArmItems);
 
-    	self.centerTorsoAccept = createDropAccept(self.centerTorso, self.centerTorsoItems);
-    	self.centerTorsoTarget = createDropTarget(self.centerTorso, self.centerTorsoItemsInternal);
+    	//self.centerTorsoAccept = createDropAccept(self.centerTorso, self.centerTorsoItems);
+    	//self.centerTorsoTarget = createDropTarget(self.centerTorso, self.centerTorsoItemsInternal);
+
+    	// New organization for template usage
+    	self.leftArmNew = {
+    		slots: self.leftArmSlots,
+    		hardpoints: self.leftArm,
+    		items: self.leftArmItems
+    	};
+
+    	self.leftArmNew.accept = createDropAccept(self.leftArmNew, self.leftArmItems);
+    	self.leftArmNew.drop = createDropTarget(self.leftArmNew, self.leftArmItems);
 
 	}; // end of core vm xtor
 	

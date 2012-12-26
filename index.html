@@ -10,6 +10,7 @@
 		<script type="text/javascript" src="/js/items.js"></script>
 		<script type="text/javascript" src="/js/core.js"></script>
 		<script type="text/javascript" src="/js/mech.js"></script>
+		<script type="text/javascript" src="/js/enums.js"></script>
 		<link href="site.css" rel="stylesheet" type="text/css"></link>
 		<link href="/css/overcast/jquery-ui-1.9.2.custom.css" rel="stylesheet" type="text/css"><link>
  	</head>
@@ -40,23 +41,25 @@
 			<div data-bind="with: activeMech">
 				<h2>Configuring <span data-bind="text: name" /></h2>
 				
-				<div class="loadout-area">
+				<!-- <div class="loadout-area">
 					<p>Left Arm:</p>
 					<ul data-bind="foreach: leftArmSlots, jqueryui : { widget: 'droppable', options: { accept: leftArmAccept, activeClass: 'dropHighlight', drop: leftArmTarget } }">
 						<li>
 							<span data-bind="text: $data"></span>
 						</li>
 					</ul>	
-				</div>
+				</div> -->
 
-				<div class="loadout-area">
+				<div data-bind="template: { name: 'componentList', data: leftArmNew }"></div>
+
+				<!-- <div class="loadout-area">
 					<p>Center Torso:</p>
 					<ul data-bind="foreach: centerTorsoSlots, jqueryui : { widget: 'droppable', options: { accept: centerTorsoAccept, activeClass: 'dropHighlight', drop: centerTorsoTarget } }">
 						<li>
 							<span data-bind="text: $data"></span>
 						</li>
 					</ul>	
-				</div>
+				</div> -->
 
 				<div style="clear:both;"></div>
 
@@ -94,7 +97,10 @@
 					<span data-bind="text: maxTonnage"></span>
 					<br />
 					<span>Current Tons:</span>
-					<span data-bind="text: tonnage"></span>					
+					<span data-bind="text: tonnage"></span>
+					<br />
+					<span>Critical Slots:</span>
+					<span data-bind="text: criticalSlotsOpen"></span>					
 				</div>
 				<div>
 					<span>Engine:</span>
@@ -171,6 +177,17 @@
 						</tbody>
 					</table>
 				</div>
+
+				<script type='text\html' id="componentList">
+					<div class="loadout-area">
+						<p>Left Arm:</p>
+						<ul data-bind="foreach: slots, jqueryui : { widget: 'droppable', options: { accept: accept, activeClass: 'dropHighlight', drop: drop } }">
+							<li>
+								<span data-bind="text: $data"></span>
+							</li>
+						</ul>	
+					</div>
+				</script>
 			</div>
 		</div>
 	</body>

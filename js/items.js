@@ -19,6 +19,22 @@
         // mechlab_items.equipment = ko.utils.arrayFilter(mechlab_items.modules, function(item) {
         //     return item.cType !== 'CEngineStats' && item.cType !== 'CPilotModule';
         // });
+
+        items.engines = [];
+
+        // Iterate and move some things
+        $.each(items.modules, function(index, item){
+            if(item.cType == ''){
+
+            }
+            switch(item.cType){
+                case 'CEngineStats':
+                    item.tons = item.engineStats.tons;
+                    items.engines.push(item);
+                    break;
+            }
+        });
+
         return items;
     };
 
