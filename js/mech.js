@@ -67,18 +67,24 @@
     	// slot info, hardpoints, other info
     	// 
     	// Corresponds to a template binding as well
-    	var Component = function(){
+    	var Component = function(name, options){
     		var component = this;
+            var options = options || {}; // prevent errors
 
+            component.name = ko.observable(name);
     		component.criticalSlots = ko.observable(0);//.extend({ logChange: 'criticalSlots'});
 
-    		component.energyHardpoints = ko.observable(0);
-    		component.ballisticHardpoints = ko.observable(0);
-    		component.missileHardpoints = ko.observable(0);
+    		
 
     		// This is actually the most important bit - the weapons, ammo, etc that 
     		// this part of the mech has been assigned
     		component.items = ko.observableArray();//.extend({ logChange: 'items'});
+
+            component.itemsWithFixed = ko.computed(function() {
+                return component.items().concat([
+
+                ]);
+            });
 
     		var calculateHardpointsUsed = function(weaponType) {
     			var used = 0;
@@ -90,32 +96,38 @@
     			return used;
     		};
 
-    		component.ballisticSlotsUsed = ko.computed(function() {
+            // Hardpoint-related members
+            component.energyHardpoints = ko.observable(0);
+            component.ballisticHardpoints = ko.observable(0);
+            component.missileHardpoints = ko.observable(0);
+            component.ams = options.ams || false;
+
+    		component.ballisticHardpointsUsed = ko.computed(function() {
     			return calculateHardpointsUsed(0);
     		});
-    		component.ballisticSlotsOpen = ko.computed(function() {
-    			return component.ballisticHardpoints() - component.ballisticSlotsUsed();
+    		component.ballisticHardpointsOpen = ko.computed(function() {
+    			return component.ballisticHardpoints() - component.ballisticHardpointsUsed();
     		});//.extend({ logChange: 'ballisticSlotsOpen'});
-    		component.energySlotsUsed = ko.computed(function() {
+    		component.energyHardpointsUsed = ko.computed(function() {
     			return calculateHardpointsUsed(1);
     		});
-    		component.energySlotsOpen = ko.computed(function() {
-    			return component.energyHardpoints() - component.energySlotsUsed();
+    		component.energyHardpointsOpen = ko.computed(function() {
+    			return component.energyHardpoints() - component.energyHardpointsUsed();
     		});//.extend({ logChange: 'energySlotsOpen'});
-    		component.missileSlotsUsed = ko.computed(function() {
+    		component.missileHardpointsUsed = ko.computed(function() {
     			return calculateHardpointsUsed(2);
     		});
-    		component.missileSlotsOpen = ko.computed(function() {
-    			return component.missileHardpoints() - component.missileSlotsUsed();
+    		component.missileHardpointsOpen = ko.computed(function() {
+    			return component.missileHardpoints() - component.missileHardpointsUsed();
     		});//.extend({ logChange: 'missileSlotsOpen'});
 
     		component.hardpointDisplayText = ko.computed(function() {
     			if(component.ballisticHardpoints() + component.energyHardpoints() + component.missileHardpoints() === 0){
     				return '--'; // no text
     			}
-    			var text = component.ballisticSlotsUsed() + '/' + component.ballisticHardpoints() + 'B '
-    				+ component.energySlotsUsed() + '/' + component.energyHardpoints() + 'E ' 
-    				+ component.missileSlotsUsed() + '/' + component.missileHardpoints() + 'M';
+    			var text = component.ballisticHardpointsUsed() + '/' + component.ballisticHardpoints() + 'B '
+    				+ component.energyHardpointsUsed() + '/' + component.energyHardpoints() + 'E ' 
+    				+ component.missileHardpointsUsed() + '/' + component.missileHardpoints() + 'M';
     				// TODO : Improved formatting?
     			return text;
     		});
@@ -154,6 +166,9 @@
 			});//.extend({ logChange: 'displaySlots'});
 
     		var checkSlots = function(item) {
+                // TODO : This is a gross hack. Add hardcoded tonnage to ammo types
+                if(!item.slots) { item.slots = "1"; }
+
     			return component.criticalSlotsOpen() >= item.slots;
     		};
 
@@ -166,11 +181,11 @@
 				// Return a check expression
 				switch(weaponType){
 					case '0': 
-						return component.ballisticSlotsOpen() >= 1;
+						return component.ballisticHardpointsOpen() >= 1;
 					case '1':
-						return component.energySlotsOpen() >= 1;
+						return component.energyHardpointsOpen() >= 1;
 					case '2':
-						return component.missileSlotsOpen() >= 1;
+						return component.missileHardpointsOpen() >= 1;
 				}
 
 				return false; // testing default?
@@ -178,7 +193,7 @@
 
 			component.accept = function(incoming) {
     			var item = ko.dataFor(incoming[0]);
-
+                //console.log('echckslots', item);
     			// Check tonnage - TODO : Display invalid state or prevent?
 
     			// Return '&&'' of slots, hardpoints, etc 
@@ -195,11 +210,15 @@
     	};
 
     	// Mech hardpoints
-    	self.leftArm = new Component();
+    	self.leftArm = new Component("Left Arm");
+
+        self.centerTorso = new Component("Center Torso");
 
     	self.leftArm.criticalSlots(8); // testing
     	self.leftArm.ballisticHardpoints(1); // testing
     	self.leftArm.energyHardpoints(2); // testing
+
+        self.centerTorso.criticalSlots(10);
 
     	// Anna's contribution to the codebase
 		//1001javascriptinternetexploder.no=pie
@@ -231,13 +250,12 @@
 			return self.overallArmorValue() / armorPerTon;
 		});
 
-
 		// This will be a complicated equation.
 		//
 		// weight of all armor (armor points sum * armor type modifier)
 		// +
 		// weight of all weapons 
-		// +
+		// +;
 		// weight of all ammunition
 		// + 
 		// weight of all equipment

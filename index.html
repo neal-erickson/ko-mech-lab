@@ -49,9 +49,11 @@
 						</li>
 					</ul>	
 				</div> -->
+				<div class="loadout-area">
+					<div data-bind="template: { name: 'componentList', data: leftArm }"></div>
+					<div data-bind="template: { name: 'componentList', data: centerTorso }"></div>
 
-				<div data-bind="template: { name: 'componentList', data: leftArm }"></div>
-
+				</div>
 				<!-- <div class="loadout-area">
 					<p>Center Torso:</p>
 					<ul data-bind="foreach: centerTorsoSlots, jqueryui : { widget: 'droppable', options: { accept: centerTorsoAccept, activeClass: 'dropHighlight', drop: centerTorsoTarget } }">
@@ -78,14 +80,14 @@
 					</div>
 					<div id="fragment-2">
 						<ul data-bind="foreach: $parent.items.ammoTypes">
-							<li>
+							<li data-bind="jqueryui: { widget: 'draggable', options: { revert: true, distance: 20, helper: 'clone', revertDuration: 0 } }">
 								<span data-bind="text: name"></span>
 							</li>
 						</ul>
 					</div>
 					<div id="fragment-3">
 						<ul data-bind="foreach: $parent.items.equipment">
-							<li>
+							<li data-bind="jqueryui: { widget: 'draggable', options: { revert: true, distance: 20, helper: 'clone', revertDuration: 0 } }">
 								<span data-bind="text: name"></span>
 							</li>
 						</ul>
@@ -179,8 +181,11 @@
 				</div>
 
 				<script type='text\html' id="componentList">
-					<div class="loadout-area">
-						<p>Left Arm: <span data-bind="text: hardpointDisplayText" /></p>
+					<div class="loadout">
+						<p>
+							<span id="namespan" data-bind="text: name"></span>:
+							<span id="hardpointDisplayTextSpan" data-bind="text: hardpointDisplayText" />
+						</p>
 						<ul data-bind="foreach: displaySlots, jqueryui : { widget: 'droppable', options: { accept: accept, activeClass: 'dropHighlight', drop: drop } }">
 							<li>
 								<span data-bind="text: $data"></span>
