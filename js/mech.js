@@ -3,8 +3,6 @@
 		mechlab = { };
 	}
 
-	
-
 	// This 'sub' view model controls all the interesting bits
 	mechlab.mechViewModel = function(mech) {
 		var self = this;
@@ -21,7 +19,6 @@
 
 		// Core components
 		self.engine = ko.observable();
-    	
     	self.engineWeight = ko.computed(function() {
     		if(self.engine()){
     			return self.engine().engineStats.weight.toFloat();	
@@ -46,16 +43,16 @@
 			return true; // testing
     	}
 
-    	var checkOpenSlots = function(component, item){
-    		var openSlots = component.criticalSlots;
-    		$.each(component.items(), function(index, item) {
-				openSlots -= item.slots;
-			});
-			if(openSlots < item.slots){
-				return false;
-			}
-			return true;
-    	};
+   //  	var checkOpenSlots = function(component, item){
+   //  		var openSlots = component.criticalSlots;
+   //  		$.each(component.items(), function(index, item) {
+			// 	openSlots -= item.slots;
+			// });
+			// if(openSlots < item.slots){
+			// 	return false;
+			// }
+			// return true;
+   //  	};
 
     	// Factory functions for bindings sharing
     	// TODO : Component possesses its own items
@@ -73,20 +70,57 @@
     	var Component = function(){
     		var component = this;
 
-    		component.criticalSlots = ko.observable(0);
+    		component.criticalSlots = ko.observable(0);//.extend({ logChange: 'criticalSlots'});
 
     		component.energyHardpoints = ko.observable(0);
     		component.ballisticHardpoints = ko.observable(0);
     		component.missileHardpoints = ko.observable(0);
 
-    		component.items = ko.observableArray();
+    		// This is actually the most important bit - the weapons, ammo, etc that 
+    		// this part of the mech has been assigned
+    		component.items = ko.observableArray();//.extend({ logChange: 'items'});
 
+    		var calculateHardpointsUsed = function(weaponType) {
+    			var used = 0;
+    			$.each(component.items(), function(index, item) {
+    				if(item.weaponStats && item.weaponStats.type == weaponType) {
+    					used++;
+    				}
+    			});
+    			return used;
+    		};
+
+    		component.ballisticSlotsUsed = ko.computed(function() {
+    			return calculateHardpointsUsed(0);
+    		});
     		component.ballisticSlotsOpen = ko.computed(function() {
-    			return 1;
+    			return component.ballisticHardpoints() - component.ballisticSlotsUsed();
+    		});//.extend({ logChange: 'ballisticSlotsOpen'});
+    		component.energySlotsUsed = ko.computed(function() {
+    			return calculateHardpointsUsed(1);
+    		});
+    		component.energySlotsOpen = ko.computed(function() {
+    			return component.energyHardpoints() - component.energySlotsUsed();
+    		});//.extend({ logChange: 'energySlotsOpen'});
+    		component.missileSlotsUsed = ko.computed(function() {
+    			return calculateHardpointsUsed(2);
+    		});
+    		component.missileSlotsOpen = ko.computed(function() {
+    			return component.missileHardpoints() - component.missileSlotsUsed();
+    		});//.extend({ logChange: 'missileSlotsOpen'});
+
+    		component.hardpointDisplayText = ko.computed(function() {
+    			if(component.ballisticHardpoints() + component.energyHardpoints() + component.missileHardpoints() === 0){
+    				return '--'; // no text
+    			}
+    			var text = component.ballisticSlotsUsed() + '/' + component.ballisticHardpoints() + 'B '
+    				+ component.energySlotsUsed() + '/' + component.energyHardpoints() + 'E ' 
+    				+ component.missileSlotsUsed() + '/' + component.missileHardpoints() + 'M';
+    				// TODO : Improved formatting?
+    			return text;
     		});
 
-    		
-
+    		// Slots is items but taking up the number of slots based on the item's value
     		component.slots = ko.computed(function(){
 				var slots = [];
 				
@@ -98,23 +132,49 @@
 						slots.push('[' + item.name + ']');
 					};
 				});
-
-				// Pad out empty critical slots
-				while(slots.length < component.criticalSlots()){
-					slots.push('-- empty --');
-				}
 					
 				return slots;
-			});
+			});//.extend({ logChange: 'slots'});
 
-    		component.criticalSlotsOpen = ko.computed(function() {
+			component.criticalSlotsOpen = ko.computed(function() {
+    			//console.log('---> criticalSlotsOpen calc', component.criticalSlots(), component.slots().length, component.slots());
     			return component.criticalSlots() - component.slots().length;
-    		});
+    		});//.extend({ logChange: 'criticalSlotsOpen'});
 
-    		// TODO : This is not working right now
+    		// This is the computed value that pads out the slots with empty placeholders for visual display. Should not be used for computation.
+			component.displaySlots = ko.computed(function() {
+				var slots = component.slots();
+				var placeholders = [];
+
+				// Pad out empty critical slots
+				while(placeholders.length < component.criticalSlotsOpen()){
+					placeholders.push('-- empty --');
+				}
+				return slots.concat(placeholders);
+			});//.extend({ logChange: 'displaySlots'});
+
     		var checkSlots = function(item) {
-    			return component.criticalSlotsOpen() > item.slots;
+    			return component.criticalSlotsOpen() >= item.slots;
     		};
+
+			var checkWeaponHardpoints = function(item){
+	    		if(!item.weaponStats){ return true; } // pass-through
+				
+	    		// Grab weapon type enum
+	    		var weaponType = item.weaponStats.type;
+				
+				// Return a check expression
+				switch(weaponType){
+					case '0': 
+						return component.ballisticSlotsOpen() >= 1;
+					case '1':
+						return component.energySlotsOpen() >= 1;
+					case '2':
+						return component.missileSlotsOpen() >= 1;
+				}
+
+				return false; // testing default?
+	    	}
 
 			component.accept = function(incoming) {
     			var item = ko.dataFor(incoming[0]);
@@ -122,10 +182,12 @@
     			// Check tonnage - TODO : Display invalid state or prevent?
 
     			// Return '&&'' of slots, hardpoints, etc 
-    			return checkOpenSlots(component, item) 
-    				&& checkWeaponHardpoints(component, item);
+    			return checkSlots(item)
+    				&& checkWeaponHardpoints(item);
     		};
 
+    		// Simple function for adding the dropped item to the component's items.
+    		// It's been checked already by the accept function.
 			component.drop = function(event, ui){
 				var droppedItem = ko.dataFor(ui.draggable[0]);
 	    		component.items.push(droppedItem);
@@ -137,82 +199,10 @@
 
     	self.leftArm.criticalSlots(8); // testing
     	self.leftArm.ballisticHardpoints(1); // testing
+    	self.leftArm.energyHardpoints(2); // testing
 
     	// Anna's contribution to the codebase
 		//1001javascriptinternetexploder.no=pie
-
-
-
-    	self.centerTorso = new Component();
-
-    	// This represents the internal calculation of items per component
-		//self.leftArmItems = ko.observableArray();//.extend({ logChange: 'leftArmItems' });
-
-		// This function calculates the slots to display based on the items
-		// and the specific components (hardpoints)
-		// var calculateComponentSlotDisplay = function(component, items){
-		// 	var slots = [];
-			
-		// 	// Iterate through the items, adding the slots based on the number
-		// 	// each one takes up
-		// 	$.each(items, function(index, item) {
-		// 		// Make items occupy x number of slots for display
-		// 		for(var i = 0; i < item.slots; i++){
-		// 			// if(i === 0){
-		// 			// 	slots.push(item.name);
-		// 			// } else {
-		// 			// 	slots.push('(' + item.name + ')');
-		// 			// }
-		// 			slots.push('[' + item.name + ']');
-		// 		};
-		// 	});
-
-		// 	// Pad out empty critical slots
-		// 	while(slots.length < component.criticalSlots){
-		// 		slots.push('-- empty --');
-		// 	}
-			
-		// 	return slots;
-		// };
-
-		// Mech slots
-
-
-		// This represents the internal calculation of items per component
-		//self.leftArmItems = ko.observableArray();//.extend({ logChange: 'leftArmItems' });
-
-		// This is the 'display' value
-		//self.leftArmSlots = ko.computed(function() {
-		//	return calculateComponentSlotDisplay(self.leftArm, self.leftArmItems());
-		//});//.extend({ logChange: 'leftArmSlots'});
-
-		// self.leftArmBallisticSlotsUsed = ko.computed(function() {
-		// 	var used = 0;
-		// 	$.each(self.leftArmItems(), function(index, item) {
-		// 		if(item.weaponStats && item.weaponStats.type == 0){
-		// 			used++;
-		// 		}
-		// 	});
-		// 	return used;
-		// });
-
-		// self.centerTorsoItemsInternal = ko.observableArray();
-		// self.centerTorsoItems = ko.computed(function() {
-		// 	return [{
-		// 		name: 'Gyro', 
-		// 		slots: "2",
-		// 		tons: "0"
-		// 	}].concat(self.centerTorsoItemsInternal());
-		// });
-		
-		// self.centerTorsoSlots = ko.computed(function() {
-		// 	return calculateComponentSlotDisplay(self.centerTorso, self.centerTorsoItems());
-		// });
-
-  //   	self.criticalSlots = ko.observable(20); // ???
-  //   	self.criticalSlotsOpen = ko.computed(function() {
-  //   		return self.criticalSlots(); // todo
-  //   	});
 
     	// Armor values for each location
     	self.armorHead = ko.observable(10);//.extend({ logChange: 'armorHead' });
@@ -259,29 +249,6 @@
     		return self.engineWeight() 
     			+ self.armorWeight();
     	});
-
-    	
-
-    	//self.leftArmAccept = createDropAccept(self.leftArmNew, self.leftArmItems);
-		//self.leftArmTarget = createDropTarget(self.leftArmNew, self.leftArmItems);
-
-    	//self.centerTorsoAccept = createDropAccept(self.centerTorso, self.centerTorsoItems);
-    	//self.centerTorsoTarget = createDropTarget(self.centerTorso, self.centerTorsoItemsInternal);
-
-    	// var createOpenHardpoints = function(component, hardpoint) {
-
-    	// };
-
-    	// New organization for template usage
-    	// self.leftArmNew = {
-    	// 	slots: self.leftArmSlots,
-    	// 	hardpoints: self.leftArm,
-    	// 	items: self.leftArmItems,
-    	// 	ballisticSlotsOpen: self.leftArmBallisticSlotsUsed
-    	// };
-
-    	// self.leftArmNew.accept = createDropAccept(self.leftArmNew, self.leftArmItems);
-    	// self.leftArmNew.drop = createDropTarget(self.leftArmNew, self.leftArmItems);
 
 	}; // end of core vm xtor
 	

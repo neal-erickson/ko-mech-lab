@@ -180,8 +180,8 @@
 
 				<script type='text\html' id="componentList">
 					<div class="loadout-area">
-						<p>Left Arm:</p>
-						<ul data-bind="foreach: slots, jqueryui : { widget: 'droppable', options: { accept: accept, activeClass: 'dropHighlight', drop: drop } }">
+						<p>Left Arm: <span data-bind="text: hardpointDisplayText" /></p>
+						<ul data-bind="foreach: displaySlots, jqueryui : { widget: 'droppable', options: { accept: accept, activeClass: 'dropHighlight', drop: drop } }">
 							<li>
 								<span data-bind="text: $data"></span>
 							</li>

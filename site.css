@@ -22,10 +22,9 @@ div.loadout-area {
 }
 
 div.loadout-area ul {
-	
 	list-style-type: none;
 	border: solid 1px #666666;
-
+	min-height: 100px;
 }
 
 ul.dropHighlight {
