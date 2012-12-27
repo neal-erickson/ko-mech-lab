@@ -4,15 +4,22 @@
 	    for (var i in constantsList) {
 	        this[constantsList[i]] = i;
 	    }
+	    this.allValues = constantsList;
 	}
 
 	Enum.prototype.values = function() {
 	    return this.allValues;
-	    /* for the above to work, you'd need to do this.allValues = constantsList at the constructor */
 	};
 
 	mechlab_enums = {};
 
+	mechlab_enums.betterWeaponTypes = new Enum([
+		"ballistic",
+		"energy",
+		"missile"
+	]);
+
+	// Current "real" enum
 	mechlab_enums.weaponTypes = {
 		ballistic: 0,
 		energy: 1,

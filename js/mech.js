@@ -88,7 +88,15 @@
 			return calculateComponentSlotDisplay(self.leftArm, self.leftArmItems());
 		});//.extend({ logChange: 'leftArmSlots'});
 
-
+		self.leftArmBallisticSlotsUsed = ko.computed(function() {
+			var used = 0;
+			$.each(self.leftArmItems(), function(index, item) {
+				if(item.weaponStats && item.weaponStats.type == 0){
+					used++;
+				}
+			});
+			return used;
+		});
 
 
 		self.centerTorsoItemsInternal = ko.observableArray();
@@ -159,15 +167,16 @@
 
     	var checkWeaponHardpoints = function(component, item){
     		if(!item.weaponStats){ return true; } // pass-through
-
+			
     		// Grab weapon type enum
     		var weaponType = item.weaponStats.type;
 			
 			// Return a check expression
-			// switch(weaponType){
-			// 	case '0': 
-			// 		return 
-			// }
+			console.log(weaponType);
+			switch(weaponType){
+				case '0': 
+					return component.hardpoints.ballisticHardpoints > component.ballisticSlotsOpen();
+			}
 
 			return true; // testing
     	}
@@ -193,7 +202,7 @@
 
     			// Return '&&'' of slots, hardpoints, etc 
     			return checkOpenSlots(component, item) 
-    				&& checkWeaponHardpoints(component, items);
+    				&& checkWeaponHardpoints(component, item);
     		};
     	};
     	var createDropTarget = function(component, items) {
@@ -209,11 +218,16 @@
     	//self.centerTorsoAccept = createDropAccept(self.centerTorso, self.centerTorsoItems);
     	//self.centerTorsoTarget = createDropTarget(self.centerTorso, self.centerTorsoItemsInternal);
 
+    	var createOpenHardpoints = function(component, hardpoint) {
+
+    	};
+
     	// New organization for template usage
     	self.leftArmNew = {
     		slots: self.leftArmSlots,
     		hardpoints: self.leftArm,
-    		items: self.leftArmItems
+    		items: self.leftArmItems,
+    		ballisticSlotsOpen: self.leftArmBallisticSlotsUsed
     	};
 
     	self.leftArmNew.accept = createDropAccept(self.leftArmNew, self.leftArmItems);
