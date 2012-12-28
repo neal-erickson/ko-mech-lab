@@ -16,21 +16,25 @@ div.area {
 	padding:15px;
 }
 
-div.loadout-area {
-	width: 1100px;
-	border: 1px solid black;
-	float: left;
-}
-
 div.loadout {
 	float:left;
-	width:210px;
+	/*width:210px;*/
 }
 
 div.loadout ul {
 	list-style-type: none;
 	border: solid 1px #666666;
 	min-height: 100px;
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
+}
+
+div.loadout ul li {
+	border-bottom: 1px solid black;
+}
+
+div.loadout ul li:last-child {
+	border-bottom: none;
 }
 
 ul.dropHighlight {

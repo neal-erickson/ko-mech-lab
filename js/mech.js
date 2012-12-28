@@ -74,7 +74,7 @@
             component.energyHardpoints = ko.observable(0);
             component.ballisticHardpoints = ko.observable(0);
             component.missileHardpoints = ko.observable(0);
-            component.ams = options.ams || false; // TODO : make sure this is kosher
+            component.ams = ko.observable(false);
 
     		component.ballisticHardpointsUsed = ko.computed(function() {
     			return calculateHardpointsUsed(0);
@@ -96,13 +96,23 @@
     		});//.extend({ logChange: 'missileSlotsOpen'});
 
     		component.hardpointDisplayText = ko.computed(function() {
-    			if(component.ballisticHardpoints() + component.energyHardpoints() + component.missileHardpoints() === 0){
-    				return '--'; // no text
+    			// if(component.ballisticHardpoints() + component.energyHardpoints() + component.missileHardpoints() === 0){
+    			// 	return '--'; // no text
+    			// }
+    			var text = '';
+    			if(component.ballisticHardpoints() > 0) {
+    				text += component.ballisticHardpointsUsed() + '/' + component.ballisticHardpoints() + 'B ';
     			}
-    			var text = component.ballisticHardpointsUsed() + '/' + component.ballisticHardpoints() + 'B '
-    				+ component.energyHardpointsUsed() + '/' + component.energyHardpoints() + 'E ' 
-    				+ component.missileHardpointsUsed() + '/' + component.missileHardpoints() + 'M';
-    				// TODO : Improved formatting?
+    			if(component.energyHardpoints() > 0) {
+    				text += + component.energyHardpointsUsed() + '/' + component.energyHardpoints() + 'E ';
+    			}
+    			if(component.missileHardpoints() > 0) {
+    				text += component.missileHardpointsUsed() + '/' + component.missileHardpoints() + 'M ' ;
+    			}
+    			if(component.ams()) {
+    				text += 'AMS'; // TODO
+    			}
+    			
     			return text;
     		});
 
@@ -110,8 +120,7 @@
     		component.slots = ko.computed(function(){
 				var slots = [];
 				var allItems = component.fixedItems().concat(component.items());
-				// Iterate through the items, adding the slots based on the number
-				// each one takes up
+				// Iterate through the items, adding the slots based on the number each one takes up
 				$.each(allItems, function(index, item) {
 					// Make items occupy x number of slots for display
 					for(var i = 0; i < item.slots; i++){
@@ -151,7 +160,7 @@
 				
 	    		// Grab weapon type enum
 	    		var weaponType = item.weaponStats.type;
-				
+
 				// Return a check expression
 				switch(weaponType){
 					case '0': 
@@ -160,6 +169,8 @@
 						return component.energyHardpointsOpen() >= 1;
 					case '2':
 						return component.missileHardpointsOpen() >= 1;
+					case '4': // 4 is AMS
+						return component.ams(); // TODO
 				}
 
 				return false; // testing default?
@@ -171,6 +182,7 @@
     			// Check tonnage - TODO : Display invalid state or prevent?
 
     			// Return '&&'' of slots, hardpoints, etc 
+    			//debugger;
     			return checkSlots(item)
     				&& checkWeaponHardpoints(item);
     		};
@@ -191,21 +203,32 @@
         };
 
     	// Mech hardpoints
-    	self.leftArm = new Component("Left Arm", {
-            fixedItems: ko.observableArray([
-                new fixedItem('Shoulder', "1", "0"),
-                new fixedItem('Upper Arm Actuator', "1", "0"),
-                new fixedItem('Lower Arm Actuator', "1", "0"),
-                new fixedItem('Hand Actuator', "1", "0")
-            ])
+    	self.head = new Component('Head', {
+    		fixedItems: ko.observableArray([
+    			new fixedItem('Life Support', '2', '0'),
+    			new fixedItem('Sensors', '2', '0'),
+    			new fixedItem('Cockpit', '1', '0')
+    		])
+    	});
+
+    	var fixedArmItems = ko.observableArray([
+            new fixedItem('Shoulder', "1", "0"),
+            new fixedItem('Upper Arm Actuator', "1", "0"),
+            new fixedItem('Lower Arm Actuator', "1", "0"),
+            new fixedItem('Hand Actuator', "1", "0")
+        ]);
+    	self.rightArm = new Component("Right Arm", {
+            fixedItems: fixedArmItems
+        });
+        self.leftArm = new Component("Left Arm", {
+            fixedItems: fixedArmItems
         });
 
-        //var centerTorsoFixedItems = ko.observableArray();
-
+        self.rightTorso = new Component("Right Torso");
+		self.leftTorso = new Component("Left Torso");
         self.centerTorso = new Component("Center Torso", {
             fixedItems: ko.computed(function() {
                 var items = [new fixedItem('Gyro', "4", "0")];
-                debugger;
                 if(self.engine()) {
                     items.push(self.engine());
                 }
@@ -213,10 +236,36 @@
             })
         });
 
-    	self.leftArm.criticalSlots(8); // testing
-    	self.leftArm.ballisticHardpoints(1); // testing
-    	self.leftArm.energyHardpoints(2); // testing
-        self.centerTorso.criticalSlots(16); // testing
+        var fixedLegItems = ko.observableArray([
+        	new fixedItem('Hip', "1", "0"),
+            new fixedItem('Upper Leg Actuator', "1", "0"),
+            new fixedItem('Lower Leg Actuator', "1", "0"),
+            new fixedItem('Foot Actuator', "1", "0")
+        ]);
+        self.rightLeg = new Component('Right Leg', {
+        	fixedItems: fixedLegItems
+        });
+        self.leftLeg = new Component('Left Leg', {
+        	fixedItems: fixedLegItems
+        });
+
+        // These are testing values for HBK-4J
+        self.rightArm.criticalSlots(12);
+        self.leftArm.criticalSlots(12);
+        self.rightTorso.criticalSlots(12);
+    	self.leftTorso.criticalSlots(12);
+        self.centerTorso.criticalSlots(12);
+        self.head.criticalSlots(6);
+        self.rightLeg.criticalSlots(6);
+        self.leftLeg.criticalSlots(6);
+
+
+		self.leftArm.energyHardpoints(1);
+        self.rightTorso.missileHardpoints(2);
+        self.rightTorso.energyHardpoints(2);
+        self.head.energyHardpoints(1);
+        self.rightArm.energyHardpoints(1);
+        self.leftTorso.ams(true);
 
     	// Anna's contribution to the codebase
 		//1001javascriptinternetexploder.no=pie

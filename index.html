@@ -40,32 +40,58 @@
 
 			<div data-bind="with: activeMech">
 				<h2>Configuring <span data-bind="text: name" /></h2>
-				
-				<!-- <div class="loadout-area">
-					<p>Left Arm:</p>
-					<ul data-bind="foreach: leftArmSlots, jqueryui : { widget: 'droppable', options: { accept: leftArmAccept, activeClass: 'dropHighlight', drop: leftArmTarget } }">
-						<li>
-							<span data-bind="text: $data"></span>
-						</li>
-					</ul>	
-				</div> -->
-				<div class="loadout-area">
-					<div data-bind="template: { name: 'componentList', data: leftArm }"></div>
-					<div data-bind="template: { name: 'componentList', data: centerTorso }"></div>
-
+				<div>
+					<span>Tons:</span>
+					<span data-bind="text: maxTonnage"></span>
+					<br />
+					<span>Current Tons:</span>
+					<span data-bind="text: tonnage"></span>			
 				</div>
-				<!-- <div class="loadout-area">
-					<p>Center Torso:</p>
-					<ul data-bind="foreach: centerTorsoSlots, jqueryui : { widget: 'droppable', options: { accept: centerTorsoAccept, activeClass: 'dropHighlight', drop: centerTorsoTarget } }">
-						<li>
-							<span data-bind="text: $data"></span>
-						</li>
-					</ul>	
-				</div> -->
+				<table id="loadoutTable" style="float:left;">
+					<tbody>
+						<tr>
+							<td>
+								<div data-bind="template: { name: 'componentList', data: rightArm }"></div>
+							</td>
+							<td>
+								<div data-bind="template: { name: 'componentList', data: rightTorso }"></div>
+							</td>
+							<td>
+								<div data-bind="template: { name: 'componentList', data: head }"></div>
+							</td>
+							<td>
+								<div data-bind="template: { name: 'componentList', data: leftTorso }"></div>
+							</td>
+							<td>
+								<div data-bind="template: { name: 'componentList', data: leftArm }"></div>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="3">
+								<div>
+									<span>Engine:</span>
+									<select data-bind="options: $parent.items.engines, optionsText: 'name', value: engine">
+									</select>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>
+								<div data-bind="template: { name: 'componentList', data: rightLeg }"></div>
+							</td>
+							<td>
+								<div data-bind="template: { name: 'componentList', data: centerTorso }"></div>
+							</td>
+							<td>
+								<div data-bind="template: { name: 'componentList', data: leftLeg }"></div>
+							</td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
 
-				
-
-				<div id="itemTabs" data-bind="jqueryui: { widget: 'tabs' }" style="width:500px;float:left;">
+				<div id="itemTabs" data-bind="jqueryui: { widget: 'tabs' }" style="width:400px;float:left;">
 					<ul>
 						<li><a href="#fragment-1">Weapons</a></li>
 						<li><a href="#fragment-2">Ammo</a></li>
@@ -73,21 +99,21 @@
 					</ul>
 					<div id="fragment-1">
 						<ul data-bind="foreach: $parent.items.weapons">
-							<li data-bind="jqueryui: { widget: 'draggable', options: { revert: true, distance: 20, helper: 'clone', revertDuration: 0 } }">
+							<li data-bind="jqueryui: { widget: 'draggable', options: $root.draggableOptions }">
 								<span data-bind="text: name"></span>
 							</li>
 						</ul>
 					</div>
 					<div id="fragment-2">
 						<ul data-bind="foreach: $parent.items.ammoTypes">
-							<li data-bind="jqueryui: { widget: 'draggable', options: { revert: true, distance: 20, helper: 'clone', revertDuration: 0 } }">
+							<li data-bind="jqueryui: { widget: 'draggable', options: $root.draggableOptions }">
 								<span data-bind="text: name"></span>
 							</li>
 						</ul>
 					</div>
 					<div id="fragment-3">
 						<ul data-bind="foreach: $parent.items.equipment">
-							<li data-bind="jqueryui: { widget: 'draggable', options: { revert: true, distance: 20, helper: 'clone', revertDuration: 0 } }">
+							<li data-bind="jqueryui: { widget: 'draggable', options: $root.draggableOptions }">
 								<span data-bind="text: name"></span>
 							</li>
 						</ul>
@@ -96,22 +122,8 @@
 				
 				<div style="clear:both;"></div>
 
-				<div>
-					<span>Tons:</span>
-					<span data-bind="text: maxTonnage"></span>
-					<br />
-					<span>Current Tons:</span>
-					<span data-bind="text: tonnage"></span>
-					<br />
-					<!-- <span>Critical Slots:</span>
-					<span data-bind="text: criticalSlotsOpen"></span>	 -->				
-				</div>
-				<div>
-					<span>Engine:</span>
-					<select data-bind="options: $parent.items.engines, optionsText: 'name', value: engine">
-					</select>
-				</div>
-
+				
+				
 				<div class="area">
 					<h3>Upgrades</h3>
 					<table>
@@ -185,7 +197,9 @@
 				<script type='text\html' id="componentList">
 					<div class="loadout">
 						<p>
-							<span id="namespan" data-bind="text: name"></span>:
+							<span id="namespan" data-bind="text: name"></span>
+						</p>
+						<p>
 							<span id="hardpointDisplayTextSpan" data-bind="text: hardpointDisplayText" />
 						</p>
 						<ul data-bind="foreach: displaySlots, jqueryui : { widget: 'droppable', options: { accept: accept, activeClass: 'dropHighlight', drop: drop } }">

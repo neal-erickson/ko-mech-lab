@@ -22,6 +22,13 @@
 		    return target;
 		};
 
+		self.draggableOptions = {
+			revert: true, 
+			distance: 20, 
+			helper: 'clone', 
+			revertDuration: 0 
+		};
+
 		// Load items from separate namespace
 		self.items = mechlab_items;
 		
