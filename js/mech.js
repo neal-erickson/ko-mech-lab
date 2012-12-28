@@ -60,6 +60,14 @@
     		// this part of the mech has been assigned
     		component.items = ko.observableArray();//.extend({ logChange: 'items'});
 
+    		component.itemsWeight = ko.computed(function() {
+    			var weight = 0;
+    			$.each(component.items(), function(index, item) {
+    				weight += parseFloat(item.tons);
+    			});
+    			return weight;
+    		});
+
     		var calculateHardpointsUsed = function(weaponType) {
     			var used = 0;
     			$.each(component.items(), function(index, item) {
@@ -132,7 +140,6 @@
 			});//.extend({ logChange: 'slots'});
 
 			component.criticalSlotsOpen = ko.computed(function() {
-    			//console.log('---> criticalSlotsOpen calc', component.criticalSlots(), component.slots().length, component.slots());
     			return component.criticalSlots() - component.slots().length;
     		});//.extend({ logChange: 'criticalSlotsOpen'});
 
@@ -249,6 +256,37 @@
         	fixedItems: fixedLegItems
         });
 
+        // Component abstractions
+        var componentsList = [
+        	self.head,
+        	self.rightArm,
+        	self.leftArm,
+        	self.rightTorso,
+        	self.centerTorso,
+        	self.leftTorso,
+        	self.rightLeg,
+        	self.leftLeg
+        ];
+
+        // Weapon weights
+        self.totalItemsWeight = ko.computed(function() {
+        	var weight = 0;
+        	
+        	$.each(componentsList, function(index, item){
+        		console.log(item.itemsWeight());
+        		weight += item.itemsWeight();
+        	});
+        	return weight;
+        	// return self.head.itemsWeight()
+        	// 	+ self.rightArm.itemsWeight()
+        	// 	+ self.leftArm.itemsWeight()
+        	// 	+ self.rightTorso.itemsWeight()
+        	// 	+ self.leftTorso.itemsWeight()
+        	// 	+ self.centerTorso.itemsWeight()
+        	// 	+ self.rightLeg.itemsWeight()
+        	// 	+ self.leftLeg.itemsWeight();
+        });
+
         // These are testing values for HBK-4J
         self.rightArm.criticalSlots(12);
         self.leftArm.criticalSlots(12);
@@ -312,7 +350,8 @@
 		// engine weight
 		self.tonnage = ko.computed(function() {
     		return self.engineWeight() 
-    			+ self.armorWeight();
+    			+ self.armorWeight()
+    			+ self.totalItemsWeight();
     	});
 
 	}; // end of core vm xtor

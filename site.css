@@ -41,6 +41,11 @@ ul.dropHighlight {
 	background-color: fuchsia;
 }
 
-div#itemTabs div {
-	
+div#itemTabs {
+	font-family: monospace;
+}
+
+div#itemTabs ul {
+	padding-left: 0px;
+	list-style-type: none;
 }
