@@ -26,23 +26,6 @@
     		return 0; // no engine, which is a possibility
     	});
 
-    	// Drag + drop ////////////////////////////////////////////////////////////
-
-    	var checkWeaponHardpoints = function(component, item){
-    		if(!item.weaponStats){ return true; } // pass-through
-			
-    		// Grab weapon type enum
-    		var weaponType = item.weaponStats.type;
-			
-			// Return a check expression
-			switch(weaponType){
-				case '0': 
-					return component.ballisticHardpoints > component.ballisticSlotsOpen();
-			}
-
-			return true; // testing
-    	}
-
     	// Constructor for mech 'component' such as left arm, center torso, etc
     	// slot info, hardpoints, other info
     	// 
@@ -83,6 +66,10 @@
             component.ballisticHardpoints = ko.observable(0);
             component.missileHardpoints = ko.observable(0);
             component.ams = ko.observable(false);
+
+            component.amsUsed = ko.computed(function() {
+                return calculateHardpointsUsed(4);
+            });
 
     		component.ballisticHardpointsUsed = ko.computed(function() {
     			return calculateHardpointsUsed(0);
@@ -177,7 +164,7 @@
 					case '2':
 						return component.missileHardpointsOpen() >= 1;
 					case '4': // 4 is AMS
-						return component.ams(); // TODO
+						return component.ams() && component.amsUsed() < 1; // TODO
 				}
 
 				return false; // testing default?
@@ -231,8 +218,19 @@
             fixedItems: fixedArmItems
         });
 
-        self.rightTorso = new Component("Right Torso");
-		self.leftTorso = new Component("Left Torso");
+        var torsofixedItems = ko.computed(function() {
+            if(self.engine() && self.engine().name.indexOf('XL') !== -1){
+                debugger;
+                return [new fixedItem("XL Engine", "3", "0")];
+            }
+            return [];
+        });
+        self.rightTorso = new Component("Right Torso", {
+           fixedItems: torsofixedItems 
+        });
+		self.leftTorso = new Component("Left Torso", {
+            fixedItems: torsofixedItems
+        });
         self.centerTorso = new Component("Center Torso", {
             fixedItems: ko.computed(function() {
                 var items = [new fixedItem('Gyro', "4", "0")];
@@ -309,23 +307,29 @@
 		//1001javascriptinternetexploder.no=pie
 
     	// Armor values for each location
-    	self.armorHead = ko.observable(10);//.extend({ logChange: 'armorHead' });
-    	self.armorCenterTorso = ko.observable(10);
-    	self.armorRightArm = ko.observable(10);
-    	self.armorLeftArm = ko.observable(10);
-    	self.armorRightTorso = ko.observable(10);
-    	self.armorLeftTorso = ko.observable(10);
-    	self.armorRightLeg = ko.observable(10);
-    	self.armorLeftLeg = ko.observable(10);
+    	self.armorHead = ko.observable(18);//.extend({ logChange: 'armorHead' });
+    	self.armorCenterTorso = ko.observable(52);
+        self.armorCenterTorsoRear = ko.observable(10);
+        self.armorRightTorso = ko.observable(40);
+        self.armorRightTorsoRear = ko.observable(8);
+        self.armorLeftTorso = ko.observable(40);
+        self.armorLeftTorsoRear = ko.observable(8);
+    	self.armorRightArm = ko.observable(32);
+    	self.armorLeftArm = ko.observable(32);
+    	self.armorRightLeg = ko.observable(40);
+    	self.armorLeftLeg = ko.observable(40);
 
 		// Calculated values
 		self.overallArmorValue = ko.computed(function() {
 			return self.armorHead().toFloat() +
 				self.armorCenterTorso().toFloat() + 
+                self.armorCenterTorsoRear().toFloat() +
 				self.armorRightArm().toFloat() +
 				self.armorLeftArm().toFloat() +
 				self.armorRightTorso().toFloat() +
+                self.armorRightTorsoRear().toFloat() +
 				self.armorLeftTorso().toFloat() +
+                self.armorLeftTorsoRear().toFloat() +
 				self.armorRightLeg().toFloat() + 
 				self.armorLeftLeg().toFloat();
 		});//.extend({ logChange: 'oav'});
@@ -334,6 +338,11 @@
 			var armorPerTon = self.armor() === 'standard' ? 32.0 : 34.85; // TODO : Double check value
 			return self.overallArmorValue() / armorPerTon;
 		});
+
+        self.structureWeight = ko.computed(function() {
+            var multiplier = self.structure() === 'standard' ? 0.1 : 0.05;
+            return self.maxTonnage() * multiplier;
+        });
 
 		// This will be a complicated equation.
 		//
@@ -349,7 +358,8 @@
 		// +
 		// engine weight
 		self.tonnage = ko.computed(function() {
-    		return self.engineWeight() 
+    		return self.structureWeight() 
+                + self.engineWeight() 
     			+ self.armorWeight()
     			+ self.totalItemsWeight();
     	});
