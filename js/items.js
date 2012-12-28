@@ -21,18 +21,27 @@
         // });
 
         items.engines = [];
+        items.equipment = [];
+
+        // items.weapons.sort(function(a, b) {
+        //     return a.weaponStats.type = b.weaponStats.type;
+        // });
 
         // Iterate and move some things
         $.each(items.modules, function(index, item){
-            if(item.cType == ''){
-
-            }
             switch(item.cType){
                 case 'CEngineStats':
                     //debugger;
                     item.tons = item.engineStats.weight; // weird exception to data schema
                     item.slots = item.engineStats.slots;
                     items.engines.push(item);
+                    break;
+                case 'CBAPStats':
+                case 'CJumpJetStats':
+                case 'CHeatSinkStats':
+                case 'CCASEStats':
+                case 'CGECMStats':
+                    items.equipment.push(item);
                     break;
             }
         });

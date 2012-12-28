@@ -359,7 +359,7 @@
 		// engine weight
 		self.tonnage = ko.computed(function() {
     		return self.structureWeight() 
-                + self.engineWeight() 
+                + self.engineWeight()
     			+ self.armorWeight()
     			+ self.totalItemsWeight();
     	});
