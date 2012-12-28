@@ -29,7 +29,9 @@
             }
             switch(item.cType){
                 case 'CEngineStats':
-                    item.tons = item.engineStats.tons;
+                    //debugger;
+                    item.tons = item.engineStats.weight; // weird exception to data schema
+                    item.slots = item.engineStats.slots;
                     items.engines.push(item);
                     break;
             }

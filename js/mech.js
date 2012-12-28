@@ -43,26 +43,6 @@
 			return true; // testing
     	}
 
-   //  	var checkOpenSlots = function(component, item){
-   //  		var openSlots = component.criticalSlots;
-   //  		$.each(component.items(), function(index, item) {
-			// 	openSlots -= item.slots;
-			// });
-			// if(openSlots < item.slots){
-			// 	return false;
-			// }
-			// return true;
-   //  	};
-
-    	// Factory functions for bindings sharing
-    	// TODO : Component possesses its own items
-    	// var createDropAccept = function(component, items) {
-    		
-    	// };
-    	// var createDropTarget = function(component, items) {
-    		
-    	// };
-
     	// Constructor for mech 'component' such as left arm, center torso, etc
     	// slot info, hardpoints, other info
     	// 
@@ -74,17 +54,11 @@
             component.name = ko.observable(name);
     		component.criticalSlots = ko.observable(0);//.extend({ logChange: 'criticalSlots'});
 
-    		
+    		component.fixedItems = options.fixedItems || ko.observableArray([]);
 
     		// This is actually the most important bit - the weapons, ammo, etc that 
     		// this part of the mech has been assigned
     		component.items = ko.observableArray();//.extend({ logChange: 'items'});
-
-            component.itemsWithFixed = ko.computed(function() {
-                return component.items().concat([
-
-                ]);
-            });
 
     		var calculateHardpointsUsed = function(weaponType) {
     			var used = 0;
@@ -100,7 +74,7 @@
             component.energyHardpoints = ko.observable(0);
             component.ballisticHardpoints = ko.observable(0);
             component.missileHardpoints = ko.observable(0);
-            component.ams = options.ams || false;
+            component.ams = options.ams || false; // TODO : make sure this is kosher
 
     		component.ballisticHardpointsUsed = ko.computed(function() {
     			return calculateHardpointsUsed(0);
@@ -135,10 +109,10 @@
     		// Slots is items but taking up the number of slots based on the item's value
     		component.slots = ko.computed(function(){
 				var slots = [];
-				
+				var allItems = component.fixedItems().concat(component.items());
 				// Iterate through the items, adding the slots based on the number
 				// each one takes up
-				$.each(component.items(), function(index, item) {
+				$.each(allItems, function(index, item) {
 					// Make items occupy x number of slots for display
 					for(var i = 0; i < item.slots; i++){
 						slots.push('[' + item.name + ']');
@@ -209,16 +183,40 @@
     		};    		
     	};
 
-    	// Mech hardpoints
-    	self.leftArm = new Component("Left Arm");
+        // Convenience xtor for "fixed" hardpoint items (gyro, etc)
+        var fixedItem = function(name, slots) {
+            this.name = name;
+            this.slots = slots;
+            this.tons = 0;
+        };
 
-        self.centerTorso = new Component("Center Torso");
+    	// Mech hardpoints
+    	self.leftArm = new Component("Left Arm", {
+            fixedItems: ko.observableArray([
+                new fixedItem('Shoulder', "1", "0"),
+                new fixedItem('Upper Arm Actuator', "1", "0"),
+                new fixedItem('Lower Arm Actuator', "1", "0"),
+                new fixedItem('Hand Actuator', "1", "0")
+            ])
+        });
+
+        //var centerTorsoFixedItems = ko.observableArray();
+
+        self.centerTorso = new Component("Center Torso", {
+            fixedItems: ko.computed(function() {
+                var items = [new fixedItem('Gyro', "4", "0")];
+                debugger;
+                if(self.engine()) {
+                    items.push(self.engine());
+                }
+                return items;
+            })
+        });
 
     	self.leftArm.criticalSlots(8); // testing
     	self.leftArm.ballisticHardpoints(1); // testing
     	self.leftArm.energyHardpoints(2); // testing
-
-        self.centerTorso.criticalSlots(10);
+        self.centerTorso.criticalSlots(16); // testing
 
     	// Anna's contribution to the codebase
 		//1001javascriptinternetexploder.no=pie
