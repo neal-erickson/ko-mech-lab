@@ -10,6 +10,7 @@
 		<script type="text/javascript" src="/js/items.js"></script>
 		<script type="text/javascript" src="/js/core.js"></script>
 		<script type="text/javascript" src="/js/mech.js"></script>
+		<script type="text/javascript" src="/js/mech_loadouts.js"></script>
 		<script type="text/javascript" src="/js/enums.js"></script>
 		<link href="site.css" rel="stylesheet" type="text/css"></link>
 		<link href="/css/overcast/jquery-ui-1.9.2.custom.css" rel="stylesheet" type="text/css"><link>
@@ -38,7 +39,7 @@
 			</div>
 			<hr />
 
-			<div data-bind="with: activeMech">
+			<div data-bind="with: mechViewModel, visible: mechChosen">
 				<h2>Configuring <span data-bind="text: name" /></h2>
 				<div>
 					<span>Tons:</span>

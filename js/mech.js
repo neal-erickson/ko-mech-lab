@@ -4,12 +4,19 @@
 	}
 
 	// This 'sub' view model controls all the interesting bits
-	mechlab.mechViewModel = function(mech) {
+	mechlab.mechViewModel = function() {
 		var self = this;
 
+        self.mech = ko.observable();
+
 		// Basic mech information
-		self.name = ko.observable(mech.name.toUpperCase());
+        self.name = ko.computed(function() {
+            return self.mech() ? self.mech().name.toUpperCase() : '';
+        });
 		self.maxTonnage = ko.observable(50);
+
+        // Whether the mech has lower arm actuators and hands. Most do.
+        self.hasHands = ko.observable(true);
 
 		// Upgrade settings
 		self.structure = ko.observable('standard');
@@ -295,7 +302,6 @@
         self.rightLeg.criticalSlots(6);
         self.leftLeg.criticalSlots(6);
 
-
 		self.leftArm.energyHardpoints(1);
         self.rightTorso.missileHardpoints(2);
         self.rightTorso.energyHardpoints(2);
@@ -303,11 +309,11 @@
         self.rightArm.energyHardpoints(1);
         self.leftTorso.ams(true);
 
-    	// Anna's contribution to the codebase
+    	// Anna's contribution to the codebase:
 		//1001javascriptinternetexploder.no=pie
 
     	// Armor values for each location
-    	self.armorHead = ko.observable(18);//.extend({ logChange: 'armorHead' });
+    	self.armorHead = ko.observable(18);
     	self.armorCenterTorso = ko.observable(52);
         self.armorCenterTorsoRear = ko.observable(10);
         self.armorRightTorso = ko.observable(40);
@@ -363,6 +369,24 @@
     			+ self.armorWeight()
     			+ self.totalItemsWeight();
     	});
+
+        // This is the function to load a mech 
+        self.loadMech = function(mech){
+            self.maxTonnage(mech.tonnage);
+            self.hasHands(mech.hasHands);
+
+            self.armorHead(mech.armor[0]);
+            self.armorCenterTorso(mech.armor[1]);
+            self.armorCenterTorsoRear(mech.armor[2]);
+            self.armorRightTorso(mech.armor[3]);
+            self.armorRightTorsoRear(mech.armor[4]);
+            self.armorLeftTorso(mech.armor[5]);
+            self.armorLeftTorsoRear(mech.armor[6]);
+            self.armorRightArm(mech.armor[7]);
+            self.armorLeftArm(mech.armor[8]);
+            self.armorRightLeg(mech.armor[9]);
+            self.armorLeftLeg(mech.armor[10]);
+        };
 
 	}; // end of core vm xtor
 	

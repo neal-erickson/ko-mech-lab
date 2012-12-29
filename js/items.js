@@ -4,7 +4,7 @@
         $.getJSON('data/item-stats.json', function(data) {
             //debugger;
             //mechlab_items = data;
-            var cleaned= cleanupItems(data);
+            var cleaned = cleanupItems(data);
             callback(cleaned);
         });
     };
@@ -24,10 +24,16 @@
         items.equipment = [];
 
         // items.weapons.sort(function(a, b) {
-        //     return a.weaponStats.type = b.weaponStats.type;
+        //     console.log(a.weaponStats.type - b.weaponStats.type);
+        //     return a.weaponStats.type - b.weaponStats.type;
         // });
+        items.mechs.sort(function(a, b){
+            console.log('msort', a, b);
+            return 0;
+        })
 
         // Iterate and move some things
+        debugger;
         $.each(items.modules, function(index, item){
             switch(item.cType){
                 case 'CEngineStats':
