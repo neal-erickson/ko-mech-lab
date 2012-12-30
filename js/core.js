@@ -44,14 +44,13 @@
 
 		// Callback for selecting mech variant
 		self.selectMech = function() {
-			// Load the mech (async?)
-			//var mech = self.loadMech(self.selectedMech());
-			var mech = mechlab_loadouts.load(self.selectedMech().id);
+			//var mech = mechlab_loadouts.load(self.selectedMech().id);
+			var mech = mechlab_loadouts.load("21");
 
-			self.mechChosen(true);
-
-			// Start editing
-			self.mechViewModel.loadMech(mech);
+			if(mech) {
+				self.mechChosen(true);
+				self.mechViewModel.loadMech(mech);
+			}
 		};
 	};
 })(jQuery);

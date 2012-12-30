@@ -10,30 +10,21 @@
     };
 
     var cleanupItems = function(items) {
-        // Remove unnecessary things
-
-        // mechlab_items.engines = ko.utils.arrayFilter(mechlab_items.modules, function(item) {
-        //     return item.cType === 'CEngineStats';
-        // });
-
-        // mechlab_items.equipment = ko.utils.arrayFilter(mechlab_items.modules, function(item) {
-        //     return item.cType !== 'CEngineStats' && item.cType !== 'CPilotModule';
-        // });
-
         items.engines = [];
         items.equipment = [];
 
-        // items.weapons.sort(function(a, b) {
-        //     console.log(a.weaponStats.type - b.weaponStats.type);
-        //     return a.weaponStats.type - b.weaponStats.type;
-        // });
+        items.weapons.sort(function(a, b) {
+            var diff = a.weaponStats.type - b.weaponStats.type;
+            if(diff === 0) {
+                return a.weaponStats.tons - b.weaponStats.tons;
+            }
+            return diff;
+        });
         items.mechs.sort(function(a, b){
-            console.log('msort', a, b);
-            return 0;
+            return a.name < b.name ? -1 : 1;
         })
 
         // Iterate and move some things
-        debugger;
         $.each(items.modules, function(index, item){
             switch(item.cType){
                 case 'CEngineStats':

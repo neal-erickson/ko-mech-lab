@@ -7,12 +7,8 @@
 	mechlab.mechViewModel = function() {
 		var self = this;
 
-        self.mech = ko.observable();
+        self.name = ko.observable();
 
-		// Basic mech information
-        self.name = ko.computed(function() {
-            return self.mech() ? self.mech().name.toUpperCase() : '';
-        });
 		self.maxTonnage = ko.observable(50);
 
         // Whether the mech has lower arm actuators and hands. Most do.
@@ -35,8 +31,6 @@
 
     	// Constructor for mech 'component' such as left arm, center torso, etc
     	// slot info, hardpoints, other info
-    	// 
-    	// Corresponds to a template binding as well
     	var Component = function(name, options){
     		var component = this;
             var options = options || {}; // prevent errors
@@ -98,9 +92,6 @@
     		});//.extend({ logChange: 'missileSlotsOpen'});
 
     		component.hardpointDisplayText = ko.computed(function() {
-    			// if(component.ballisticHardpoints() + component.energyHardpoints() + component.missileHardpoints() === 0){
-    			// 	return '--'; // no text
-    			// }
     			var text = '';
     			if(component.ballisticHardpoints() > 0) {
     				text += component.ballisticHardpointsUsed() + '/' + component.ballisticHardpoints() + 'B ';
@@ -182,8 +173,7 @@
                 //console.log('echckslots', item);
     			// Check tonnage - TODO : Display invalid state or prevent?
 
-    			// Return '&&'' of slots, hardpoints, etc 
-    			//debugger;
+    			// Return '&&'' of slots, hardpoints, etc
     			return checkSlots(item)
     				&& checkWeaponHardpoints(item);
     		};
@@ -262,52 +252,29 @@
         });
 
         // Component abstractions
-        var componentsList = [
+        self.componentsList = [
         	self.head,
+            self.centerTorso,
+            self.rightTorso,
+            self.leftTorso,
         	self.rightArm,
         	self.leftArm,
-        	self.rightTorso,
-        	self.centerTorso,
-        	self.leftTorso,
         	self.rightLeg,
         	self.leftLeg
         ];
+
+        self.selectedComponent = ko.observable();
 
         // Weapon weights
         self.totalItemsWeight = ko.computed(function() {
         	var weight = 0;
         	
-        	$.each(componentsList, function(index, item){
+        	$.each(self.componentsList, function(index, item){
         		console.log(item.itemsWeight());
         		weight += item.itemsWeight();
         	});
         	return weight;
-        	// return self.head.itemsWeight()
-        	// 	+ self.rightArm.itemsWeight()
-        	// 	+ self.leftArm.itemsWeight()
-        	// 	+ self.rightTorso.itemsWeight()
-        	// 	+ self.leftTorso.itemsWeight()
-        	// 	+ self.centerTorso.itemsWeight()
-        	// 	+ self.rightLeg.itemsWeight()
-        	// 	+ self.leftLeg.itemsWeight();
         });
-
-        // These are testing values for HBK-4J
-        self.rightArm.criticalSlots(12);
-        self.leftArm.criticalSlots(12);
-        self.rightTorso.criticalSlots(12);
-    	self.leftTorso.criticalSlots(12);
-        self.centerTorso.criticalSlots(12);
-        self.head.criticalSlots(6);
-        self.rightLeg.criticalSlots(6);
-        self.leftLeg.criticalSlots(6);
-
-		self.leftArm.energyHardpoints(1);
-        self.rightTorso.missileHardpoints(2);
-        self.rightTorso.energyHardpoints(2);
-        self.head.energyHardpoints(1);
-        self.rightArm.energyHardpoints(1);
-        self.leftTorso.ams(true);
 
     	// Anna's contribution to the codebase:
 		//1001javascriptinternetexploder.no=pie
@@ -324,6 +291,8 @@
     	self.armorLeftArm = ko.observable(32);
     	self.armorRightLeg = ko.observable(40);
     	self.armorLeftLeg = ko.observable(40);
+
+        //self.components = ko.observableArray([1, 2, 3]);
 
 		// Calculated values
 		self.overallArmorValue = ko.computed(function() {
@@ -372,9 +341,12 @@
 
         // This is the function to load a mech 
         self.loadMech = function(mech){
+            // Core values
             self.maxTonnage(mech.tonnage);
             self.hasHands(mech.hasHands);
+            self.name(mech.name);
 
+            // Copy in base armor values
             self.armorHead(mech.armor[0]);
             self.armorCenterTorso(mech.armor[1]);
             self.armorCenterTorsoRear(mech.armor[2]);
@@ -386,6 +358,10 @@
             self.armorLeftArm(mech.armor[8]);
             self.armorRightLeg(mech.armor[9]);
             self.armorLeftLeg(mech.armor[10]);
+
+            // Component specifics
+            self.head.criticalSlots(mech.components.head.criticalSlots);
+            self.head.energyHardpoints(mech.components.head.energyHardpoints);
         };
 
 	}; // end of core vm xtor

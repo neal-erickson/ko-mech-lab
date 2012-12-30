@@ -37,62 +37,236 @@
 				</select>
 				<button data-bind="click: selectMech">Go</button>
 			</div>
-			<hr />
 
 			<div data-bind="with: mechViewModel, visible: mechChosen">
-				<h2>Configuring <span data-bind="text: name" /></h2>
-				<div>
-					<span>Tons:</span>
-					<span data-bind="text: maxTonnage"></span>
-					<br />
-					<span>Current Tons:</span>
-					<span data-bind="text: tonnage"></span>			
+				<!--Mech Overview-->
+				<div style="float:left;border:1px solid black;height:525px;width:140px;">
+					<table>
+						<tbody>
+							<tr>
+								<td colspan="2">
+									<h3><span data-bind="text: name" /></h3>
+								</td>
+							</tr>
+							<tr>
+								<td>Speed:</td>
+								<td>TODO</td>
+							</tr>
+							<tr>
+								<td>
+									<span>Tons:</span>
+								</td>
+								<td>
+									<span data-bind="text: tonnage"></span>/<span data-bind="text: maxTonnage"></span>	
+								</td>
+							</tr>
+							<tr>
+								<td>Armor:</td>
+								<td>
+									<span data-bind="text: overallArmorValue"></span>
+								</td>
+							</tr>
+							<tr>
+								<td>Firepower:</td>
+								<td>TODO</td>
+							</tr>
+							<tr>
+								<td>Heat Eff:</td>
+								<td>TODO</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
-				<table id="loadoutTable" style="float:left;">
-					<tbody>
-						<tr>
-							<td>
-								<div data-bind="template: { name: 'componentList', data: rightArm }"></div>
-							</td>
-							<td>
-								<div data-bind="template: { name: 'componentList', data: rightTorso }"></div>
-							</td>
-							<td>
-								<div data-bind="template: { name: 'componentList', data: head }"></div>
-							</td>
-							<td>
-								<div data-bind="template: { name: 'componentList', data: leftTorso }"></div>
-							</td>
-							<td>
-								<div data-bind="template: { name: 'componentList', data: leftArm }"></div>
-							</td>
-						</tr>
-						<tr>
-							<td colspan="3">
-								<div>
-									<span>Engine:</span>
-									<select data-bind="options: $parent.items.engines, optionsText: 'name', value: engine">
-									</select>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td></td>
-							<td>
-								<div data-bind="template: { name: 'componentList', data: rightLeg }"></div>
-							</td>
-							<td>
-								<div data-bind="template: { name: 'componentList', data: centerTorso }"></div>
-							</td>
-							<td>
-								<div data-bind="template: { name: 'componentList', data: leftLeg }"></div>
-							</td>
-							<td></td>
-						</tr>
-					</tbody>
-				</table>
+				
 
-				<div id="itemTabs" data-bind="jqueryui: { widget: 'tabs' }" style="width:400px;float:left;">
+				<div style="float:left;height:525px;border:1px solid black;width:700px;">
+					<div data-bind="jqueryui: { widget: 'tabs' }" style="width:400px;float:left;">
+						<ul>
+							<li><a href="#loadout-1">Loadout</a></li>
+							<li><a href="#loadout-2">Armor</a></li>
+							<li><a href="#loadout-3">Upgrades</a></li>
+						</ul>
+						<div id="loadout-1">
+							<span>Component:</span>
+							<select data-bind="options: componentsList, optionsText: 'name', value: selectedComponent"></select>
+							<div data-bind="template: { name: 'componentList', data: selectedComponent }"></div>
+						</div>
+
+						<div id="loadout-2">
+							<table>
+								<tbody>
+									<tr>
+										<td>Head</td>
+										<td>
+											<input data-bind="value: armorHead" />
+										</td>
+									</tr>
+									<tr>
+										<td>Center Torso</td>
+										<td>
+											<input data-bind="value: armorCenterTorso" />
+										</td>
+									</tr>
+									<tr>
+										<td>Center Torso Rear</td>
+										<td>
+											<input data-bind="value: armorCenterTorsoRear" />
+										</td>
+									</tr>
+									<tr>
+										<td>Right Torso</td>
+										<td>
+											<input data-bind="value: armorRightTorso" />
+										</td>
+									</tr>
+									<tr>
+										<td>Right Torso Rear</td>
+										<td>
+											<input data-bind="value: armorRightTorsoRear" />
+										</td>
+									</tr>
+									<tr>
+										<td>Left Torso</td>
+										<td>
+											<input data-bind="value: armorLeftTorso" />
+										</td>
+									</tr>
+									<tr>
+										<td>Left Torso Rear</td>
+										<td>
+											<input data-bind="value: armorLeftTorsoRear" />
+										</td>
+									</tr>
+									<tr>
+										<td>Left Arm</td>
+										<td>
+											<input data-bind="value: armorLeftArm" />
+										</td>
+									</tr>
+									<tr>
+										<td>Right Arm</td>
+										<td>
+											<input data-bind="value: armorRightArm" />
+										</td>
+									</tr>
+									<tr>
+										<td>Left Leg</td>
+										<td>
+											<input data-bind="value: armorLeftLeg" />
+										</td>
+									</tr>
+									<tr>
+										<td>Right Leg</td>
+										<td>
+											<input data-bind="value: armorRightLeg" />
+										</td>
+									</tr>
+									<tr>
+										<td>Total</td>
+										<td><span data-bind="text: overallArmorValue" /></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<div id="loadout-3">
+							<table>
+								<tbody>
+									<tr>
+										<td>
+											<label>Internal Structure</label>
+										</td>
+										<td>
+											<select id="structureSelect" data-bind="value: structure">
+												<option value="standard">Standard</option>
+												<option value="endosteel">Endo Steel</option>
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>Heat Sinks</label>
+										</td>
+										<td>
+											<select id="heatSinkSelect" data-bind="value: heatSinks">
+												<option value="single">Single</option>
+												<option value="double">Double</option>
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>Armor Type</label>
+										</td>
+										<td>
+											<select id="armorSelect" data-bind="value: armor">
+												<option value="standard">Standard</option>
+												<option value="ferroFibrous">Ferro-Fibrous</option>
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label>Artemis</label>
+										</td>
+										<td>
+											<select id="artemisSelect" data-bind="value: artemis">
+												<option value="none">None</option>
+												<option value="equipped">Equipped</option>
+											</select>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+
+					<!-- <table id="loadoutTable">
+						<tbody>
+							<tr>
+								<td>
+									<div data-bind="template: { name: 'componentList', data: rightArm }"></div>
+								</td>
+								<td>
+									<div data-bind="template: { name: 'componentList', data: rightTorso }"></div>
+								</td>
+								<td>
+									<div data-bind="template: { name: 'componentList', data: head }"></div>
+								</td>
+								<td>
+									<div data-bind="template: { name: 'componentList', data: leftTorso }"></div>
+								</td>
+								<td>
+									<div data-bind="template: { name: 'componentList', data: leftArm }"></div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="3">
+									<div>
+										<span>Engine:</span>
+										<select data-bind="options: $parent.items.engines, optionsText: 'name', value: engine">
+										</select>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>
+									<div data-bind="template: { name: 'componentList', data: rightLeg }"></div>
+								</td>
+								<td>
+									<div data-bind="template: { name: 'componentList', data: centerTorso }"></div>
+								</td>
+								<td>
+									<div data-bind="template: { name: 'componentList', data: leftLeg }"></div>
+								</td>
+								<td></td>
+							</tr>
+						</tbody>
+					</table> -->
+				</div>
+
+				<div id="itemTabs" data-bind="jqueryui: { widget: 'tabs' }" style="float:left;">
 					<ul>
 						<li><a href="#fragment-1">Weapons</a></li>
 						<li><a href="#fragment-2">Ammo</a></li>
@@ -120,140 +294,6 @@
 						</ul>
 					</div>
 				</div>
-				
-				<div style="clear:both;"></div>
-
-				
-				
-				<div class="area">
-					<h3>Upgrades</h3>
-					<table>
-						<tbody>
-							<tr>
-								<td>
-									<label>Internal Structure</label>
-								</td>
-								<td>
-									<select id="structureSelect" data-bind="value: structure">
-										<option value="standard">Standard</option>
-										<option value="endosteel">Endo Steel</option>
-									</select>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<label>Heat Sinks</label>
-								</td>
-								<td>
-									<select id="heatSinkSelect" data-bind="value: heatSinks">
-										<option value="single">Single</option>
-										<option value="double">Double</option>
-									</select>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<label>Armor Type</label>
-								</td>
-								<td>
-									<select id="armorSelect" data-bind="value: armor">
-										<option value="standard">Standard</option>
-										<option value="ferroFibrous">Ferro-Fibrous</option>
-									</select>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<label>Artemis</label>
-								</td>
-								<td>
-									<select id="artemisSelect" data-bind="value: artemis">
-										<option value="none">None</option>
-										<option value="equipped">Equipped</option>
-									</select>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-
-				<div class="area">
-					<h3>Armor</h3>
-					<table>
-						<tbody>
-							<tr>
-								<td>Head</td>
-								<td>
-									<input data-bind="value: armorHead" />
-								</td>
-							</tr>
-							<tr>
-								<td>Center Torso</td>
-								<td>
-									<input data-bind="value: armorCenterTorso" />
-								</td>
-							</tr>
-							<tr>
-								<td>Center Torso Rear</td>
-								<td>
-									<input data-bind="value: armorCenterTorsoRear" />
-								</td>
-							</tr>
-							<tr>
-								<td>Right Torso</td>
-								<td>
-									<input data-bind="value: armorRightTorso" />
-								</td>
-							</tr>
-							<tr>
-								<td>Right Torso Rear</td>
-								<td>
-									<input data-bind="value: armorRightTorsoRear" />
-								</td>
-							</tr>
-							<tr>
-								<td>Left Torso</td>
-								<td>
-									<input data-bind="value: armorLeftTorso" />
-								</td>
-							</tr>
-							<tr>
-								<td>Left Torso Rear</td>
-								<td>
-									<input data-bind="value: armorLeftTorsoRear" />
-								</td>
-							</tr>
-							<tr>
-								<td>Left Arm</td>
-								<td>
-									<input data-bind="value: armorLeftArm" />
-								</td>
-							</tr>
-							<tr>
-								<td>Right Arm</td>
-								<td>
-									<input data-bind="value: armorRightArm" />
-								</td>
-							</tr>
-							<tr>
-								<td>Left Leg</td>
-								<td>
-									<input data-bind="value: armorLeftLeg" />
-								</td>
-							</tr>
-							<tr>
-								<td>Right Leg</td>
-								<td>
-									<input data-bind="value: armorRightLeg" />
-								</td>
-							</tr>
-							<tr>
-								<td>Total</td>
-								<td><span data-bind="text: overallArmorValue" /></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
 
 				<script type='text\html' id="componentList">
 					<div class="loadout">
@@ -270,6 +310,7 @@
 						</ul>	
 					</div>
 				</script>
+
 			</div>
 		</div>
 	</body>
