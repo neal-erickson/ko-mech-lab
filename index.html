@@ -95,7 +95,13 @@
 							<li><a href="#loadout-2">Armor</a></li>
 							<li><a href="#loadout-3">Upgrades</a></li>
 						</ul>
+
 						<div id="loadout-1">
+							<div>
+								<span>Engine:</span>
+								<select data-bind="options: $parent.items.engines, optionsText: 'name', value: engine">
+								</select>
+							</div>
 							<span>Component:</span>
 							<select data-bind="options: componentsList, optionsText: 'name', value: selectedComponent"></select>
 							<div data-bind="template: { name: 'componentList', data: selectedComponent }"></div>

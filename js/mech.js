@@ -282,7 +282,7 @@
     	// Anna's contribution to the codebase:
 		//1001javascriptinternetexploder.no=pie
 
-    	// Armor values for each location
+    	// Initialize armor values for each location
     	self.armorHead = ko.observable(18);
     	self.armorCenterTorso = ko.observable(52);
         self.armorCenterTorsoRear = ko.observable(10);
@@ -367,7 +367,7 @@
             self.head.energyHardpoints(mech.components.head.energyHardpoints);
 
             var engine = mechlab_items.getById(mech.engine_id);
-            //debugger;
+            self.engine(engine);
         };
 
         // Clear out the current configuration
@@ -377,6 +377,7 @@
             });
 
             // TODO : Reset upgrades ???
+            // TODO : Clear engine??
         };
 
         // TODO: Implement
