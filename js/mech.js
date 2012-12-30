@@ -117,7 +117,12 @@
 				$.each(allItems, function(index, item) {
 					// Make items occupy x number of slots for display
 					for(var i = 0; i < item.slots; i++){
-						slots.push('[' + item.name + ']');
+						//slots.push('[' + item.name + ']');
+                        slots.push({
+                            name: item.name,
+                            data: item,
+                            isUser: item.tons != 0 // TODO : Fix this!!!
+                        });
 					};
 				});
 					
@@ -135,7 +140,10 @@
 
 				// Pad out empty critical slots
 				while(placeholders.length < component.criticalSlotsOpen()){
-					placeholders.push('-- empty --');
+					placeholders.push({
+                        name: '-- empty --',
+                        isEmpty: true
+                    });
 				}
 				return slots.concat(placeholders);
 			});//.extend({ logChange: 'displaySlots'});
@@ -168,10 +176,9 @@
 				return false; // testing default?
 	    	}
 
+            // Drag n drop functions
 			component.accept = function(incoming) {
     			var item = ko.dataFor(incoming[0]);
-                
-    			// Check tonnage - TODO : Display invalid state or prevent?
 
     			// Return '&&'' of slots, hardpoints, etc
     			return checkSlots(item)
@@ -185,9 +192,34 @@
 	    		component.items.push(droppedItem);
     		}; 
 
+            // This is called by knockout-delegatedEvents by child items
+            component.removeItem = function(item, ui){
+                // KO's observable array has a 'remove' function thats awesome
+                component.items.remove(item.data);
+            };
+
+            // Clears out the core items
             component.clear = function() {
                 component.items([]);
-            };		
+            };
+
+            var getItemsByIds = function(ids){
+                var items = [];
+                $.each(ids, function(index, id) {
+                    items.push(mechlab_items.getById(id));
+                });
+                return items;
+            };
+
+            // Convenience function for loading mech specifications
+            component.loadSpec = function(componentSpec){
+                component.criticalSlots(componentSpec.criticalSlots);
+                component.ballisticHardpoints(componentSpec.ballisticHardpoints);
+                component.energyHardpoints(componentSpec.energyHardpoints);
+                component.missileHardpoints(componentSpec.missileHardpoints);
+                component.items(getItemsByIds(componentSpec.itemIds));
+                component.ams(componentSpec.ams);
+            };
     	};
 
         // Convenience xtor for "fixed" hardpoint items (gyro, etc)
@@ -221,7 +253,6 @@
 
         var torsofixedItems = ko.computed(function() {
             if(self.engine() && self.engine().name.indexOf('XL') !== -1){
-                debugger;
                 return [new fixedItem("XL Engine", "3", "0")];
             }
             return [];
@@ -342,7 +373,7 @@
     			+ self.totalItemsWeight();
     	});
 
-        // This is the function to load a mech 
+        // This is the function to load a mech
         self.loadMech = function(mech){
             // Core values
             self.maxTonnage(mech.tonnage);
@@ -363,11 +394,20 @@
             self.armorLeftLeg(mech.armor[10]);
 
             // Component specifics
-            self.head.criticalSlots(mech.components.head.criticalSlots);
-            self.head.energyHardpoints(mech.components.head.energyHardpoints);
+            self.head.loadSpec(mech.components.head);
+            self.centerTorso.loadSpec(mech.components.centerTorso);
+            self.rightTorso.loadSpec(mech.components.rightTorso);
+            self.leftTorso.loadSpec(mech.components.leftTorso);
+            self.rightArm.loadSpec(mech.components.rightArm);
+            self.leftArm.loadSpec(mech.components.leftArm);
+            self.rightLeg.loadSpec(mech.components.rightLeg);
+            self.leftLeg.loadSpec(mech.components.leftLeg);
 
+            // Load engine
             var engine = mechlab_items.getById(mech.engine_id);
             self.engine(engine);
+
+            // TODO finish
         };
 
         // Clear out the current configuration

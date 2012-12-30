@@ -3,15 +3,19 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>MechCheck v0.1</title>
+
 		<script type="text/javascript" src="/scripts/knockout-2.2.0.debug.js"></script>
 		<script type="text/javascript" src="/scripts/jquery-1.8.3.js"></script>
 		<script type="text/javascript" src="/scripts/jquery-ui-1.9.2.custom.js"></script>
 		<script type="text/javascript" src="/scripts/knockout-jquery-ui-widget.js"></script>
+		<script type="text/javascript" src="/scripts/knockout-delegatedEvents.js"></script>
+
 		<script type="text/javascript" src="/js/items.js"></script>
 		<script type="text/javascript" src="/js/core.js"></script>
 		<script type="text/javascript" src="/js/mech.js"></script>
 		<script type="text/javascript" src="/js/mech_loadouts.js"></script>
 		<script type="text/javascript" src="/js/enums.js"></script>
+
 		<link href="site.css" rel="stylesheet" type="text/css"></link>
 		<link href="/css/overcast/jquery-ui-1.9.2.custom.css" rel="stylesheet" type="text/css"><link>
  	</head>
@@ -87,8 +91,7 @@
 					</p>
 				</div>
 				
-
-				<div style="float:left;height:525px;border:1px solid black;width:700px;">
+				<div style="float:left;height:525px;border:1px solid black;width:500px;">
 					<div data-bind="jqueryui: { widget: 'tabs' }" style="width:400px;float:left;">
 						<ul>
 							<li><a href="#loadout-1">Loadout</a></li>
@@ -102,9 +105,21 @@
 								<select data-bind="options: $parent.items.engines, optionsText: 'name', value: engine">
 								</select>
 							</div>
+							<hr />
 							<span>Component:</span>
 							<select data-bind="options: componentsList, optionsText: 'name', value: selectedComponent"></select>
-							<div data-bind="template: { name: 'componentList', data: selectedComponent }"></div>
+							<div data-bind="with: selectedComponent, delegatedHandler: 'click'">
+								<p>
+									<span id="hardpointDisplayTextSpan" data-bind="text: hardpointDisplayText" />
+								</p>
+								<ul data-bind="foreach: displaySlots, jqueryui : { widget: 'droppable', options: { accept: accept, activeClass: 'dropHighlight', drop: drop } }">
+									<li style="border-bottom:1px solid black;">
+										<span data-bind="text: name"></span>
+										<a href="#" style="float:right;" data-bind="visible: true"
+											data-click="removeItem">x</a>
+									</li>
+								</ul>
+							</div>
 						</div>
 
 						<div id="loadout-2">
@@ -288,11 +303,36 @@
 						<li><a href="#fragment-3">Equipment</a></li>
 					</ul>
 					<div id="fragment-1">
-						<ul data-bind="foreach: $parent.items.weapons">
-							<li data-bind="jqueryui: { widget: 'draggable', options: $root.draggableOptions }">
-								<span data-bind="text: name"></span>
-							</li>
-						</ul>
+						<table>
+							<thead>
+								<tr>
+									<th></th>
+									<th>Tons</th>
+									<th>Slots</th>
+									<th>Damage</th>
+									<th>Heat</th>
+								</tr>
+							</thead>
+							<tbody data-bind="foreach: $parent.items.weapons">
+								<tr data-bind="jqueryui: { widget: 'draggable', options: $root.draggableOptions }">
+									<td>
+										<span data-bind="text: name">
+									</td>
+									<td>
+										<span data-bind="text: tons">
+									</td>
+									<td>
+										<span data-bind="text: slots">
+									</td>
+									<td>
+										<span data-bind="text: weaponStats.damage">
+									</td>
+									<td>
+										<span data-bind="text: weaponStats.heat">
+									</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 					<div id="fragment-2">
 						<ul data-bind="foreach: $parent.items.ammoTypes">
@@ -309,20 +349,6 @@
 						</ul>
 					</div>
 				</div>
-
-				<script type='text\html' id="componentList">
-					<div class="loadout">
-						<p>
-							<span id="hardpointDisplayTextSpan" data-bind="text: hardpointDisplayText" />
-						</p>
-						<ul data-bind="foreach: displaySlots, jqueryui : { widget: 'droppable', options: { accept: accept, activeClass: 'dropHighlight', drop: drop } }">
-							<li>
-								<span data-bind="text: $data"></span>
-							</li>
-						</ul>	
-					</div>
-				</script>
-
 			</div>
 		</div>
 	</body>
