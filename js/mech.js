@@ -170,7 +170,7 @@
 
 			component.accept = function(incoming) {
     			var item = ko.dataFor(incoming[0]);
-                //console.log('echckslots', item);
+                
     			// Check tonnage - TODO : Display invalid state or prevent?
 
     			// Return '&&'' of slots, hardpoints, etc
@@ -183,7 +183,11 @@
 			component.drop = function(event, ui){
 				var droppedItem = ko.dataFor(ui.draggable[0]);
 	    		component.items.push(droppedItem);
-    		};    		
+    		}; 
+
+            component.clear = function() {
+                component.items([]);
+            };		
     	};
 
         // Convenience xtor for "fixed" hardpoint items (gyro, etc)
@@ -270,7 +274,6 @@
         	var weight = 0;
         	
         	$.each(self.componentsList, function(index, item){
-        		console.log(item.itemsWeight());
         		weight += item.itemsWeight();
         	});
         	return weight;
@@ -362,6 +365,28 @@
             // Component specifics
             self.head.criticalSlots(mech.components.head.criticalSlots);
             self.head.energyHardpoints(mech.components.head.energyHardpoints);
+
+            var engine = mechlab_items.getById(mech.engine_id);
+            //debugger;
+        };
+
+        // Clear out the current configuration
+        self.clearItems = function() {
+            $.each(self.componentsList, function(index, item) {
+                item.clear();
+            });
+
+            // TODO : Reset upgrades ???
+        };
+
+        // TODO: Implement
+        self.resetStock = function() {
+            alert('reset stuff');
+        };
+
+        // TODO: Implement
+        self.saveConfiguration = function() {
+            alert('saveConfiguration');
         };
 
 	}; // end of core vm xtor

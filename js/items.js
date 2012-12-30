@@ -1,5 +1,17 @@
 (function($){
 
+    // Need to get some array hash action
+     var makeHash = function(array) {
+        var hashed = {};
+        for(var i in array){
+            var item = array[i];
+            console.log(item);
+            hashed[item.id] = item;
+        }
+        //console.log('hashed', hashed);
+        return hashed;
+    };
+
     loadMechlabItems = function(callback){
         $.getJSON('data/item-stats.json', function(data) {
             //debugger;
@@ -20,6 +32,7 @@
             }
             return diff;
         });
+        makeHash(items.weapons);
         items.mechs.sort(function(a, b){
             return a.name < b.name ? -1 : 1;
         })
@@ -42,6 +55,15 @@
                     break;
             }
         });
+
+        // TESTING
+        // crazy old mega hash thing
+        var allItems = items.weapons.concat(items.ammoTypes).concat(items.engines).concat(items.equipment);
+        items.idHash = makeHash(allItems);
+
+        items.getById = function(id) {
+            return items.idHash[id];
+        }
 
         return items;
     };

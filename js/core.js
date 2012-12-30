@@ -1,7 +1,7 @@
 (function($) {
 	mechlab = { };
 
-	mechlab.coreVM = function(items) {
+	mechlab.coreVM = function() {
 		var self = this;
 
 		// Convenience function for conversion.

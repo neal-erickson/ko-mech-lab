@@ -21,8 +21,13 @@ div.loadout {
 	/*width:210px;*/
 }
 
-div.loadout ul {
+ul {
+	font-family: monospace;
 	list-style-type: none;
+	padding-left: 0px;
+}
+
+div.loadout ul {
 	border: solid 1px #666666;
 	min-height: 100px;
 	margin: 0px 0px 0px 0px;
@@ -38,7 +43,7 @@ div.loadout ul li:last-child {
 	border-bottom: none;
 }
 
-ul.dropHighlight {
+ul.dropHighlight li {
 	background-color: fuchsia;
 }
 

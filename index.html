@@ -38,7 +38,7 @@
 				<button data-bind="click: selectMech">Go</button>
 			</div>
 
-			<div data-bind="with: mechViewModel, visible: mechChosen">
+			<div data-bind="with: mechViewModel, visible: mechChosen" style="display:none;">
 				<!--Mech Overview-->
 				<div style="float:left;border:1px solid black;height:525px;width:140px;">
 					<table>
@@ -76,6 +76,15 @@
 							</tr>
 						</tbody>
 					</table>
+					<p>
+						<button data-bind="click: clearItems">Clear Items</button>
+					</p>
+					<p>
+						<button data-bind="click: resetStock">Reset Stock</button>
+					</p>
+					<p>
+						<button data-bind="click: saveConfiguration">Save Loadout</button>
+					</p>
 				</div>
 				
 
@@ -297,9 +306,6 @@
 
 				<script type='text\html' id="componentList">
 					<div class="loadout">
-						<p>
-							<span id="namespan" data-bind="text: name"></span>
-						</p>
 						<p>
 							<span id="hardpointDisplayTextSpan" data-bind="text: hardpointDisplayText" />
 						</p>
