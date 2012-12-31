@@ -1,15 +1,26 @@
+/* Core styles */
+
 body {
 	font-family: monospace;
 }
 
 div#primary {
-	padding: 20px;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 hr {
 	margin-top:15px;
 	margin-bottom: 15px;
 }
+
+ul {
+	font-family: monospace;
+	list-style-type: none;
+	padding-left: 0px;
+}
+
+/* Primary layout styles */
 
 div.area {
 	border: solid 1px black;
@@ -21,10 +32,10 @@ div.loadout {
 	/*width:210px;*/
 }
 
-ul {
-	font-family: monospace;
-	list-style-type: none;
-	padding-left: 0px;
+div.content-block {
+	border:1px solid black;
+	border-radius: 10px;
+	padding: 5px;
 }
 
 div.loadout ul {
@@ -35,17 +46,7 @@ div.loadout ul {
 	width:165px;
 }
 
-div.loadout ul li {
-	border-bottom: 1px solid black;
-}
-
-div.loadout ul li:last-child {
-	border-bottom: none;
-}
-
-ul.dropHighlight li {
-	background-color: fuchsia;
-}
+/* Item View styles */
 
 div#itemTabs {
 	font-family: monospace;
@@ -54,4 +55,42 @@ div#itemTabs {
 div#itemTabs ul {
 	padding-left: 0px;
 	list-style-type: none;
+}
+
+/* Loadout editor styles */
+
+div.loadout-container ul li {
+	padding: 2px;
+	border-left: 1px solid black;
+	border-right: 1px solid black;
+	border-bottom: 1px dotted black;
+}
+
+div.loadout-container ul li span.name {
+	visibility: hidden;
+}
+
+div.loadout-container ul li.first span.name {
+	visibility: visible;
+}
+
+div.loadout-container ul li.first {
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	margin-top:3px;
+	border-top: 1px solid black;
+}
+
+div.loadout-container ul li.last {
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	border-bottom: 1px solid black;
+}
+
+div.loadout-container ul li.empty {
+	border-style: dashed;
+}
+
+div.loadout-container ul.dropHighlight li.empty {
+	background-color: #00CC99;
 }

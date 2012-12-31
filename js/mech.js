@@ -13,6 +13,7 @@
 
         // Whether the mech has lower arm actuators and hands. Most do.
         self.hasHands = ko.observable(true);
+        self.canHasJumpJets = ko.observable(false);
 
 		// Upgrade settings
 		self.structure = ko.observable('standard');
@@ -29,16 +30,27 @@
     		return 0; // no engine, which is a possibility
     	});
 
+        self.speed = ko.computed(function() {
+            if(!self.engine()) { return 0; }
+            return self.engine().engineStats.rating.toFloat() * 16.2 / self.maxTonnage(); 
+        });
+
     	// Constructor for mech 'component' such as left arm, center torso, etc
-    	// slot info, hardpoints, other info
+    	// Includes slot info, hardpoints, other info
     	var Component = function(name, options){
     		var component = this;
             var options = options || {}; // prevent errors
 
+            // Component specifics
             component.name = ko.observable(name);
     		component.criticalSlots = ko.observable(0);//.extend({ logChange: 'criticalSlots'});
-
     		component.fixedItems = options.fixedItems || ko.observableArray([]);
+
+            // Hardpoint-related members
+            component.energyHardpoints = ko.observable(0);
+            component.ballisticHardpoints = ko.observable(0);
+            component.missileHardpoints = ko.observable(0);
+            component.ams = ko.observable(false);
 
     		// This is actually the most important bit - the weapons, ammo, etc that 
     		// this part of the mech has been assigned
@@ -52,21 +64,15 @@
     			return weight;
     		});
 
-    		var calculateHardpointsUsed = function(weaponType) {
-    			var used = 0;
-    			$.each(component.items(), function(index, item) {
-    				if(item.weaponStats && item.weaponStats.type == weaponType) {
-    					used++;
-    				}
-    			});
-    			return used;
-    		};
-
-            // Hardpoint-related members
-            component.energyHardpoints = ko.observable(0);
-            component.ballisticHardpoints = ko.observable(0);
-            component.missileHardpoints = ko.observable(0);
-            component.ams = ko.observable(false);
+            var calculateHardpointsUsed = function(weaponType) {
+                var used = 0;
+                $.each(component.items(), function(index, item) {
+                    if(item.weaponStats && item.weaponStats.type == weaponType) {
+                        used++;
+                    }
+                });
+                return used;
+            };
 
             component.amsUsed = ko.computed(function() {
                 return calculateHardpointsUsed(4);
@@ -105,9 +111,26 @@
     			if(component.ams()) {
     				text += 'AMS'; // TODO
     			}
-    			
     			return text;
     		});
+
+            var Slot = function(name, options){
+                this.name = name;
+                this.data = options.data || {};
+                this.empty = options.empty || false;
+                this.removeable = options.removeable || false;
+                this.first = options.first || false;
+                this.last = options.last || false;
+            };
+
+            var isRemoveable = function(item){
+                // Engine can't be removed normal way
+                if(item.cType == "CEngineStats"){
+                    return false;
+                }
+                // Fixed items have no tonnage. Currently. Hopefully.
+                return item.tons != 0;
+            };
 
     		// Slots is items but taking up the number of slots based on the item's value
     		component.slots = ko.computed(function(){
@@ -117,12 +140,14 @@
 				$.each(allItems, function(index, item) {
 					// Make items occupy x number of slots for display
 					for(var i = 0; i < item.slots; i++){
-						//slots.push('[' + item.name + ']');
-                        slots.push({
-                            name: item.name,
+                        var slot = new Slot(item.name, {
                             data: item,
-                            isUser: item.tons != 0 // TODO : Fix this!!!
+                            removeable: isRemoveable(item), // TODO : engine
+                            first: i == 0,
+                            last: i == item.slots - 1
                         });
+                        console.log(item, i == 0, item.slots - 1);
+                        slots.push(slot);
 					};
 				});
 					
@@ -140,10 +165,11 @@
 
 				// Pad out empty critical slots
 				while(placeholders.length < component.criticalSlotsOpen()){
-					placeholders.push({
-                        name: '-- empty --',
-                        isEmpty: true
-                    });
+                    placeholders.push(new Slot('(empty)', {
+                        empty: true,
+                        first: true,
+                        last: true
+                    }))
 				}
 				return slots.concat(placeholders);
 			});//.extend({ logChange: 'displaySlots'});
@@ -154,6 +180,22 @@
 
     			return component.criticalSlotsOpen() >= item.slots;
     		};
+
+            var checkEquipmentType = function(item) {
+                switch(item.cType){
+                    case 'CJumpJetStats':
+                        // TODO : Correct jump jet class
+                        return self.canHasJumpJets();
+                    case 'CHeatSinkStats':
+                        if(self.heatSinks() === 'single'){
+                            return item.name === 'HeatSink_MkI';
+                        }
+                        return item.name === 'DoubleHeatSink_MkI';
+                    default:
+                        return true; // default pass through
+                };
+                // TODO : Ecm, Beagle, CASE
+            };
 
 			var checkWeaponHardpoints = function(item){
 	    		if(!item.weaponStats){ return true; } // pass-through
@@ -172,8 +214,7 @@
 					case '4': // 4 is AMS
 						return component.ams() && component.amsUsed() < 1; // TODO
 				}
-
-				return false; // testing default?
+				return false;
 	    	}
 
             // Drag n drop functions
@@ -182,6 +223,7 @@
 
     			// Return '&&'' of slots, hardpoints, etc
     			return checkSlots(item)
+                    && checkEquipmentType(item)
     				&& checkWeaponHardpoints(item);
     		};
 
@@ -193,9 +235,18 @@
     		}; 
 
             // This is called by knockout-delegatedEvents by child items
-            component.removeItem = function(item, ui){
+            component.removeItem = function(element, ui){
                 // KO's observable array has a 'remove' function thats awesome
-                component.items.remove(item.data);
+                // but unfortunately it removes all of an instance, rather than the first.
+                //component.items.remove(element.data);
+
+                // Instead, iterate through the items and remove the one with matching id
+                $.each(component.items(), function(index, item) {
+                    if(item.id == element.data.id) {
+                        component.items.splice(index, 1);
+                        return false; // break $.each() since we only want to remove 1
+                    }
+                });
             };
 
             // Clears out the core items
@@ -220,13 +271,14 @@
                 component.items(getItemsByIds(componentSpec.itemIds));
                 component.ams(componentSpec.ams);
             };
-    	};
+
+    	}; // end component xtor
 
         // Convenience xtor for "fixed" hardpoint items (gyro, etc)
         var fixedItem = function(name, slots) {
             this.name = name;
             this.slots = slots;
-            this.tons = 0;
+            this.tons = 0; // set tonnage
         };
 
     	// Mech hardpoints
@@ -308,6 +360,10 @@
         		weight += item.itemsWeight();
         	});
         	return weight;
+        });
+
+        self.alphaStrike = ko.computed(function() {
+            return 0;
         });
 
     	// Anna's contribution to the codebase:
