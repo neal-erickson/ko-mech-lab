@@ -32,14 +32,20 @@
 		</script>
 		<div id="primary">
 			<h2>MechCheck (0.1)</h2>
-			<div>
+
+			<div id="chassisSelection">
 				<span>Select mech:</span>
 				<select id="chassisSelect" data-bind="
 					options: items.mechs, 
 					optionsText: function(option){ return option.name.toUpperCase(); }, 
 					value: selectedMech">
 				</select>
-				<button data-bind="click: selectMech">Go</button>
+				<button id="buttonSelectMech" data-bind="click: selectMech">Go</button>
+
+				<span>&nbsp;or load saved:</span>
+				<select data-bind="options: savedMechs, value: selectedSavedMech"></select>
+				<button id="loadSavedButton" data-bind="click: loadSaved">Load</button>
+				<button id="clearButton" data-bind="click: clearSaved">Clear</button>
 			</div>
 
 			<div data-bind="with: mechViewModel, visible: mechChosen" style="display:none;">
@@ -102,12 +108,6 @@
 						</ul>
 
 						<div id="loadout-1">
-							<div>
-								<span>Engine:</span>
-								<select data-bind="options: $parent.items.engines, optionsText: 'name', value: engine">
-								</select>
-							</div>
-							<hr />
 							<span>Component:</span>
 							<select data-bind="options: componentsList, optionsText: 'name', value: selectedComponent"></select>
 							<div class="loadout-container" data-bind="with: selectedComponent, delegatedHandler: 'click'">
@@ -121,6 +121,11 @@
 											data-click="removeItem">x</a>
 									</li>
 								</ul>
+							</div>
+							<div data-bind="visible: displayEngine">
+								<span>Engine:</span>
+								<select data-bind="options: $parent.items.engines, optionsText: 'name', value: engine">
+								</select>
 							</div>
 						</div>
 
@@ -309,6 +314,7 @@
 							<thead>
 								<tr>
 									<th></th>
+									<th>Id</th>
 									<th>Tons</th>
 									<th>Slots</th>
 									<th>Damage</th>
@@ -318,19 +324,22 @@
 							<tbody data-bind="foreach: $parent.items.weapons">
 								<tr data-bind="jqueryui: { widget: 'draggable', options: $root.draggableOptions }">
 									<td>
-										<span data-bind="text: name">
+										<span data-bind="text: name"></span>
 									</td>
 									<td>
-										<span data-bind="text: tons">
+										<span data-bind="text: id"></span>
 									</td>
 									<td>
-										<span data-bind="text: slots">
+										<span data-bind="text: tons"></span>
 									</td>
 									<td>
-										<span data-bind="text: weaponStats.damage">
+										<span data-bind="text: slots"></span>
 									</td>
 									<td>
-										<span data-bind="text: weaponStats.heat">
+										<span data-bind="text: weaponStats.damage"></span>
+									</td>
+									<td>
+										<span data-bind="text: weaponStats.heat"></span>
 									</td>
 								</tr>
 							</tbody>

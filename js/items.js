@@ -5,7 +5,6 @@
         var hashed = {};
         for(var i in array){
             var item = array[i];
-            console.log(item);
             hashed[item.id] = item;
         }
         //console.log('hashed', hashed);
@@ -14,8 +13,6 @@
 
     loadMechlabItems = function(callback){
         $.getJSON('data/item-stats.json', function(data) {
-            //debugger;
-            //mechlab_items = data;
             var cleaned = cleanupItems(data);
             callback(cleaned);
         });
@@ -43,7 +40,7 @@
                 case 'CEngineStats':
                     //debugger;
                     item.tons = item.engineStats.weight; // weird exception to data schema
-                    item.slots = item.engineStats.slots;
+                    item.slots = "6"; // I handle XL engines is a different way
                     items.engines.push(item);
                     break;
                 case 'CBAPStats':

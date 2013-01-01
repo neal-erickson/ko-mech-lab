@@ -35,6 +35,19 @@
 		// Load items from separate namespace
 		self.items = mechlab_items;
 		
+		var getSavedMechs = function() {
+			var saved = [];
+			var length = localStorage.length;
+			for(var i  = 0; i < length; i++){
+				saved.push(localStorage.key(i));
+			}
+			return saved;
+		};
+
+		// Load saved mechs from storage
+		self.savedMechs = ko.observableArray(getSavedMechs());
+		self.selectedSavedMech = ko.observable();
+
 		// View model abstracted from core view model
 		self.mechViewModel = new mechlab.mechViewModel();
 
@@ -42,15 +55,31 @@
 		self.selectedMech = ko.observable();
 		self.mechChosen = ko.observable(false);
 
+		var loadIntoView = function(mech){
+			if(!mech) return;
+
+			self.mechChosen(true);
+			self.mechViewModel.loadMech(mech);
+		};
+
 		// Callback for selecting mech variant
 		self.selectMech = function() {
 			//var mech = mechlab_loadouts.load(self.selectedMech().id);
-			var mech = mechlab_loadouts.load("21");
+			var mech = mechlab_loadouts.load("21"); //hardcoded for testing
+			loadIntoView(mech);
+		};
 
-			if(mech) {
-				self.mechChosen(true);
-				self.mechViewModel.loadMech(mech);
-			}
+		// Load mech from localstorage
+		self.loadSaved = function(ui, event) {
+			var mech = localStorage.getItem(self.selectedSavedMech());
+			
+			loadIntoView(mech);
+
+			// TODO finish
+		};
+
+		self.clearSaved = function() {
+			localStorage.clear();
 		};
 	};
 })(jQuery);

@@ -21,6 +21,7 @@
 		tonnage: 50,
 		hasHands: true,
 		jumpJets: false,
+		ecm: false,
 		armor: [18, 52, 10, 40, 8, 40, 8, 32, 32, 40, 40],
 		components: {
 			head: new componentLayout(6, 0, 1, 0, [1003]),

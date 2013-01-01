@@ -146,7 +146,7 @@
                             first: i == 0,
                             last: i == item.slots - 1
                         });
-                        console.log(item, i == 0, item.slots - 1);
+                        //console.log(item, i == 0, item.slots - 1);
                         slots.push(slot);
 					};
 				});
@@ -352,6 +352,10 @@
 
         self.selectedComponent = ko.observable();
 
+        self.displayEngine = ko.computed(function(){
+            return self.selectedComponent() !== undefined && self.selectedComponent().name() == 'Center Torso';
+        }).extend({ logChange: 'de'});
+
         // Weapon weights
         self.totalItemsWeight = ko.computed(function() {
         	var weight = 0;
@@ -471,7 +475,6 @@
             $.each(self.componentsList, function(index, item) {
                 item.clear();
             });
-
             // TODO : Reset upgrades ???
             // TODO : Clear engine??
         };
@@ -481,9 +484,30 @@
             alert('reset stuff');
         };
 
-        // TODO: Implement
+        // Save current configuration to localStorage
         self.saveConfiguration = function() {
-            alert('saveConfiguration');
+            if(!localStorage) {
+                alert('Saving is only allowed for browsers with localStorage');
+                return;
+            }
+
+            // Prompt user for config name
+            var configName = window.prompt('Enter mech config name:', self.name());
+
+            if(!configName) return; // cancel case
+
+            // Make sure it's not already there
+            // var existing = localStorage.getItem(configName);
+            // if(existing){
+            //     alert('Mech config ' + configName + ' already exists');
+            //     return;
+            // }
+
+            // Put it in the storage
+            var mechString = JSON.stringify("{ 'name': test }");
+            localStorage.setItem(configName, mechString);
+
+            //alert('Saved ' + configName);
         };
 
 	}; // end of core vm xtor
