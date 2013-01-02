@@ -25,10 +25,11 @@
 		this.hasHands = options.hasHands || false;
 		this.jumpJets = options.jumpJets || false;
 		this.ecm = options.ecm || false;
+
 		this.structure = options.structure || 'standard';
 		this.armor = options.armor || 'standard';
 		this.heatSinks = options.heatSinks || 'single';
-		this.artemis = options.artemis || 'artemis';
+		this.artemis = options.artemis || 'none';
 	};
 
 	mechlab_loadouts.componentLayout = function(criticalSlots, ballisticHardpoints, energyHardpoints, missileHardpoints, itemIds, options){

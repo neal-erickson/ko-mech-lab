@@ -9,10 +9,6 @@
 
         // TODO : Make everything possible computed from this
         self.mech = ko.observable().extend({ logChange: 'mech'});
-
-        // self.mechName = ko.computed(function() {
-        //     return self.mech() ? self.mech().name : '';
-        // }).extend({ logChange: 'mechName'});
         
         self.name = ko.observable();
 		self.maxTonnage = ko.observable(50);
@@ -26,7 +22,7 @@
 		self.structure = ko.observable('standard');
 		self.armor = ko.observable('standard');
 		self.heatSinks = ko.observable('single');
-		self.artemis = ko.observable('none');
+		self.artemis = ko.observable('none');//.extend({logChange: 'artemis'});
 
 		// Core components
 		self.engine = ko.observable();
@@ -469,9 +465,15 @@
             self.hasHands(mech.hasHands);
             self.name(mech.name);
 
-            // Upgrades etc
+            // Chassis specifics
             self.canHasJumpJets(mech.jumpJets);
             self.ecm(mech.ecm);
+
+            // Upgrades etc
+            self.structure(mech.structure);
+            self.armor(mech.armor);
+            self.artemis(mech.artemis);
+            self.heatSinks(mech.heatSinks);
 
             // Copy in base armor values
             self.armorHead(mech.armorValues[0]);
@@ -501,6 +503,7 @@
             self.engine(engine);
 
             // TODO finish
+
         };
 
         // Clear out the current configuration
@@ -512,7 +515,6 @@
             // TODO : Clear engine??
         };
 
-        // TODO: Implement
         self.resetStock = function() {
             self.loadMech(self.mech());
         };
@@ -525,7 +527,11 @@
                 jumpJets: self.canHasJumpJets(),
                 ecm: self.ecm(),
                 engine_id: self.engine().id,
-                armor: [
+                structure: self.structure(),
+                artemis: self.artemis(),
+                heatSinks: self.heatSinks(),
+                armor: self.armor(),
+                armorValues: [
                     self.armorHead(),
                     self.armorCenterTorso(),
                     self.armorCenterTorsoRear(),

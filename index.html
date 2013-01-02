@@ -353,11 +353,32 @@
 						</ul>
 					</div>
 					<div id="fragment-3">
-						<ul data-bind="foreach: $parent.items.equipment">
-							<li data-bind="jqueryui: { widget: 'draggable', options: $root.draggableOptions }">
-								<span data-bind="text: name"></span>
-							</li>
-						</ul>
+						<table>
+							<thead>
+								<tr>
+									<td></td>
+									<td>ID</td>
+									<td>Tons</td>
+									<td>Slots</td>
+								</tr>
+							</thead>
+							<tbody data-bind="foreach: $parent.items.equipment">
+								<tr data-bind="jqueryui: { widget: 'draggable', options: $root.draggableOptions }">
+									<td>
+										<span data-bind="text: name"></span>
+									</td>
+									<td>
+										<span data-bind="text: id"></span>
+									</td>
+									<td>
+										<span data-bind="text: tons"></span>
+									</td>
+									<td>
+										<span data-bind="text: slots"></span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
