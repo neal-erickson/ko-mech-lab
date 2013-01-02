@@ -7,6 +7,8 @@
 	mechlab.mechViewModel = function() {
 		var self = this;
 
+        self.showFixedItems = ko.observable(true); // TODO use
+
         // TODO : Make everything possible computed from this
         self.mech = ko.observable().extend({ logChange: 'mech'});
         
@@ -455,6 +457,10 @@
     			+ self.totalItemsWeight();
     	});
 
+        self.tonnageDisplay = ko.computed(function() {
+            return Math.round(self.tonnage() * 100) / 100;
+        });
+
         // This is the function to load a mech
         self.loadMech = function(mech){
             // Save the loadout
@@ -501,9 +507,6 @@
             // Load engine
             var engine = mechlab_items.getById(mech.engine_id);
             self.engine(engine);
-
-            // TODO finish
-
         };
 
         // Clear out the current configuration
@@ -511,10 +514,9 @@
             $.each(self.componentsList, function(index, item) {
                 item.clear();
             });
-            // TODO : Reset upgrades ???
-            // TODO : Clear engine??
         };
 
+        // Back to original
         self.resetStock = function() {
             self.loadMech(self.mech());
         };

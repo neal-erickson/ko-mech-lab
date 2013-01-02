@@ -39,6 +39,10 @@
 		//self.mechChoices = ko.observableArray(self.items.mechs);
 		self.mechChoices = ko.observableArray([
 			{
+				id: "11",
+				name: "DRG-1C"
+			},
+			{
 				id: "21",
 				name: "HBK-4J"
 			},

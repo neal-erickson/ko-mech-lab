@@ -45,6 +45,27 @@
 	};
 
 	// Mech information
+
+	mechlab_loadouts.loadouts['11'] = new mechlab_loadouts.mechLoadout(
+		"DRG-1C",
+		60,
+		[18, 56, 24, 36, 20, 36, 20, 40, 40, 56, 56],
+		3258,
+		{
+			head: new mechlab_loadouts.componentLayout(6, 0, 0, 0, []),
+			centerTorso: new mechlab_loadouts.componentLayout(12, 0, 0, 1, [1027]),
+			rightTorso: new mechlab_loadouts.componentLayout(12, 0, 0, 0, [2005]),
+			leftTorso: new mechlab_loadouts.componentLayout(12, 0, 2, 0, [1001, 2027, 2027], { ams: true }),
+			rightArm: new mechlab_loadouts.componentLayout(13, 1, 0, 0, [1018]),
+			leftArm: new mechlab_loadouts.componentLayout(13, 0, 2, 0, [1001]),
+			rightLeg: new mechlab_loadouts.componentLayout(6, 0, 0, 0, []),
+			leftLeg: new mechlab_loadouts.componentLayout(6, 0, 0, 0, [])
+		},
+		{
+			hasHands: true
+		}
+	); 
+
 	mechlab_loadouts.loadouts['21'] = new mechlab_loadouts.mechLoadout(
 		"HBK-4J",
 		50,

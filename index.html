@@ -69,7 +69,7 @@
 									<span>Tons:</span>
 								</td>
 								<td>
-									<span data-bind="text: tonnage"></span>/<span data-bind="text: maxTonnage"></span>	
+									<span data-bind="text: tonnageDisplay"></span>/<span data-bind="text: maxTonnage"></span>	
 								</td>
 							</tr>
 							<tr>
@@ -406,6 +406,7 @@
 		</div><!--end primary div-->
 
 		<script type="text/html" id="component-template">
+			<span data-bind="text: name"></span>
 			<p>
 				<span id="hardpointDisplayTextSpan" data-bind="text: hardpointDisplayText" />
 			</p>
