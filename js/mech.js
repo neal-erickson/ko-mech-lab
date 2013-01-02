@@ -122,9 +122,13 @@
     				text += component.missileHardpointsUsed() + '/' + component.missileHardpoints() + 'M ' ;
     			}
     			if(component.ams()) {
-    				text += 'AMS'; // TODO
+    				text += component.amsUsed() + '/1 AMS'; // TODO
     			}
-    			return text;
+
+                if(text === ''){
+                    return '(None)';
+                }
+    			return '(' + text + ')';
     		});
 
             var Slot = function(name, options){
@@ -309,36 +313,31 @@
         };
 
     	// Mech hardpoints
+        // Big change: not leveraging fixed items for now
     	self.head = new Component('Head', {
-    		fixedItems: ko.observableArray([
-    			new fixedItem('Life Support', '2', '0'),
-    			new fixedItem('Sensors', '2', '0'),
-    			new fixedItem('Cockpit', '1', '0')
-    		])
+    		// fixedItems: ko.observableArray([
+    		// 	new fixedItem('Life Support', '2', '0'),
+    		// 	new fixedItem('Sensors', '2', '0'),
+    		// 	new fixedItem('Cockpit', '1', '0')
+    		// ])
     	});
 
-        var fixedArmItems = ko.computed(function(){
-            var armItems = [
-                new fixedItem('Shoulder', "1", "0"),
-                new fixedItem('Upper Arm Actuator', "1", "0")
-            ];
-            if(self.hasHands()){
-                armItems.push(new fixedItem('Lower Arm Actuator', "1", "0"));
-                armItems.push(new fixedItem('Hand Actuator', "1", "0"));
-            }
-            return armItems;
-        });
-    	// var fixedArmItems = ko.observableArray([
-     //        new fixedItem('Shoulder', "1", "0"),
-     //        new fixedItem('Upper Arm Actuator', "1", "0"),
-     //        new fixedItem('Lower Arm Actuator', "1", "0"),
-     //        new fixedItem('Hand Actuator', "1", "0")
-     //    ]);
+        // var fixedArmItems = ko.computed(function(){
+        //     var armItems = [
+        //         new fixedItem('Shoulder', "1", "0"),
+        //         new fixedItem('Upper Arm Actuator', "1", "0")
+        //     ];
+        //     if(self.hasHands()){
+        //         armItems.push(new fixedItem('Lower Arm Actuator', "1", "0"));
+        //         armItems.push(new fixedItem('Hand Actuator', "1", "0"));
+        //     }
+        //     return armItems;
+        // });
     	self.rightArm = new Component("Right Arm", {
-            fixedItems: fixedArmItems
+            //fixedItems: fixedArmItems
         });
         self.leftArm = new Component("Left Arm", {
-            fixedItems: fixedArmItems
+            //fixedItems: fixedArmItems
         });
 
         var torsofixedItems = ko.computed(function() {
@@ -354,26 +353,26 @@
             fixedItems: torsofixedItems
         });
         self.centerTorso = new Component("Center Torso", {
-            fixedItems: ko.computed(function() {
-                var items = [new fixedItem('Gyro', "4", "0")];
-                if(self.engine()) {
-                    items.push(self.engine());
-                }
-                return items;
-            })
+            // fixedItems: ko.computed(function() {
+            //     var items = [new fixedItem('Gyro', "4", "0")];
+            //     if(self.engine()) {
+            //         items.push(self.engine());
+            //     }
+            //     return items;
+            // })
         });
 
-        var fixedLegItems = ko.observableArray([
-        	new fixedItem('Hip', "1", "0"),
-            new fixedItem('Upper Leg Actuator', "1", "0"),
-            new fixedItem('Lower Leg Actuator', "1", "0"),
-            new fixedItem('Foot Actuator', "1", "0")
-        ]);
+        // var fixedLegItems = ko.observableArray([
+        // 	new fixedItem('Hip', "1", "0"),
+        //     new fixedItem('Upper Leg Actuator', "1", "0"),
+        //     new fixedItem('Lower Leg Actuator', "1", "0"),
+        //     new fixedItem('Foot Actuator', "1", "0")
+        // ]);
         self.rightLeg = new Component('Right Leg', {
-        	fixedItems: fixedLegItems
+        	//fixedItems: fixedLegItems
         });
         self.leftLeg = new Component('Left Leg', {
-        	fixedItems: fixedLegItems
+        	//fixedItems: fixedLegItems
         });
 
         // Component abstractions
