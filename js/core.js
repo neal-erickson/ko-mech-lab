@@ -34,7 +34,20 @@
 
 		// Load items from separate namespace
 		self.items = mechlab_items;
-		
+
+		// Currently, hardcoding implemented mechs
+		//self.mechChoices = ko.observableArray(self.items.mechs);
+		self.mechChoices = ko.observableArray([
+			{
+				id: "21",
+				name: "HBK-4J"
+			},
+			{
+				id: "35",
+				name: "RVN-4X"
+			}
+		]);
+
 		var getSavedMechs = function() {
 			var saved = [];
 			var length = localStorage.length;
@@ -64,8 +77,8 @@
 
 		// Callback for selecting mech variant
 		self.selectMech = function() {
-			//var mech = mechlab_loadouts.load(self.selectedMech().id);
-			var mech = mechlab_loadouts.load("21"); //hardcoded for testing
+			var mech = mechlab_loadouts.load(self.selectedMech().id);
+			//var mech = mechlab_loadouts.load("21"); //hardcoded for testing
 			loadIntoView(mech);
 		};
 

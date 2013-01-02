@@ -19,9 +19,11 @@
     };
 
     var cleanupItems = function(items) {
+        // Custom arrays (are classified as modules)
         items.engines = [];
         items.equipment = [];
 
+        // Sort weapons by type, then tonnage
         items.weapons.sort(function(a, b) {
             var diff = a.weaponStats.type - b.weaponStats.type;
             if(diff === 0) {
@@ -29,10 +31,16 @@
             }
             return diff;
         });
-        makeHash(items.weapons);
+        
+        // Sort mechs by name
         items.mechs.sort(function(a, b){
             return a.name < b.name ? -1 : 1;
         })
+
+        $.each(items.ammoTypes, function(index, item){
+            item.slots = "1";
+            item.tons = "1";
+        });
 
         // Iterate and move some things
         $.each(items.modules, function(index, item){

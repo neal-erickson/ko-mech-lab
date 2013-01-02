@@ -295,8 +295,7 @@
                     component.missileHardpoints(),
                     component.itemIds(),
                     {
-                        ams: component.ams(),
-
+                        ams: component.ams()
                     });
             };
 
@@ -318,12 +317,23 @@
     		])
     	});
 
-    	var fixedArmItems = ko.observableArray([
-            new fixedItem('Shoulder', "1", "0"),
-            new fixedItem('Upper Arm Actuator', "1", "0"),
-            new fixedItem('Lower Arm Actuator', "1", "0"),
-            new fixedItem('Hand Actuator', "1", "0")
-        ]);
+        var fixedArmItems = ko.computed(function(){
+            var armItems = [
+                new fixedItem('Shoulder', "1", "0"),
+                new fixedItem('Upper Arm Actuator', "1", "0")
+            ];
+            if(self.hasHands()){
+                armItems.push(new fixedItem('Lower Arm Actuator', "1", "0"));
+                armItems.push(new fixedItem('Hand Actuator', "1", "0"));
+            }
+            return armItems;
+        });
+    	// var fixedArmItems = ko.observableArray([
+     //        new fixedItem('Shoulder', "1", "0"),
+     //        new fixedItem('Upper Arm Actuator', "1", "0"),
+     //        new fixedItem('Lower Arm Actuator', "1", "0"),
+     //        new fixedItem('Hand Actuator', "1", "0")
+     //    ]);
     	self.rightArm = new Component("Right Arm", {
             fixedItems: fixedArmItems
         });
@@ -440,12 +450,6 @@
         });
 
 		// This will be a complicated equation:
-		// weight of all armor (armor points sum * armor type modifier)
-		// + weight of all weapons 
-		// + weight of all ammunition
-		// + weight of all equipment
-		// + structure weight
-		// + engine weight
 		self.tonnage = ko.computed(function() {
     		return self.structureWeight() 
                 + self.engineWeight()
@@ -455,6 +459,7 @@
 
         // This is the function to load a mech
         self.loadMech = function(mech){
+            // Save the loadout
             self.mech(mech);
 
             // Core values
@@ -503,7 +508,7 @@
 
         // TODO: Implement
         self.resetStock = function() {
-            alert('reset stuff');
+            self.loadMech(self.mech());
         };
 
         var outputCurrentConfiguration = function() {
@@ -553,7 +558,6 @@
 
             // Prompt user for config name
             var configName = window.prompt('Enter mech config name:', self.name());
-
             if(!configName) return; // cancel case
 
             // Make sure it's not already there
@@ -566,7 +570,6 @@
             // Put it in the storage
             var mechString = outputCurrentConfiguration();
             localStorage.setItem(configName, mechString);
-
             //alert('Saved ' + configName);
         };
 

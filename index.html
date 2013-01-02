@@ -22,10 +22,10 @@
 	<body>
 		<script type="text/javascript">
 			$(document).ready(function() {
-
 				loadMechlabItems(function(items){
 					mechlab_items = items;
 					window.testVM = new mechlab.coreVM();
+
 			  		ko.applyBindings(window.testVM, $('div#primary')[0]);
 				});
 			});
@@ -36,7 +36,7 @@
 			<div id="chassisSelection">
 				<span>Select mech:</span>
 				<select id="chassisSelect" data-bind="
-					options: items.mechs, 
+					options: mechChoices, 
 					optionsText: function(option){ return option.name.toUpperCase(); }, 
 					value: selectedMech">
 				</select>
