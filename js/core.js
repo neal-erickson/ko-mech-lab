@@ -71,11 +71,9 @@
 
 		// Load mech from localstorage
 		self.loadSaved = function(ui, event) {
-			var mech = localStorage.getItem(self.selectedSavedMech());
-			
+			var mechString = localStorage.getItem(self.selectedSavedMech());
+			var mech = JSON.parse(mechString);
 			loadIntoView(mech);
-
-			// TODO finish
 		};
 
 		self.clearSaved = function() {

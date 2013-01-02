@@ -89,6 +89,7 @@ div.loadout-container ul li.last {
 
 div.loadout-container ul li.empty {
 	border-style: dashed;
+	font-style: italic;
 }
 
 div.loadout-container ul.dropHighlight li.empty {

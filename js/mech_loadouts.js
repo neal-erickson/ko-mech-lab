@@ -3,7 +3,7 @@
 	mechlab_loadouts = {};
 	mechlab_loadouts.loadouts = {};
 
-	var componentLayout = function(criticalSlots, ballisticHardpoints, energyHardpoints, missileHardpoints, itemIds, options){
+	mechlab_loadouts.componentLayout = function(criticalSlots, ballisticHardpoints, energyHardpoints, missileHardpoints, itemIds, options){
 		this.criticalSlots = criticalSlots;
 		this.ballisticHardpoints = ballisticHardpoints;
 		this.energyHardpoints = energyHardpoints;
@@ -24,14 +24,14 @@
 		ecm: false,
 		armor: [18, 52, 10, 40, 8, 40, 8, 32, 32, 40, 40],
 		components: {
-			head: new componentLayout(6, 0, 1, 0, [1003]),
-			centerTorso: new componentLayout(12, 0, 0, 0, []),
-			rightTorso: new componentLayout(12, 0, 3, 2, []),
-			leftTorso: new componentLayout(12, 0, 0, 0, [], { ams: true }),
-			rightArm: new componentLayout(6, 0, 1, 0, [1003]),
-			leftArm: new componentLayout(6, 0, 1, 0, [1003]),
-			rightLeg: new componentLayout(6, 0, 1, 0, []),
-			leftLeg: new componentLayout(6, 0, 1, 0, []),
+			head: new mechlab_loadouts.componentLayout(6, 0, 1, 0, [1003]),
+			centerTorso: new mechlab_loadouts.componentLayout(12, 0, 0, 0, []),
+			rightTorso: new mechlab_loadouts.componentLayout(12, 0, 3, 2, [1027, 1027, 1001, 1001]),
+			leftTorso: new mechlab_loadouts.componentLayout(12, 0, 0, 0, [], { ams: true }),
+			rightArm: new mechlab_loadouts.componentLayout(6, 0, 1, 0, [1001]),
+			leftArm: new mechlab_loadouts.componentLayout(6, 0, 1, 0, [1001]),
+			rightLeg: new mechlab_loadouts.componentLayout(6, 0, 1, 0, []),
+			leftLeg: new mechlab_loadouts.componentLayout(6, 0, 1, 0, [])
 		},
 		engine_id: 3238
 	};

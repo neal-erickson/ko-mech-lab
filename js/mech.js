@@ -7,13 +7,20 @@
 	mechlab.mechViewModel = function() {
 		var self = this;
 
-        self.name = ko.observable();
+        // TODO : Make everything possible computed from this
+        self.mech = ko.observable().extend({ logChange: 'mech'});
 
+        // self.mechName = ko.computed(function() {
+        //     return self.mech() ? self.mech().name : '';
+        // }).extend({ logChange: 'mechName'});
+        
+        self.name = ko.observable();
 		self.maxTonnage = ko.observable(50);
 
         // Whether the mech has lower arm actuators and hands. Most do.
         self.hasHands = ko.observable(true);
         self.canHasJumpJets = ko.observable(false);
+        self.ecm = ko.observable(false);
 
 		// Upgrade settings
 		self.structure = ko.observable('standard');
@@ -55,6 +62,14 @@
     		// This is actually the most important bit - the weapons, ammo, etc that 
     		// this part of the mech has been assigned
     		component.items = ko.observableArray();//.extend({ logChange: 'items'});
+
+            component.itemIds = ko.computed(function() {
+                var ids = [];
+                $.each(component.items(), function(index, item) {
+                    ids.push(item.id);
+                });
+                return ids;
+            });
 
     		component.itemsWeight = ko.computed(function() {
     			var weight = 0;
@@ -272,6 +287,19 @@
                 component.ams(componentSpec.ams);
             };
 
+            component.outputComponentConfig = function(){
+                return new mechlab_loadouts.componentLayout(
+                    component.criticalSlots(),
+                    component.ballisticHardpoints(),
+                    component.energyHardpoints(),
+                    component.missileHardpoints(),
+                    component.itemIds(),
+                    {
+                        ams: component.ams(),
+
+                    });
+            };
+
     	}; // end component xtor
 
         // Convenience xtor for "fixed" hardpoint items (gyro, etc)
@@ -386,8 +414,6 @@
     	self.armorRightLeg = ko.observable(40);
     	self.armorLeftLeg = ko.observable(40);
 
-        //self.components = ko.observableArray([1, 2, 3]);
-
 		// Calculated values
 		self.overallArmorValue = ko.computed(function() {
 			return self.armorHead().toFloat() +
@@ -413,19 +439,13 @@
             return self.maxTonnage() * multiplier;
         });
 
-		// This will be a complicated equation.
-		//
+		// This will be a complicated equation:
 		// weight of all armor (armor points sum * armor type modifier)
-		// +
-		// weight of all weapons 
-		// +;
-		// weight of all ammunition
-		// + 
-		// weight of all equipment
-		// -
-		// endo steel structure if applicable
-		// +
-		// engine weight
+		// + weight of all weapons 
+		// + weight of all ammunition
+		// + weight of all equipment
+		// + structure weight
+		// + engine weight
 		self.tonnage = ko.computed(function() {
     		return self.structureWeight() 
                 + self.engineWeight()
@@ -435,6 +455,8 @@
 
         // This is the function to load a mech
         self.loadMech = function(mech){
+            self.mech(mech);
+
             // Core values
             self.maxTonnage(mech.tonnage);
             self.hasHands(mech.hasHands);
@@ -484,6 +506,44 @@
             alert('reset stuff');
         };
 
+        var outputCurrentConfiguration = function() {
+            var outputMech = {
+                name: self.name(),
+                tonnage: self.maxTonnage(),
+                hasHands: self.hasHands(),
+                jumpJets: self.canHasJumpJets(),
+                ecm: self.ecm(),
+                engine_id: self.engine().id,
+                armor: [
+                    self.armorHead(),
+                    self.armorCenterTorso(),
+                    self.armorCenterTorsoRear(),
+                    self.armorRightTorso(),
+                    self.armorRightTorsoRear(),
+                    self.armorLeftTorso(),
+                    self.armorLeftTorsoRear(),
+                    self.armorRightArm(),
+                    self.armorLeftArm(),
+                    self.armorRightLeg(),
+                    self.armorLeftLeg()
+                ],
+                components: {
+                    head: self.head.outputComponentConfig(),
+                    centerTorso: self.centerTorso.outputComponentConfig(),
+                    rightTorso: self.rightTorso.outputComponentConfig(),
+                    leftTorso: self.leftTorso.outputComponentConfig(),
+                    rightArm: self.rightArm.outputComponentConfig(),
+                    leftArm: self.leftArm.outputComponentConfig(),
+                    rightLeg: self.rightLeg.outputComponentConfig(),
+                    leftLeg: self.leftLeg.outputComponentConfig()
+                }
+            };
+
+            var output = JSON.stringify(outputMech);
+            console.log(output);
+            return output;
+        };
+
         // Save current configuration to localStorage
         self.saveConfiguration = function() {
             if(!localStorage) {
@@ -504,7 +564,7 @@
             // }
 
             // Put it in the storage
-            var mechString = JSON.stringify("{ 'name': test }");
+            var mechString = outputCurrentConfiguration();
             localStorage.setItem(configName, mechString);
 
             //alert('Saved ' + configName);
