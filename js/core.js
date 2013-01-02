@@ -58,8 +58,15 @@
 		};
 
 		// Load saved mechs from storage
-		self.savedMechs = ko.observableArray(getSavedMechs());
+		self.savedMechs = ko.observableArray();
+
+		mechlab.refreshStorageMechs = function() {
+			self.savedMechs(getSavedMechs());
+		};
+
 		self.selectedSavedMech = ko.observable();
+
+		mechlab.refreshStorageMechs();
 
 		// View model abstracted from core view model
 		self.mechViewModel = new mechlab.mechViewModel();
@@ -91,6 +98,9 @@
 
 		self.clearSaved = function() {
 			localStorage.clear();
+			mechlab.refreshStorageMechs();
 		};
-	};
+
+	}; // end core vm xtor
+	
 })(jQuery);

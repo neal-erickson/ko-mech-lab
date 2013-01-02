@@ -37,6 +37,7 @@
             return a.name < b.name ? -1 : 1;
         })
 
+        // Ammo has no slots or tons by default, always 1 for both
         $.each(items.ammoTypes, function(index, item){
             item.slots = "1";
             item.tons = "1";
@@ -61,16 +62,16 @@
             }
         });
 
-        // TESTING
-        // crazy old mega hash thing
+        // Create a hash for quickly loading all items by id
         var allItems = items.weapons.concat(items.ammoTypes).concat(items.engines).concat(items.equipment);
         items.idHash = makeHash(allItems);
 
+        // Hash accessor (in case implementation changes)
         items.getById = function(id) {
             return items.idHash[id];
         }
 
-        return items;
+        return items; // give it back bro
     };
 
 })(jQuery);

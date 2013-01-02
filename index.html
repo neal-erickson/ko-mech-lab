@@ -17,7 +17,7 @@
 		<script type="text/javascript" src="js/enums.js"></script>
 
 		<link href="site.css" rel="stylesheet" type="text/css"></link>
-		<link href="css/overcast/jquery-ui-1.9.2.custom.css" rel="stylesheet" type="text/css"><link>
+		<!-- <link href="css/overcast/jquery-ui-1.9.2.custom.css" rel="stylesheet" type="text/css"><link> -->
  	</head>
 	<body>
 		<script type="text/javascript">
@@ -100,7 +100,7 @@
 				</div>
 				
 				<div class="content-block" style="float:left;height:525px;width:500px;">
-					<div data-bind="jqueryui: { widget: 'tabs' }" style="width:400px;float:left;">
+					<div data-bind="jqueryui: { widget: 'tabs' }">
 						<ul>
 							<li><a href="#loadout-1">Loadout</a></li>
 							<li><a href="#loadout-2">Armor</a></li>
@@ -114,7 +114,7 @@
 								<p>
 									<span id="hardpointDisplayTextSpan" data-bind="text: hardpointDisplayText" />
 								</p>
-								<ul data-bind="foreach: displaySlots, jqueryui : { widget: 'droppable', options: { accept: accept, activeClass: 'dropHighlight', drop: drop } }">
+								<ul class="slot-list" data-bind="foreach: displaySlots, jqueryui : { widget: 'droppable', options: { accept: accept, activeClass: 'dropHighlight', drop: drop } }">
 									<li data-bind="css: { 'first': first, 'last': last, 'empty': empty }">
 										<span class="name" data-bind="text: name"></span>
 										<a href="#" style="float:right;" data-bind="visible: removeable"

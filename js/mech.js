@@ -199,13 +199,15 @@
             var checkEquipmentType = function(item) {
                 switch(item.cType){
                     case 'CJumpJetStats':
-                        // TODO : Correct jump jet class
+                        // TODO : Enforce orrect jump jet class
                         return self.canHasJumpJets();
                     case 'CHeatSinkStats':
                         if(self.heatSinks() === 'single'){
                             return item.name === 'HeatSink_MkI';
                         }
                         return item.name === 'DoubleHeatSink_MkI';
+                    case 'CGECMStats':
+                        return self.ecm();
                     default:
                         return true; // default pass through
                 };
@@ -467,18 +469,22 @@
             self.hasHands(mech.hasHands);
             self.name(mech.name);
 
+            // Upgrades etc
+            self.canHasJumpJets(mech.jumpJets);
+            self.ecm(mech.ecm);
+
             // Copy in base armor values
-            self.armorHead(mech.armor[0]);
-            self.armorCenterTorso(mech.armor[1]);
-            self.armorCenterTorsoRear(mech.armor[2]);
-            self.armorRightTorso(mech.armor[3]);
-            self.armorRightTorsoRear(mech.armor[4]);
-            self.armorLeftTorso(mech.armor[5]);
-            self.armorLeftTorsoRear(mech.armor[6]);
-            self.armorRightArm(mech.armor[7]);
-            self.armorLeftArm(mech.armor[8]);
-            self.armorRightLeg(mech.armor[9]);
-            self.armorLeftLeg(mech.armor[10]);
+            self.armorHead(mech.armorValues[0]);
+            self.armorCenterTorso(mech.armorValues[1]);
+            self.armorCenterTorsoRear(mech.armorValues[2]);
+            self.armorRightTorso(mech.armorValues[3]);
+            self.armorRightTorsoRear(mech.armorValues[4]);
+            self.armorLeftTorso(mech.armorValues[5]);
+            self.armorLeftTorsoRear(mech.armorValues[6]);
+            self.armorRightArm(mech.armorValues[7]);
+            self.armorLeftArm(mech.armorValues[8]);
+            self.armorRightLeg(mech.armorValues[9]);
+            self.armorLeftLeg(mech.armorValues[10]);
 
             // Component specifics
             self.head.loadSpec(mech.components.head);
@@ -571,6 +577,8 @@
             var mechString = outputCurrentConfiguration();
             localStorage.setItem(configName, mechString);
             //alert('Saved ' + configName);
+
+            mechlab.refreshStorageMechs();
         };
 
 	}; // end of core vm xtor
