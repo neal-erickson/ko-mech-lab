@@ -68,17 +68,17 @@
 	mechlab_loadouts.loadouts['35'] = new mechlab_loadouts.mechLoadout(
 		"RVN-4X",
 		35,
-		[18, 52, 10, 40, 8, 40, 8, 32, 32, 40, 40],
+		[18, 32, 10, 22, 8, 22, 8, 22, 22, 30, 30],
 		3233,
 		{
-			head: new mechlab_loadouts.componentLayout(6, 0, 0, 0, []),
-			centerTorso: new mechlab_loadouts.componentLayout(12, 0, 0, 0, []),
-			rightTorso: new mechlab_loadouts.componentLayout(12, 0, 0, 1, [1031]),
-			leftTorso: new mechlab_loadouts.componentLayout(12, 0, 0, 0, [], { ams: true }),
-			rightArm: new mechlab_loadouts.componentLayout(6, 0, 2, 0, [1001, 1001]),
-			leftArm: new mechlab_loadouts.componentLayout(6, 2, 0, 0, [1024, 1024]),
-			rightLeg: new mechlab_loadouts.componentLayout(6, 0, 1, 0, []),
-			leftLeg: new mechlab_loadouts.componentLayout(6, 0, 1, 0, [])
+			head: new mechlab_loadouts.componentLayout(6, 0, 0, 0, [3000]),
+			centerTorso: new mechlab_loadouts.componentLayout(12, 0, 0, 0, [1504]),
+			rightTorso: new mechlab_loadouts.componentLayout(12, 0, 0, 1, [1031, 1504, 1504]),
+			leftTorso: new mechlab_loadouts.componentLayout(12, 0, 0, 0, [1504, 1504, 2028], { ams: true }),
+			rightArm: new mechlab_loadouts.componentLayout(12, 0, 2, 0, [1001, 1001]),
+			leftArm: new mechlab_loadouts.componentLayout(12, 2, 0, 0, [1024, 1024, 2011]),
+			rightLeg: new mechlab_loadouts.componentLayout(6, 0, 1, 0, [3000, 3000]),
+			leftLeg: new mechlab_loadouts.componentLayout(6, 0, 1, 0, [3000, 3000])
 		},
 		{
 			jumpJets: true

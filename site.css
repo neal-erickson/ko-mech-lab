@@ -64,6 +64,8 @@ div.loadout-container ul li {
 	border-left: 1px solid black;
 	border-right: 1px solid black;
 	border-bottom: 1px dotted black;
+	background-color: #D8D8D8;
+	width:175px;
 }
 
 div.loadout-container ul li span.name {
@@ -90,6 +92,11 @@ div.loadout-container ul li.last {
 div.loadout-container ul li.empty {
 	border-style: dashed;
 	font-style: italic;
+	background: none;
+}
+
+div.loadout-container ul li.removeable {
+	background:none;
 }
 
 div.loadout-container ul.dropHighlight li.empty {
@@ -97,23 +104,6 @@ div.loadout-container ul.dropHighlight li.empty {
 }
 
 /* jQueryUI tabs overridden */
-/*#tabs-nohdr {
-	padding: 0px;
-	background: none;
-	border-width: 0px;
-}
-#tabs-nohdr .ui-tabs-nav {
-	padding-left: 0px;
-	background: transparent;
-	border-width: 0px 0px 1px 0px;
-	-moz-border-radius: 0px;
-	-webkit-border-radius: 0px;
-	border-radius: 0px;
-}
-#tabs-nohdr .ui-tabs-panel {
-	background: #f5f3e5 url(http://code.jquery.com/ui/1.9.1/themes/south-street/images/ui-bg_highlight-hard_100_f5f3e5_1x100.png) repeat-x scroll 50% top;
-	border-width: 0px 1px 1px 1px;
-}*/
 
 .ui-tabs {
 	zoom: 1;

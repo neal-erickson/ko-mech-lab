@@ -386,11 +386,11 @@
         	self.leftLeg
         ];
 
-        self.selectedComponent = ko.observable();
+        // self.selectedComponent = ko.observable();
 
-        self.displayEngine = ko.computed(function(){
-            return self.selectedComponent() !== undefined && self.selectedComponent().name() == 'Center Torso';
-        });//.extend({ logChange: 'de'});
+        // self.displayEngine = ko.computed(function(){
+        //     return self.selectedComponent() !== undefined && self.selectedComponent().name() == 'Center Torso';
+        // });//.extend({ logChange: 'de'});
 
         // Weapon weights
         self.totalItemsWeight = ko.computed(function() {
