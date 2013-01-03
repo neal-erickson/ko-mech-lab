@@ -50,7 +50,7 @@
 
 			<div data-bind="with: mechViewModel, visible: mechChosen" style="display:none;">
 				<!--Mech Overview-->
-				<div class="content-block" style="float:left;width:150px;margin:0 10px 0 0;">
+				<div class="content-block" style="float:left;width:135px;margin:0 10px 0 0;">
 					<table>
 						<tbody>
 							<tr>
@@ -64,7 +64,7 @@
 									<span data-bind="text: speed"></span>
 								</td>
 							</tr>
-							<tr>
+							<tr data-bind="css: { 'invalid' : !tonnageValid() }">
 								<td>
 									<span>Tons:</span>
 								</td>
@@ -80,11 +80,15 @@
 							</tr>
 							<tr>
 								<td>Alpha:</td>
-								<td>TODO</td>
+								<td>
+									<span data-bind="text: alphaStrike"></span>
+								</td>
 							</tr>
 							<tr>
 								<td>Heat:</td>
-								<td>TODO</td>
+								<td>
+									<span data-bind="text: heatEfficiency"></span>
+								</td>
 							</tr>
 						</tbody>
 					</table>
@@ -164,67 +168,67 @@
 									<tr>
 										<td>Head</td>
 										<td>
-											<input data-bind="value: armorHead" />
+											<input type="number" data-bind="value: armorHead" />
 										</td>
 									</tr>
 									<tr>
 										<td>Center Torso</td>
 										<td>
-											<input data-bind="value: armorCenterTorso" />
+											<input type="number" data-bind="value: armorCenterTorso" />
 										</td>
 									</tr>
 									<tr>
 										<td>Center Torso Rear</td>
 										<td>
-											<input data-bind="value: armorCenterTorsoRear" />
+											<input type="number" data-bind="value: armorCenterTorsoRear" />
 										</td>
 									</tr>
 									<tr>
 										<td>Right Torso</td>
 										<td>
-											<input data-bind="value: armorRightTorso" />
+											<input type="number" data-bind="value: armorRightTorso" />
 										</td>
 									</tr>
 									<tr>
 										<td>Right Torso Rear</td>
 										<td>
-											<input data-bind="value: armorRightTorsoRear" />
+											<input type="number" data-bind="value: armorRightTorsoRear" />
 										</td>
 									</tr>
 									<tr>
 										<td>Left Torso</td>
 										<td>
-											<input data-bind="value: armorLeftTorso" />
+											<input type="number" data-bind="value: armorLeftTorso" />
 										</td>
 									</tr>
 									<tr>
 										<td>Left Torso Rear</td>
 										<td>
-											<input data-bind="value: armorLeftTorsoRear" />
+											<input type="number" data-bind="value: armorLeftTorsoRear" />
 										</td>
 									</tr>
 									<tr>
 										<td>Left Arm</td>
 										<td>
-											<input data-bind="value: armorLeftArm" />
+											<input type="number" data-bind="value: armorLeftArm" />
 										</td>
 									</tr>
 									<tr>
 										<td>Right Arm</td>
 										<td>
-											<input data-bind="value: armorRightArm" />
+											<input type="number" data-bind="value: armorRightArm" />
 										</td>
 									</tr>
 									<tr>
 										<td>Left Leg</td>
 										<td>
-											<input data-bind="value: armorLeftLeg" />
+											<input type="number" data-bind="value: armorLeftLeg" />
 										</td>
 									</tr>
 									<tr>
 										<td>Right Leg</td>
 										<td>
-											<input data-bind="value: armorRightLeg" />
+											<input type="number" data-bind="value: armorRightLeg" />
 										</td>
 									</tr>
 									<tr>
@@ -426,6 +430,10 @@
 						data-click="removeItem">x</a>
 				</li>
 			</ul>
+		</script>
+
+		<script type="text/html" id="armorTemplate">
+			<input type="number" min="0" data-bind="value: $data"></input>
 		</script>
 
 	</body>

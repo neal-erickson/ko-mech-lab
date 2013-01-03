@@ -33,10 +33,7 @@
         self.heatSinksAreDouble = ko.computed(function() {
             return self.heatSinks() == 'double';
         });
-        self.heatSinksAreDouble.subscribe(function(newValue){
-            // This manual subscription is for clearing out existing heat sinks if the kind are switched
-            // TODO:
-        });
+        
 		self.artemis = ko.observable('none');//.extend({logChange: 'artemis'});
 
 		// Core components
@@ -90,6 +87,12 @@
     			return weight;
     		});
 
+            component.weapons = ko.computed(function() {
+                return ko.utils.arrayFilter(component.items(), function(item){
+                    if(item.weaponStats) return true;
+                });
+            }).extend({logChange: 'weapons'});
+
             var calculateHardpointsUsed = function(weaponType) {
                 var used = 0;
                 $.each(component.items(), function(index, item) {
@@ -103,7 +106,6 @@
             component.amsUsed = ko.computed(function() {
                 return calculateHardpointsUsed(4);
             });
-
     		component.ballisticHardpointsUsed = ko.computed(function() {
     			return calculateHardpointsUsed(0);
     		});
@@ -135,7 +137,7 @@
     				text += component.missileHardpointsUsed() + '/' + component.missileHardpoints() + 'M ' ;
     			}
     			if(component.ams()) {
-    				text += component.amsUsed() + '/1 AMS'; // TODO
+    				text += component.amsUsed() + '/1 AMS';
     			}
 
                 if(text === ''){
@@ -172,7 +174,7 @@
 					for(var i = 0; i < item.slots; i++){
                         var slot = new Slot(item.name, {
                             data: item,
-                            removeable: isRemoveable(item), // TODO : engine
+                            removeable: isRemoveable(item),
                             first: i == 0,
                             last: i == item.slots - 1
                         });
@@ -413,7 +415,16 @@
             }
 
             return slots;
-        }).extend({logChange: 'rcs'});
+        });//.extend({logChange: 'rcs'});
+
+        self.heatSinksAreDouble.subscribe(function(newValue){
+            // This manual subscription is for clearing out existing heat sinks if the kind are switched
+             $.each(self.componentsList, function(index, component){
+                var heatSinkId = newValue ? 3000 : 3001;
+                var heatSink = mechlab_items.getById(heatSinkId);
+                component.items.remove(heatSink);
+            });
+        });
 
         // Weapon weights
         self.totalItemsWeight = ko.computed(function() {
@@ -426,6 +437,19 @@
         });
 
         self.alphaStrike = ko.computed(function() {
+            var alpha = 0;
+            $.each(self.componentsList, function(i, component){
+                $.each(component.weapons(), function(j, weapon) {
+                    var multiplier = weapon.weaponStats.ammoPerShot.toFloat();
+                    if(multiplier === 0) multiplier = 1;
+                    var damage = multiplier * weapon.weaponStats.damage.toFloat();
+                    alpha += damage;
+                });
+            });
+            return alpha;
+        });
+        
+        self.heatEfficiency = ko.computed(function() {
             return 0;
         });
 
@@ -480,6 +504,10 @@
 
         self.tonnageDisplay = ko.computed(function() {
             return Math.round(self.tonnage() * 100) / 100;
+        });
+
+        self.tonnageValid = ko.computed(function() {
+            return self.tonnage() <= self.maxTonnage();
         });
 
         // This is the function to load a mech

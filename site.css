@@ -7,6 +7,7 @@ body {
 div#primary {
 	padding-left: 10px;
 	padding-right: 10px;
+	width: 1350px;
 }
 
 hr {
@@ -34,7 +35,6 @@ div.area {
 
 div.loadout {
 	float:left;
-	/*width:210px;*/
 }
 
 div.content-block {
@@ -49,6 +49,12 @@ div.loadout ul {
 	margin: 0px 0px 0px 0px;
 	padding: 0px 0px 0px 0px;
 	width:165px;
+}
+
+/* Validity */
+
+tr.invalid td {
+	color: red;
 }
 
 /* Item View styles */
