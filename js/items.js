@@ -11,6 +11,8 @@
         return hashed;
     };
 
+    // TODO : Implement object with 'static' methods, then $.extend() on item 'types'
+
     loadMechlabItems = function(callback){
         $.getJSON('data/item-stats.json', function(data) {
             var cleaned = cleanupItems(data);
@@ -18,6 +20,8 @@
         });
     };
 
+    // This function is to modify the created items object
+    // with better methods, ordering, etc.
     var cleanupItems = function(items) {
         // Custom arrays (are classified as modules)
         items.engines = [];

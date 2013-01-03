@@ -308,13 +308,13 @@
 
             component.outputComponentConfig = function(){
                 return new mechlab_loadouts.componentLayout(
-                    component.criticalSlots(),
-                    component.ballisticHardpoints(),
-                    component.energyHardpoints(),
-                    component.missileHardpoints(),
-                    component.itemIds(),
+                    component.criticalSlots(), 
+                    component.itemIds(), 
                     {
-                        ams: component.ams()
+                        ams: component.ams(),
+                        ballistic: component.ballisticHardpoints(),
+                        energy: component.energyHardpoints(),
+                        missile: component.missileHardpoints()
                     });
             };
 
@@ -448,7 +448,7 @@
             });
             return alpha;
         });
-        
+
         self.heatEfficiency = ko.computed(function() {
             return 0;
         });
