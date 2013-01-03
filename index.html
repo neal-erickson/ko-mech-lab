@@ -99,7 +99,7 @@
 					</p>
 				</div>
 				
-				<div class="content-block" style="float:left;width:800px;">
+				<div class="content-block" style="float:left;">
 					<div data-bind="jqueryui: { widget: 'tabs' }">
 						<ul>
 							<li><a href="#loadout-1">Loadout</a></li>
@@ -111,7 +111,12 @@
 							<table class="mech-layout">
 								<tbody>
 									<tr>
-										<td></td>
+										<td>
+											<p>Critical Slots:</p>
+											<p>
+												<span data-bind="text: remainingCriticalSlots"></span>
+											</p>
+										</td>
 										<td>
 											<div class="loadout-container" data-bind="template: { name: 'component-template', data: head }"></div>
 											<div>
@@ -246,17 +251,6 @@
 									</tr>
 									<tr>
 										<td>
-											<label>Heat Sinks</label>
-										</td>
-										<td>
-											<select id="heatSinkSelect" data-bind="value: heatSinks">
-												<option value="single">Single</option>
-												<option value="double">Double</option>
-											</select>
-										</td>
-									</tr>
-									<tr>
-										<td>
 											<label>Armor Type</label>
 										</td>
 										<td>
@@ -268,10 +262,21 @@
 									</tr>
 									<tr>
 										<td>
+											<label>Heat Sinks</label>
+										</td>
+										<td>
+											<select id="heatSinkSelect" data-bind="value: heatSinks">
+												<option value="single">Single</option>
+												<option value="double">Double</option>
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<td>
 											<label>Artemis</label>
 										</td>
 										<td>
-											<select id="artemisSelect" data-bind="value: artemis">
+											<select id="artemisSelect" data-bind="value: artemis" disabled>
 												<option value="none">None</option>
 												<option value="equipped">Equipped</option>
 											</select>

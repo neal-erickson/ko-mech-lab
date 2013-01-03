@@ -22,8 +22,21 @@
 
 		// Upgrade settings
 		self.structure = ko.observable('standard');
+        self.structureIsEndoSteel = ko.computed(function() {
+            return self.structure() != 'standard';
+        });
 		self.armor = ko.observable('standard');
+        self.armorIsFerroFibrous = ko.computed(function() {
+            return self.armor() != 'standard';
+        });
 		self.heatSinks = ko.observable('single');
+        self.heatSinksAreDouble = ko.computed(function() {
+            return self.heatSinks() == 'double';
+        });
+        self.heatSinksAreDouble.subscribe(function(newValue){
+            // This manual subscription is for clearing out existing heat sinks if the kind are switched
+            // TODO:
+        });
 		self.artemis = ko.observable('none');//.extend({logChange: 'artemis'});
 
 		// Core components
@@ -387,11 +400,20 @@
         	self.leftLeg
         ];
 
-        // self.selectedComponent = ko.observable();
+        self.remainingCriticalSlots = ko.computed(function(){
+            var slots = 0;
+            $.each(self.componentsList, function(index, item){
+                slots += item.criticalSlotsOpen();
+            });
+            if(self.structureIsEndoSteel()){
+                slots -= 14;
+            }
+            if(self.armorIsFerroFibrous()){
+                slots -= 14;
+            }
 
-        // self.displayEngine = ko.computed(function(){
-        //     return self.selectedComponent() !== undefined && self.selectedComponent().name() == 'Center Torso';
-        // });//.extend({ logChange: 'de'});
+            return slots;
+        }).extend({logChange: 'rcs'});
 
         // Weapon weights
         self.totalItemsWeight = ko.computed(function() {
