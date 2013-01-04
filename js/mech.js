@@ -11,11 +11,10 @@
 
         // TODO : Make everything possible computed from this
         self.mech = ko.observable().extend({ logChange: 'mech'});
-        
+
+        // Core mech stats
         self.name = ko.observable();
 		self.maxTonnage = ko.observable(50);
-
-        // Whether the mech has lower arm actuators and hands. Most do.
         self.hasHands = ko.observable(true);
         self.canHasJumpJets = ko.observable(false);
         self.ecm = ko.observable(false);
@@ -33,10 +32,9 @@
         self.heatSinksAreDouble = ko.computed(function() {
             return self.heatSinks() == 'double';
         });
-        
 		self.artemis = ko.observable('none');//.extend({logChange: 'artemis'});
 
-		// Core components
+		// Engine components
 		self.engine = ko.observable();
     	self.engineWeight = ko.computed(function() {
     		if(self.engine()){
@@ -48,6 +46,23 @@
         self.speed = ko.computed(function() {
             if(!self.engine()) { return 0; }
             return self.engine().engineStats.rating.toFloat() * 16.2 / self.maxTonnage(); 
+        });
+
+        self.engineHeatSinks = ko.observableArray();
+        self.numberOfEngineHeatSinks = ko.computed(function() {
+            if(!self.engine()) return 0;
+            var rating = self.engine().engineStats.rating.toFloat();
+            var totalSinks = Math.round(Math.floor(rating / 25));
+            var sinks = Math.max(totalSinks - 10, 0);
+            return sinks;
+        });//.extend({logChange: 'sinks'});
+
+        self.hasRequiredHeatSinks = ko.computed(function() {
+            // If its a rating 250 or above, no external heat sinks required
+            if(self.numberOfEngineHeatSinks() >= 10){
+                return true;
+            }
+            // Otherwise, our mech needs 10 sinks to keep from lighting on fire
         });
 
     	// Constructor for mech 'component' such as left arm, center torso, etc
@@ -91,7 +106,7 @@
                 return ko.utils.arrayFilter(component.items(), function(item){
                     if(item.weaponStats) return true;
                 });
-            }).extend({logChange: 'weapons'});
+            });//.extend({logChange: 'weapons'});
 
             var calculateHardpointsUsed = function(weaponType) {
                 var used = 0;
@@ -188,7 +203,7 @@
 
 			component.criticalSlotsOpen = ko.computed(function() {
     			return component.criticalSlots() - component.slots().length;
-    		});//.extend({ logChange: 'criticalSlotsOpen'});
+    		}).extend({ logChange: component.name() + ' criticalSlotsOpen'});
 
     		// This is the computed value that pads out the slots with empty placeholders for visual display. Should not be used for computation.
 			component.displaySlots = ko.computed(function() {
@@ -320,6 +335,22 @@
 
     	}; // end component xtor
 
+        // This is a hacked component for accepting heat sinks only
+        self.engineComponent = new Component('Engine Heat Sinks', {});
+        // self.engineComponent.criticalSlots = ko.computed(function() {
+        //     return self.numberOfEngineHeatSinks();
+        // }).extend({logChange: 'eng cs'});
+        self.numberOfEngineHeatSinks.subscribe(function(newValue){
+            self.engineComponent.criticalSlots(newValue);
+            
+        });
+        var engineAccept = self.engineComponent.accept;
+        self.engineComponent.accept = function(incoming){
+            var item = ko.dataFor(incoming[0]);
+            
+            return engineAccept(incoming) && item.cType == 'CHeatSinkStats';
+        };
+
         // Convenience xtor for "fixed" hardpoint items (gyro, etc)
         var fixedItem = function(name, slots) {
             this.name = name;
@@ -401,6 +432,9 @@
         	self.rightLeg,
         	self.leftLeg
         ];
+
+        
+
 
         self.remainingCriticalSlots = ko.computed(function(){
             var slots = 0;

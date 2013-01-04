@@ -67,13 +67,16 @@
 		doubleHeatSink: 3001
 	};
 
+	var engines = {
+		std300: 3258
+	};
+
 	// Mech loadouts
 
 	mechlab_loadouts.loadouts['11'] = new mechlab_loadouts.mechLoadout(
-		"DRG-1C",
-		60,
+		"DRG-1C", 60,
 		[18, 56, 24, 36, 20, 36, 20, 40, 40, 56, 56],
-		3258,
+		engines.std300,
 		{
 			head: new mechlab_loadouts.componentLayout(1, []),
 			centerTorso: new mechlab_loadouts.componentLayout(2, [weapons.lrm10], { missile: 1}),
