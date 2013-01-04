@@ -417,8 +417,6 @@
             return slots;
         });//.extend({logChange: 'rcs'});
 
-        self.
-
         self.heatSinksAreDouble.subscribe(function(newValue){
             // This manual subscription is for clearing out existing heat sinks if the kind are switched
              $.each(self.componentsList, function(index, component){
