@@ -32,7 +32,8 @@
 		</script>
 		<div id="primary">
 			<h2>MechCheck (0.1)</h2>
-
+			<p>This is a browser-based implementation of the Mechwarrior Online mechlab, allowing you to test out the feasibility of various loadouts. Select a standard mech chassis variant and then click and drag much like the standard mechlab. Items can be removed by clicking the 'x' on their right.</p>
+			<hr />
 			<div id="chassisSelection" style="margin-bottom: 10px;">
 				<span>Select mech:</span>
 				<select id="chassisSelect" data-bind="
@@ -43,14 +44,14 @@
 				<button id="buttonSelectMech" data-bind="click: selectMech">Go</button>
 
 				<span>&nbsp;or load saved:</span>
-				<select data-bind="options: savedMechs, value: selectedSavedMech"></select>
+				<select data-bind="options: savedMechs, value: selectedSavedMech, optionsCaption: '(select saved mech)'"></select>
 				<button id="loadSavedButton" data-bind="click: loadSaved">Load</button>
 				<button id="clearButton" data-bind="click: clearSaved">Clear</button>
 			</div>
 
 			<div data-bind="with: mechViewModel, visible: mechChosen" style="display:none;">
 				<!--Mech Overview-->
-				<div class="content-block" style="float:left;width:135px;margin:0 10px 0 0;">
+				<div class="content-block" style="float:left;width:135px;">
 					<table>
 						<tbody>
 							<tr>
@@ -70,6 +71,14 @@
 								</td>
 								<td>
 									<span data-bind="text: tonnageDisplay"></span>/<span data-bind="text: maxTonnage"></span>	
+								</td>
+							</tr>
+							<tr data-bind="css: { 'invalid' : remainingCriticalSlots() < 0 }">
+								<td>
+									<span>Slots:</span>
+								</td>
+								<td>
+									<span data-bind="text: remainingCriticalSlots"></span>
 								</td>
 							</tr>
 							<tr>
@@ -115,12 +124,7 @@
 							<table class="mech-layout">
 								<tbody>
 									<tr>
-										<td>
-											<p>Critical Slots:</p>
-											<p>
-												<span data-bind="text: remainingCriticalSlots"></span>
-											</p>
-										</td>
+										<td></td>
 										<td>
 											<div class="loadout-container" data-bind="template: { name: 'component-template', data: head }"></div>
 											<div>
@@ -290,128 +294,86 @@
 							</table>
 						</div>
 					</div>
-
-					<!-- <table id="loadoutTable">
-						<tbody>
-							<tr>
-								<td>
-									<div data-bind="template: { name: 'componentList', data: rightArm }"></div>
-								</td>
-								<td>
-									<div data-bind="template: { name: 'componentList', data: rightTorso }"></div>
-								</td>
-								<td>
-									<div data-bind="template: { name: 'componentList', data: head }"></div>
-								</td>
-								<td>
-									<div data-bind="template: { name: 'componentList', data: leftTorso }"></div>
-								</td>
-								<td>
-									<div data-bind="template: { name: 'componentList', data: leftArm }"></div>
-								</td>
-							</tr>
-							<tr>
-								<td colspan="3">
-									<div>
-										<span>Engine:</span>
-										<select data-bind="options: $parent.items.engines, optionsText: 'name', value: engine">
-										</select>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td></td>
-								<td>
-									<div data-bind="template: { name: 'componentList', data: rightLeg }"></div>
-								</td>
-								<td>
-									<div data-bind="template: { name: 'componentList', data: centerTorso }"></div>
-								</td>
-								<td>
-									<div data-bind="template: { name: 'componentList', data: leftLeg }"></div>
-								</td>
-								<td></td>
-							</tr>
-						</tbody>
-					</table> -->
 				</div>
 
-				<div id="itemTabs" data-bind="jqueryui: { widget: 'tabs' }" style="float:left;">
-					<ul>
-						<li><a href="#fragment-1">Weapons</a></li>
-						<li><a href="#fragment-2">Ammo</a></li>
-						<li><a href="#fragment-3">Equipment</a></li>
-					</ul>
-					<div id="fragment-1">
-						<table>
-							<thead>
-								<tr>
-									<th></th>
-									<th>Id</th>
-									<th>Tons</th>
-									<th>Slots</th>
-									<th>Damage</th>
-									<th>Heat</th>
-								</tr>
-							</thead>
-							<tbody data-bind="foreach: $parent.items.weapons">
-								<tr data-bind="jqueryui: { widget: 'draggable', options: $root.draggableOptions }">
-									<td>
-										<span data-bind="text: name"></span>
-									</td>
-									<td>
-										<span data-bind="text: id"></span>
-									</td>
-									<td>
-										<span data-bind="text: tons"></span>
-									</td>
-									<td>
-										<span data-bind="text: slots"></span>
-									</td>
-									<td>
-										<span data-bind="text: weaponStats.damage"></span>
-									</td>
-									<td>
-										<span data-bind="text: weaponStats.heat"></span>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					<div id="fragment-2">
-						<ul data-bind="foreach: $parent.items.ammoTypes">
-							<li data-bind="jqueryui: { widget: 'draggable', options: $root.draggableOptions }">
-								<span data-bind="text: name"></span>
-							</li>
+				<div class="content-block" style="float:left;">
+					<div id="itemTabs" data-bind="jqueryui: { widget: 'tabs' }" style="float:left;">
+						<ul>
+							<li><a href="#fragment-1">Weapons</a></li>
+							<li><a href="#fragment-2">Ammo</a></li>
+							<li><a href="#fragment-3">Equipment</a></li>
 						</ul>
-					</div>
-					<div id="fragment-3">
-						<table>
-							<thead>
-								<tr>
-									<td></td>
-									<td>ID</td>
-									<td>Tons</td>
-									<td>Slots</td>
-								</tr>
-							</thead>
-							<tbody data-bind="foreach: $parent.items.equipment">
-								<tr data-bind="jqueryui: { widget: 'draggable', options: $root.draggableOptions }">
-									<td>
-										<span data-bind="text: name"></span>
-									</td>
-									<td>
-										<span data-bind="text: id"></span>
-									</td>
-									<td>
-										<span data-bind="text: tons"></span>
-									</td>
-									<td>
-										<span data-bind="text: slots"></span>
-									</td>
-								</tr>
-							</tbody>
-						</table>
+						<div id="fragment-1">
+							<table>
+								<thead>
+									<tr>
+										<th></th>
+										<th>Id</th>
+										<th>Tons</th>
+										<th>Slots</th>
+										<th>Damage</th>
+										<th>Heat</th>
+									</tr>
+								</thead>
+								<tbody data-bind="foreach: $parent.items.weapons">
+									<tr data-bind="jqueryui: { widget: 'draggable', options: $root.draggableOptions }">
+										<td>
+											<span data-bind="text: name"></span>
+										</td>
+										<td>
+											<span data-bind="text: id"></span>
+										</td>
+										<td>
+											<span data-bind="text: tons"></span>
+										</td>
+										<td>
+											<span data-bind="text: slots"></span>
+										</td>
+										<td>
+											<span data-bind="text: weaponStats.damage"></span>
+										</td>
+										<td>
+											<span data-bind="text: weaponStats.heat"></span>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div id="fragment-2">
+							<ul data-bind="foreach: $parent.items.ammoTypes">
+								<li data-bind="jqueryui: { widget: 'draggable', options: $root.draggableOptions }">
+									<span data-bind="text: name"></span>
+								</li>
+							</ul>
+						</div>
+						<div id="fragment-3">
+							<table>
+								<thead>
+									<tr>
+										<td></td>
+										<td>ID</td>
+										<td>Tons</td>
+										<td>Slots</td>
+									</tr>
+								</thead>
+								<tbody data-bind="foreach: $parent.items.equipment">
+									<tr data-bind="jqueryui: { widget: 'draggable', options: $root.draggableOptions }">
+										<td>
+											<span data-bind="text: name"></span>
+										</td>
+										<td>
+											<span data-bind="text: id"></span>
+										</td>
+										<td>
+											<span data-bind="text: tons"></span>
+										</td>
+										<td>
+											<span data-bind="text: slots"></span>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>

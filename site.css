@@ -7,7 +7,7 @@ body {
 div#primary {
 	padding-left: 10px;
 	padding-right: 10px;
-	width: 1350px;
+	min-width: 1350px;
 }
 
 hr {
@@ -24,6 +24,8 @@ ul.slot-list {
 	font-family: monospace;
 	list-style-type: none;
 	padding-left: 0px;
+	margin-top: 2px;
+	margin-bottom: 2px;
 }
 
 /* Primary layout styles */
@@ -41,6 +43,7 @@ div.content-block {
 	border:1px solid black;
 	border-radius: 10px;
 	padding: 5px;
+	margin-right: 5px;
 }
 
 div.loadout ul {
@@ -107,7 +110,7 @@ div.loadout-container ul li.last {
 div.loadout-container ul li.empty {
 	border-style: dashed;
 	font-style: italic;
-	background: none;
+	background-color: #C0C0C0;
 }
 
 div.loadout-container ul li.removeable {
