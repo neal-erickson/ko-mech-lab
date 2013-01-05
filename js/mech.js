@@ -179,23 +179,37 @@
                 return item.tons != 0;
             };
 
+            component.useItemMultipleSlots = ko.observable(true);
+
     		// Slots is items but taking up the number of slots based on the item's value
     		component.slots = ko.computed(function(){
 				var slots = [];
 				var allItems = component.fixedItems().concat(component.items());
 				// Iterate through the items, adding the slots based on the number each one takes up
 				$.each(allItems, function(index, item) {
-					// Make items occupy x number of slots for display
-					for(var i = 0; i < item.slots; i++){
+                    if(component.useItemMultipleSlots()){
+    					// Make items occupy x number of slots for display
+    					for(var i = 0; i < item.slots; i++){
+                            var slot = new Slot(item.name, {
+                                data: item,
+                                removeable: isRemoveable(item),
+                                first: i == 0,
+                                last: i == item.slots - 1
+                            });
+                            //console.log(item, i == 0, item.slots - 1);
+                            slots.push(slot);
+    					};
+                    } else {
                         var slot = new Slot(item.name, {
                             data: item,
                             removeable: isRemoveable(item),
-                            first: i == 0,
-                            last: i == item.slots - 1
+                            first: true,
+                            last: true
                         });
+                        //debugger;
                         //console.log(item, i == 0, item.slots - 1);
                         slots.push(slot);
-					};
+                    }
 				});
 					
 				return slots;
@@ -337,18 +351,21 @@
 
         // This is a hacked component for accepting heat sinks only
         self.engineComponent = new Component('Engine Heat Sinks', {});
-        // self.engineComponent.criticalSlots = ko.computed(function() {
-        //     return self.numberOfEngineHeatSinks();
-        // }).extend({logChange: 'eng cs'});
+        self.engineComponent.useItemMultipleSlots(false);
         self.numberOfEngineHeatSinks.subscribe(function(newValue){
             self.engineComponent.criticalSlots(newValue);
-            
+            // TODO : remove existing
         });
         var engineAccept = self.engineComponent.accept;
         self.engineComponent.accept = function(incoming){
-            var item = ko.dataFor(incoming[0]);
-            
-            return engineAccept(incoming) && item.cType == 'CHeatSinkStats';
+            var item = ko.dataFor(incoming[0]);            
+            if(item.cType != 'CHeatSinkStats') return; // only heat sinks allowed
+            if(self.engineComponent.criticalSlotsOpen() < 1) return false; // Check that there is a slot
+            // Check heat sink type
+            if(self.heatSinks() === 'single'){
+                return item.name === 'HeatSink_MkI';
+            }
+            return item.name === 'DoubleHeatSink_MkI';
         };
 
         // Convenience xtor for "fixed" hardpoint items (gyro, etc)
@@ -359,33 +376,9 @@
         };
 
     	// Mech hardpoints
-        // Big change: not leveraging fixed items for now
-    	self.head = new Component('Head', {
-    		// fixedItems: ko.observableArray([
-    		// 	new fixedItem('Life Support', '2', '0'),
-    		// 	new fixedItem('Sensors', '2', '0'),
-    		// 	new fixedItem('Cockpit', '1', '0')
-    		// ])
-    	});
-
-        // var fixedArmItems = ko.computed(function(){
-        //     var armItems = [
-        //         new fixedItem('Shoulder', "1", "0"),
-        //         new fixedItem('Upper Arm Actuator', "1", "0")
-        //     ];
-        //     if(self.hasHands()){
-        //         armItems.push(new fixedItem('Lower Arm Actuator', "1", "0"));
-        //         armItems.push(new fixedItem('Hand Actuator', "1", "0"));
-        //     }
-        //     return armItems;
-        // });
-    	self.rightArm = new Component("Right Arm", {
-            //fixedItems: fixedArmItems
-        });
-        self.leftArm = new Component("Left Arm", {
-            //fixedItems: fixedArmItems
-        });
-
+    	self.head = new Component('Head', {});
+    	self.rightArm = new Component("Right Arm", {});
+        self.leftArm = new Component("Left Arm", {});
         var torsofixedItems = ko.computed(function() {
             if(self.engine() && self.engine().name.indexOf('XL') !== -1){
                 return [new fixedItem("XL Engine", "3", "0")];
@@ -398,28 +391,9 @@
 		self.leftTorso = new Component("Left Torso", {
             fixedItems: torsofixedItems
         });
-        self.centerTorso = new Component("Center Torso", {
-            // fixedItems: ko.computed(function() {
-            //     var items = [new fixedItem('Gyro', "4", "0")];
-            //     if(self.engine()) {
-            //         items.push(self.engine());
-            //     }
-            //     return items;
-            // })
-        });
-
-        // var fixedLegItems = ko.observableArray([
-        // 	new fixedItem('Hip', "1", "0"),
-        //     new fixedItem('Upper Leg Actuator', "1", "0"),
-        //     new fixedItem('Lower Leg Actuator', "1", "0"),
-        //     new fixedItem('Foot Actuator', "1", "0")
-        // ]);
-        self.rightLeg = new Component('Right Leg', {
-        	//fixedItems: fixedLegItems
-        });
-        self.leftLeg = new Component('Left Leg', {
-        	//fixedItems: fixedLegItems
-        });
+        self.centerTorso = new Component("Center Torso", {});
+        self.rightLeg = new Component('Right Leg', {});
+        self.leftLeg = new Component('Left Leg', {});
 
         // Component abstractions
         self.componentsList = [
@@ -433,8 +407,7 @@
         	self.leftLeg
         ];
 
-        
-
+        self.componentsListPlusEngineSinks = self.componentsList.concat(self.engineComponent);
 
         self.remainingCriticalSlots = ko.computed(function(){
             var slots = 0;
@@ -447,13 +420,12 @@
             if(self.armorIsFerroFibrous()){
                 slots -= 14;
             }
-
             return slots;
         });//.extend({logChange: 'rcs'});
 
         self.heatSinksAreDouble.subscribe(function(newValue){
             // This manual subscription is for clearing out existing heat sinks if the kind are switched
-             $.each(self.componentsList, function(index, component){
+             $.each(self.componentsListPlusEngineSinks, function(index, component){
                 var heatSinkId = newValue ? 3000 : 3001;
                 var heatSink = mechlab_items.getById(heatSinkId);
                 component.items.remove(heatSink);
@@ -463,8 +435,7 @@
         // Weapon weights
         self.totalItemsWeight = ko.computed(function() {
         	var weight = 0;
-        	
-        	$.each(self.componentsList, function(index, item){
+        	$.each(self.componentsListPlusEngineSinks, function(index, item){
         		weight += item.itemsWeight();
         	});
         	return weight;
