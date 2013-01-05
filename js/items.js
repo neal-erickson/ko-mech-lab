@@ -11,13 +11,31 @@
         return hashed;
     };
 
-    // TODO : Implement object with 'static' methods, then $.extend() on item 'types'
-
     loadMechlabItems = function(callback){
         $.getJSON('data/item-stats.json', function(data) {
             var cleaned = cleanupItems(data);
             callback(cleaned);
         });
+    };
+
+
+    // TODO : Implement object with 'static' methods, then $.extend() on item 'types'
+    var itemSharedMethods = {
+        isWeapon: function(){
+            return !!this.weaponStats;
+        },
+        isAmmo: function(){
+            return !!this.ammoTypeStats;
+        },
+        isHeatSink: function() {
+            return this.cType === 'CHeatSinkStats';
+        },
+        isEngine: function(){
+            return this.cType === 'CEngineStats';
+        },
+        isJumpJets: function(){
+            return this.cType === 'CJumpJetStats';
+        }
     };
 
     // This function is to modify the created items object
@@ -74,6 +92,12 @@
         items.getById = function(id) {
             return items.idHash[id];
         }
+
+        // Add custom item methods
+        $.each(allItems, function(index, item){
+            $.extend(item, itemSharedMethods);
+            //console.log(item.name, item.isWeapon(), item.isEngine(), item.isAmmo(), item.isHeatSink());
+        });
 
         return items; // give it back bro
     };

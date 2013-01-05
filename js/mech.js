@@ -62,7 +62,7 @@
             if(self.numberOfEngineHeatSinks() >= 10){
                 return true;
             }
-            // Otherwise, our mech needs 10 sinks to keep from lighting on fire
+            // Otherwise, our mech needs a minimum of 10 sinks to keep from lighting on fire
         });
 
     	// Constructor for mech 'component' such as left arm, center torso, etc
@@ -86,32 +86,28 @@
     		// this part of the mech has been assigned
     		component.items = ko.observableArray();//.extend({ logChange: 'items'});
 
-            component.itemIds = ko.computed(function() {
-                var ids = [];
-                $.each(component.items(), function(index, item) {
-                    ids.push(item.id);
-                });
-                return ids;
-            });
+            // The item ids - used for saving/loading
+            component.itemIds = ko.computed(function(){
+                return component.items().map(function(item){ return item.id; });
+            });//.extend({logChange: 'itemids'});
 
+            // Weight of item within this component
     		component.itemsWeight = ko.computed(function() {
-    			var weight = 0;
-    			$.each(component.items(), function(index, item) {
-    				weight += parseFloat(item.tons);
-    			});
-    			return weight;
+                return component.items().reduce(function(previousValue, currentValue, index, array){
+                    return previousValue + currentValue.tons.toFloat();
+                }, 0);
     		});
 
             component.weapons = ko.computed(function() {
-                return ko.utils.arrayFilter(component.items(), function(item){
-                    if(item.weaponStats) return true;
+                return component.items().filter(function(item, index){
+                    return item.isWeapon();
                 });
             });//.extend({logChange: 'weapons'});
 
             var calculateHardpointsUsed = function(weaponType) {
                 var used = 0;
-                $.each(component.items(), function(index, item) {
-                    if(item.weaponStats && item.weaponStats.type == weaponType) {
+                $.each(component.weapons(), function(index, item) {
+                    if(item.weaponStats.type == weaponType) {
                         used++;
                     }
                 });
@@ -172,7 +168,7 @@
 
             var isRemoveable = function(item){
                 // Engine can't be removed normal way
-                if(item.cType == "CEngineStats"){
+                if(item.isEngine()){
                     return false;
                 }
                 // Fixed items have no tonnage. Currently. Hopefully.
@@ -217,7 +213,11 @@
 
 			component.criticalSlotsOpen = ko.computed(function() {
     			return component.criticalSlots() - component.slots().length;
-    		}).extend({ logChange: component.name() + ' criticalSlotsOpen'});
+    		});//.extend({ logChange: component.name() + ' criticalSlotsOpen'});
+
+            component.criticalSlotsInvalid = ko.computed(function(){
+                return component.criticalSlotsOpen() < 0;
+            });
 
     		// This is the computed value that pads out the slots with empty placeholders for visual display. Should not be used for computation.
 			component.displaySlots = ko.computed(function() {
@@ -238,36 +238,37 @@
     		var checkSlots = function(item) {
                 // TODO : This is a gross hack. Add hardcoded tonnage to ammo types
                 if(!item.slots) { item.slots = "1"; }
-
     			return component.criticalSlotsOpen() >= item.slots;
     		};
 
             var checkEquipmentType = function(item) {
+                if(item.isJumpJets()){
+                    // TODO : Enforce orrect jump jet class
+                    return self.canHasJumpJets();
+                }
+                if(item.isHeatSink()){
+                    if(self.heatSinks() === 'single'){
+                        return item.name === 'HeatSink_MkI';
+                    }
+                    return item.name === 'DoubleHeatSink_MkI';
+                }
+
+                // TODO remove this
                 switch(item.cType){
-                    case 'CJumpJetStats':
-                        // TODO : Enforce orrect jump jet class
-                        return self.canHasJumpJets();
-                    case 'CHeatSinkStats':
-                        if(self.heatSinks() === 'single'){
-                            return item.name === 'HeatSink_MkI';
-                        }
-                        return item.name === 'DoubleHeatSink_MkI';
                     case 'CGECMStats':
                         return self.ecm();
-                    default:
-                        return true; // default pass through
                 };
+
                 // TODO : Ecm, Beagle, CASE
+
+                return true; // default pass through
             };
 
 			var checkWeaponHardpoints = function(item){
-	    		if(!item.weaponStats){ return true; } // pass-through
-				
-	    		// Grab weapon type enum
-	    		var weaponType = item.weaponStats.type;
+	    		if(!item.isWeapon()) return true; // pass-through for non weapons
 
 				// Return a check expression
-				switch(weaponType){
+				switch(item.weaponStats.type){
 					case '0': 
 						return component.ballisticHardpointsOpen() >= 1;
 					case '1':
@@ -278,13 +279,13 @@
 						return component.ams() && component.amsUsed() < 1; // TODO
 				}
 				return false;
-	    	}
+	    	};
 
             // Drag n drop functions
 			component.accept = function(incoming) {
     			var item = ko.dataFor(incoming[0]);
 
-    			// Return '&&'' of slots, hardpoints, etc
+    			// Return '&&' of slots, hardpoints, etc
     			return checkSlots(item)
                     && checkEquipmentType(item)
     				&& checkWeaponHardpoints(item);
@@ -318,11 +319,9 @@
             };
 
             var getItemsByIds = function(ids){
-                var items = [];
-                $.each(ids, function(index, id) {
-                    items.push(mechlab_items.getById(id));
+                return ids.map(function(id){
+                    return mechlab_items.getById(id);
                 });
-                return items;
             };
 
             // Convenience function for loading mech specifications
@@ -354,7 +353,7 @@
         self.engineComponent.useItemMultipleSlots(false);
         self.numberOfEngineHeatSinks.subscribe(function(newValue){
             self.engineComponent.criticalSlots(newValue);
-            // TODO : remove existing
+            // TODO : remove existing???
         });
         var engineAccept = self.engineComponent.accept;
         self.engineComponent.accept = function(incoming){
@@ -434,11 +433,9 @@
 
         // Weapon weights
         self.totalItemsWeight = ko.computed(function() {
-        	var weight = 0;
-        	$.each(self.componentsListPlusEngineSinks, function(index, item){
-        		weight += item.itemsWeight();
-        	});
-        	return weight;
+            return self.componentsListPlusEngineSinks.reduce(function(previousValue, currentValue){
+                return previousValue + currentValue.itemsWeight(); 
+            }, 0);
         });
 
         self.alphaStrike = ko.computed(function() {
@@ -454,6 +451,7 @@
             return alpha;
         });
 
+        // TODO Implement
         self.heatEfficiency = ko.computed(function() {
             return 0;
         });

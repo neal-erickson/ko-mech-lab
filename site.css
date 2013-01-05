@@ -82,7 +82,7 @@ div.loadout-container ul li {
 	border-left: 1px solid black;
 	border-right: 1px solid black;
 	border-bottom: 1px dotted black;
-	background-color: #D8D8D8;
+	background-color: white;
 	width:175px;
 }
 
@@ -114,10 +114,10 @@ div.loadout-container ul li.empty {
 }
 
 div.loadout-container ul li.removeable {
-	background:none;
+	/*background:none;*/
 }
 
-div.loadout-container ul.dropHighlight li.empty {
+div.loadout-container ul.dropHighlight {
 	background-color: #00CC99;
 }
 
