@@ -94,9 +94,21 @@
 								</td>
 							</tr>
 							<tr>
+								<td>DPS:</td>
+								<td>
+									<span data-bind="text: dps"></span>
+								</td>
+							</tr>
+							<tr>
 								<td>Heat:</td>
 								<td>
 									<span data-bind="text: heatEfficiency"></span>
+								</td>
+							</tr>
+							<tr>
+								<td>HPS:</td>
+								<td>
+									<span data-bind="text: hps"></span>
 								</td>
 							</tr>
 						</tbody>
@@ -382,7 +394,7 @@
 		</div><!--end primary div-->
 
 		<script type="text/html" id="component-template">
-			<b><span data-bind="text: name"></span></b>
+			<b><span data-bind="text: name, css: { 'invalid': criticalSlotsInvalid }"></span></b>
 			<p>
 				<span id="hardpointDisplayTextSpan" data-bind="text: hardpointDisplayText" />
 			</p>

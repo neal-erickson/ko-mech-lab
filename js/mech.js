@@ -104,6 +104,32 @@
                 });
             });//.extend({logChange: 'weapons'});
 
+            component.alpha = ko.computed(function(){
+                return component.weapons().reduce(function(previous, current){
+                    var multiplier = current.weaponStats.ammoPerShot.toFloat();
+                    if(multiplier === 0) multiplier = 1;
+                    var damage = multiplier * current.weaponStats.damage.toFloat();
+                    return previous + damage;
+                }, 0);
+            });
+
+            component.dps = ko.computed(function(){
+                return component.weapons().reduce(function(previous, current, index, array){
+                    return previous + (current.weaponStats.damage.toFloat() / current.weaponStats.cooldown.toFloat());
+                }, 0);
+            });
+
+            component.heatEfficiency = ko.computed(function(){
+                // return component.weapons().reduce(function(previous, current){
+                //     return previous + (current.weaponStats.heat.toFloat() )
+                // }, 0);
+                return 0;
+            });
+
+            component.hps = ko.computed(function(){
+                return 0;
+            });
+
             var calculateHardpointsUsed = function(weaponType) {
                 var used = 0;
                 $.each(component.weapons(), function(index, item) {
@@ -167,14 +193,10 @@
             };
 
             var isRemoveable = function(item){
-                // Engine can't be removed normal way
-                if(item.isEngine()){
-                    return false;
-                }
-                // Fixed items have no tonnage. Currently. Hopefully.
-                return item.tons != 0;
+                return item.tons != 0; // Fixed items have no tonnage. Currently. Hopefully.
             };
 
+            // This is a hack, used only in the case of engine heat sinks component
             component.useItemMultipleSlots = ko.observable(true);
 
     		// Slots is items but taking up the number of slots based on the item's value
@@ -192,7 +214,6 @@
                                 first: i == 0,
                                 last: i == item.slots - 1
                             });
-                            //console.log(item, i == 0, item.slots - 1);
                             slots.push(slot);
     					};
                     } else {
@@ -202,8 +223,6 @@
                             first: true,
                             last: true
                         });
-                        //debugger;
-                        //console.log(item, i == 0, item.slots - 1);
                         slots.push(slot);
                     }
 				});
@@ -217,7 +236,7 @@
 
             component.criticalSlotsInvalid = ko.computed(function(){
                 return component.criticalSlotsOpen() < 0;
-            });
+            }).extend({ logChange: component.name() + ' criticalSlotsInvalid'});
 
     		// This is the computed value that pads out the slots with empty placeholders for visual display. Should not be used for computation.
 			component.displaySlots = ko.computed(function() {
@@ -243,8 +262,7 @@
 
             var checkEquipmentType = function(item) {
                 if(item.isJumpJets()){
-                    // TODO : Enforce orrect jump jet class
-                    return self.canHasJumpJets();
+                    return self.canHasJumpJets(); // TODO : Enforce orrect jump jet class
                 }
                 if(item.isHeatSink()){
                     if(self.heatSinks() === 'single'){
@@ -438,22 +456,28 @@
             }, 0);
         });
 
-        self.alphaStrike = ko.computed(function() {
-            var alpha = 0;
-            $.each(self.componentsList, function(i, component){
-                $.each(component.weapons(), function(j, weapon) {
-                    var multiplier = weapon.weaponStats.ammoPerShot.toFloat();
-                    if(multiplier === 0) multiplier = 1;
-                    var damage = multiplier * weapon.weaponStats.damage.toFloat();
-                    alpha += damage;
-                });
-            });
-            return alpha;
+        self.alphaStrike = ko.computed(function(){
+            return self.componentsList.reduce(function(previous, current){
+                return previous + current.alpha();
+            }, 0);
         });
 
-        // TODO Implement
-        self.heatEfficiency = ko.computed(function() {
-            return 0;
+        self.dps = ko.computed(function(){
+            return self.componentsList.reduce(function(previous, current){
+                return previous + current.dps();
+            }, 0);
+        });
+
+        self.heatEfficiency = ko.computed(function(){
+            return self.componentsList.reduce(function(previous, current){
+                return previous + current.heatEfficiency();
+            }, 0);
+        });
+
+        self.hps = ko.computed(function(){
+            return self.componentsList.reduce(function(previous, current){
+                return previous + current.hps();
+            }, 0);
         });
 
     	// Anna's contribution to the codebase:

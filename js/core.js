@@ -16,6 +16,10 @@
 			return this;
 		};
 
+		Number.prototype.asFixed = function(digits){
+			return this; // TODO
+		};
+
 		// TODO : Move this
 		ko.extenders.logChange = function(target, option) {
 		    target.subscribe(function(newValue) {

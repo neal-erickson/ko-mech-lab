@@ -121,6 +121,10 @@ div.loadout-container ul.dropHighlight {
 	background-color: #00CC99;
 }
 
+div.loadout-container .invalid {
+	color:red;
+}
+
 /* jQueryUI tabs overridden */
 
 .ui-tabs {
