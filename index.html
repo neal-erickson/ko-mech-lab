@@ -62,7 +62,7 @@
 							<tr>
 								<td>Speed:</td>
 								<td>
-									<span data-bind="text: speed"></span>
+									<span data-bind="text: speed().withDigits(2)"></span>
 								</td>
 							</tr>
 							<tr data-bind="css: { 'invalid' : !tonnageValid() }">
@@ -70,7 +70,7 @@
 									<span>Tons:</span>
 								</td>
 								<td>
-									<span data-bind="text: tonnageDisplay"></span>/<span data-bind="text: maxTonnage"></span>	
+									<span data-bind="text: tonnage().toFixed(2)"></span>/<span data-bind="text: maxTonnage"></span>	
 								</td>
 							</tr>
 							<tr data-bind="css: { 'invalid' : remainingCriticalSlots() < 0 }">
@@ -90,25 +90,25 @@
 							<tr>
 								<td>Alpha:</td>
 								<td>
-									<span data-bind="text: alphaStrike"></span>
+									<span data-bind="text: alphaStrike().toFixed(2)"></span>
 								</td>
 							</tr>
 							<tr>
 								<td>DPS:</td>
 								<td>
-									<span data-bind="text: dps"></span>
+									<span data-bind="text: dps().toFixed(2)"></span>
 								</td>
 							</tr>
 							<tr>
 								<td>Heat:</td>
 								<td>
-									<span data-bind="text: heatEfficiency"></span>
+									<span data-bind="text: heatEfficiency().toFixed(2)"></span>
 								</td>
 							</tr>
 							<tr>
 								<td>HPS:</td>
 								<td>
-									<span data-bind="text: hps"></span>
+									<span data-bind="text: hps().toFixed(2)"></span>
 								</td>
 							</tr>
 						</tbody>
@@ -186,67 +186,67 @@
 									<tr>
 										<td>Head</td>
 										<td>
-											<input type="number" data-bind="value: armorHead" />
+											<div data-bind="template: { name: 'armorLocation', data: armorHead }"></div>
 										</td>
 									</tr>
 									<tr>
 										<td>Center Torso</td>
 										<td>
-											<input type="number" data-bind="value: armorCenterTorso" />
+											<div data-bind="template: { name: 'armorLocation', data: armorCenterTorso }"></div>
 										</td>
 									</tr>
 									<tr>
 										<td>Center Torso Rear</td>
 										<td>
-											<input type="number" data-bind="value: armorCenterTorsoRear" />
+											<div data-bind="template: { name: 'armorLocation', data: armorCenterTorsoRear }"></div>
 										</td>
 									</tr>
 									<tr>
 										<td>Right Torso</td>
 										<td>
-											<input type="number" data-bind="value: armorRightTorso" />
+											<div data-bind="template: { name: 'armorLocation', data: armorRightTorso }"></div>
 										</td>
 									</tr>
 									<tr>
 										<td>Right Torso Rear</td>
 										<td>
-											<input type="number" data-bind="value: armorRightTorsoRear" />
+											<div data-bind="template: { name: 'armorLocation', data: armorRightTorsoRear }"></div>
 										</td>
 									</tr>
 									<tr>
 										<td>Left Torso</td>
 										<td>
-											<input type="number" data-bind="value: armorLeftTorso" />
+											<div data-bind="template: { name: 'armorLocation', data: armorLeftTorso }"></div>
 										</td>
 									</tr>
 									<tr>
 										<td>Left Torso Rear</td>
 										<td>
-											<input type="number" data-bind="value: armorLeftTorsoRear" />
+											<div data-bind="template: { name: 'armorLocation', data: armorLeftTorsoRear }"></div>
 										</td>
 									</tr>
 									<tr>
 										<td>Left Arm</td>
 										<td>
-											<input type="number" data-bind="value: armorLeftArm" />
+											<div data-bind="template: { name: 'armorLocation', data: armorLeftArm }"></div>
 										</td>
 									</tr>
 									<tr>
 										<td>Right Arm</td>
 										<td>
-											<input type="number" data-bind="value: armorRightArm" />
+											<div data-bind="template: { name: 'armorLocation', data: armorRightArm }"></div>
 										</td>
 									</tr>
 									<tr>
 										<td>Left Leg</td>
 										<td>
-											<input type="number" data-bind="value: armorLeftLeg" />
+											<div data-bind="template: { name: 'armorLocation', data: armorLeftLeg }"></div>
 										</td>
 									</tr>
 									<tr>
 										<td>Right Leg</td>
 										<td>
-											<input type="number" data-bind="value: armorRightLeg" />
+											<div data-bind="template: { name: 'armorLocation', data: armorRightLeg }"></div>
 										</td>
 									</tr>
 									<tr>
@@ -408,8 +408,8 @@
 			</ul>
 		</script>
 
-		<script type="text/html" id="armorTemplate">
-			<input type="number" min="0" data-bind="value: $data"></input>
+		<script type="text/html" id="armorLocation">
+			<input type="number" min="0" data-bind="value: value, valueUpdate: 'keyup'"></input>
 		</script>
 
 	</body>

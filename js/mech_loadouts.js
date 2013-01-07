@@ -52,6 +52,7 @@
 	// Quick id property bags for having fewer hardcoded ids	
 
 	var weapons = {
+		smallLaser: 1003,
 		mediumLaser: 1001,
 		autocannon2: 1018,
 		lrm10: 1027
@@ -68,7 +69,8 @@
 	};
 
 	var engines = {
-		std300: 3258
+		std300: 3258,
+		std320: 3262
 	};
 
 	// Mech loadouts
@@ -84,6 +86,22 @@
 			leftTorso: new mechlab_loadouts.componentLayout(12, [weapons.mediumLaser, ammo.lrm, ammo.lrm], { ams: true, energy: 2 }),
 			rightArm: new mechlab_loadouts.componentLayout(9, [weapons.autocannon2], { ballistic: 1 }),
 			leftArm: new mechlab_loadouts.componentLayout(9, [weapons.mediumLaser], { energy: 2 }),
+			rightLeg: new mechlab_loadouts.componentLayout(2, []),
+			leftLeg: new mechlab_loadouts.componentLayout(2, [])
+		}
+	);
+
+	mechlab_loadouts.loadouts['37'] = new mechlab_loadouts.mechLoadout(
+		"CDA-2A", 40,
+		[18, 22, 12, 12, 6, 12, 6, 8, 8, 12, 12],
+		engines.std320,
+		{
+			head: new mechlab_loadouts.componentLayout(1, []),
+			centerTorso: new mechlab_loadouts.componentLayout(2, [weapons.smallLaser], { energy: 2}),
+			rightTorso: new mechlab_loadouts.componentLayout(12, [weapons.mediumLaser], { ams: true, energy: 2 }),
+			leftTorso: new mechlab_loadouts.componentLayout(12, [weapons.mediumLaser], { energy: 2 }),
+			rightArm: new mechlab_loadouts.componentLayout(10, []),
+			leftArm: new mechlab_loadouts.componentLayout(10, []),
 			rightLeg: new mechlab_loadouts.componentLayout(2, []),
 			leftLeg: new mechlab_loadouts.componentLayout(2, [])
 		}

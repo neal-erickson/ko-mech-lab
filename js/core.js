@@ -16,11 +16,11 @@
 			return this;
 		};
 
-		Number.prototype.asFixed = function(digits){
-			return this; // TODO
+		Number.prototype.withDigits = function(digits){
+			var divisor = Math.pow(10, digits);
+			return (this * divisor) / divisor;
 		};
 
-		// TODO : Move this
 		ko.extenders.logChange = function(target, option) {
 		    target.subscribe(function(newValue) {
 		       console.log(option + ": " + newValue);
@@ -47,13 +47,13 @@
 				name: "DRG-1C"
 			},
 			{
-				id: "21",
-				name: "HBK-4J"
-			},
-			{
-				id: "35",
-				name: "RVN-4X"
-			}
+				id: "37",
+				name: "CDA-2A"
+			}//,
+			// {
+			// 	id: "35",
+			// 	name: "RVN-4X"
+			// }
 		]);
 
 		var getSavedMechs = function() {
@@ -93,7 +93,6 @@
 		// Callback for selecting mech variant
 		self.selectMech = function() {
 			var mech = mechlab_loadouts.load(self.selectedMech().id);
-			//var mech = mechlab_loadouts.load("21"); //hardcoded for testing
 			loadIntoView(mech);
 		};
 

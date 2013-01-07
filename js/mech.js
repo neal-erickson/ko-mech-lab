@@ -236,7 +236,7 @@
 
             component.criticalSlotsInvalid = ko.computed(function(){
                 return component.criticalSlotsOpen() < 0;
-            }).extend({ logChange: component.name() + ' criticalSlotsInvalid'});
+            });//.extend({ logChange: component.name() + ' criticalSlotsInvalid'});
 
     		// This is the computed value that pads out the slots with empty placeholders for visual display. Should not be used for computation.
 			component.displaySlots = ko.computed(function() {
@@ -484,32 +484,66 @@
 		//1001javascriptinternetexploder.no=pie
 
     	// Initialize armor values for each location
-    	self.armorHead = ko.observable(18);
-    	self.armorCenterTorso = ko.observable(52);
-        self.armorCenterTorsoRear = ko.observable(10);
-        self.armorRightTorso = ko.observable(40);
-        self.armorRightTorsoRear = ko.observable(8);
-        self.armorLeftTorso = ko.observable(40);
-        self.armorLeftTorsoRear = ko.observable(8);
-    	self.armorRightArm = ko.observable(32);
-    	self.armorLeftArm = ko.observable(32);
-    	self.armorRightLeg = ko.observable(40);
-    	self.armorLeftLeg = ko.observable(40);
+        var armorLocation = function(maximum){
+            var al = this;
+            al.maximum = maximum;
+            al.value = ko.observable(0);
+            al.value.subscribe(function(newValue){
+                if(newValue < 0){
+                    al.value(0);
+                }
+                else if(newValue > maximum()){
+                    al.value(maximum());
+                }
+            });
+        };
 
-		// Calculated values
-		self.overallArmorValue = ko.computed(function() {
-			return self.armorHead().toFloat() +
-				self.armorCenterTorso().toFloat() + 
-                self.armorCenterTorsoRear().toFloat() +
-				self.armorRightArm().toFloat() +
-				self.armorLeftArm().toFloat() +
-				self.armorRightTorso().toFloat() +
-                self.armorRightTorsoRear().toFloat() +
-				self.armorLeftTorso().toFloat() +
-                self.armorLeftTorsoRear().toFloat() +
-				self.armorRightLeg().toFloat() + 
-				self.armorLeftLeg().toFloat();
-		});//.extend({ logChange: 'oav'});
+        // TODO : all of the things. armor things.
+        self.armorHead = new armorLocation(ko.observable(18));
+        self.armorCenterTorso = new armorLocation(ko.computed(function() {
+            return 56;
+        }));
+        self.armorCenterTorsoRear = new armorLocation(ko.computed(function() {
+            return 56;
+        }));
+        self.armorRightTorso = new armorLocation(ko.computed(function() {
+            return 56;
+        }));
+        self.armorRightTorsoRear = new armorLocation(ko.computed(function() {
+            return 56;
+        }));
+        self.armorLeftTorso = new armorLocation(ko.computed(function() {
+            return 56;
+        }));
+        self.armorLeftTorsoRear = new armorLocation(ko.computed(function() {
+            return 56;
+        }));
+        self.armorRightArm = new armorLocation(ko.computed(function() {
+            return 56;
+        }));
+        self.armorLeftArm = new armorLocation(ko.computed(function() {
+            return 56;
+        }));
+        self.armorRightLeg = new armorLocation(ko.computed(function() {
+            return 56;
+        }));
+        self.armorLeftLeg = new armorLocation(ko.computed(function() {
+            return 56;
+        }));
+
+        self.overallArmorValue = ko.computed(function() {
+            return self.armorHead.value().toFloat() +
+                self.armorCenterTorso.value().toFloat() + 
+                self.armorCenterTorsoRear.value().toFloat() +
+                self.armorRightArm.value().toFloat() +
+                self.armorLeftArm.value().toFloat() +
+                self.armorRightTorso.value().toFloat() +
+                self.armorRightTorsoRear.value().toFloat() +
+                self.armorLeftTorso.value().toFloat() +
+                self.armorLeftTorsoRear.value().toFloat() +
+                self.armorRightLeg.value().toFloat() + 
+                self.armorLeftLeg.value().toFloat();
+        });//.extend({ logChange: 'oav'});
 
 		self.armorWeight = ko.computed(function() {
 			var armorPerTon = self.armor() === 'standard' ? 32.0 : 34.85; // TODO : Double check value
@@ -528,11 +562,6 @@
     			+ self.armorWeight()
     			+ self.totalItemsWeight();
     	});
-
-        self.tonnageDisplay = ko.computed(function() {
-            return Math.round(self.tonnage() * 100) / 100;
-        });
-
         self.tonnageValid = ko.computed(function() {
             return self.tonnage() <= self.maxTonnage();
         });
@@ -558,17 +587,17 @@
             self.heatSinks(mech.heatSinks);
 
             // Copy in base armor values
-            self.armorHead(mech.armorValues[0]);
-            self.armorCenterTorso(mech.armorValues[1]);
-            self.armorCenterTorsoRear(mech.armorValues[2]);
-            self.armorRightTorso(mech.armorValues[3]);
-            self.armorRightTorsoRear(mech.armorValues[4]);
-            self.armorLeftTorso(mech.armorValues[5]);
-            self.armorLeftTorsoRear(mech.armorValues[6]);
-            self.armorRightArm(mech.armorValues[7]);
-            self.armorLeftArm(mech.armorValues[8]);
-            self.armorRightLeg(mech.armorValues[9]);
-            self.armorLeftLeg(mech.armorValues[10]);
+            self.armorHead.value(mech.armorValues[0]);
+            self.armorCenterTorso.value(mech.armorValues[1]);
+            self.armorCenterTorsoRear.value(mech.armorValues[2]);
+            self.armorRightTorso.value(mech.armorValues[3]);
+            self.armorRightTorsoRear.value(mech.armorValues[4]);
+            self.armorLeftTorso.value(mech.armorValues[5]);
+            self.armorLeftTorsoRear.value(mech.armorValues[6]);
+            self.armorRightArm.value(mech.armorValues[7]);
+            self.armorLeftArm.value(mech.armorValues[8]);
+            self.armorRightLeg.value(mech.armorValues[9]);
+            self.armorLeftLeg.value(mech.armorValues[10]);
 
             // Component specifics
             self.head.loadSpec(mech.components.head);
