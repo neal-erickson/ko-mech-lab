@@ -65,6 +65,8 @@
             // Otherwise, our mech needs a minimum of 10 sinks to keep from lighting on fire
         });
 
+        // Component Xtor /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     	// Constructor for mech 'component' such as left arm, center torso, etc
     	// Includes slot info, hardpoints, other info
     	var Component = function(name, options){
@@ -353,10 +355,9 @@
             };
 
             component.outputComponentConfig = function(){
-                return new mechlab_loadouts.componentLayout(
-                    component.criticalSlots(), 
-                    component.itemIds(), 
-                    {
+                return new mechlab_loadouts.componentLayout({
+                        slots: component.criticalSlots(), 
+                        items: component.itemIds(), 
                         ams: component.ams(),
                         ballistic: component.ballisticHardpoints(),
                         energy: component.energyHardpoints(),
@@ -365,6 +366,8 @@
             };
 
     	}; // end component xtor
+
+        // Component Declaration/////////////////////////////////////////////////////////////////////////////////////////////
 
         // This is a hacked component for accepting heat sinks only
         self.engineComponent = new Component('Engine Heat Sinks', {});
@@ -425,6 +428,8 @@
         ];
 
         self.componentsListPlusEngineSinks = self.componentsList.concat(self.engineComponent);
+
+        // Calculated Values ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         self.remainingCriticalSlots = ko.computed(function(){
             var slots = 0;
@@ -576,7 +581,8 @@
             return self.tonnage() <= self.maxTonnage();
         });
 
-        // This is the function to load a mech
+        // Loading / Saving ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
         self.loadMech = function(mech){
             // Save the loadout
             self.mech(mech);
@@ -609,7 +615,7 @@
             self.armorRightLeg.value(mech.armorValues[9]);
             self.armorLeftLeg.value(mech.armorValues[10]);
 
-            // Component specifics
+            // Component specific loading
             self.head.loadSpec(mech.components.head);
             self.centerTorso.loadSpec(mech.components.centerTorso);
             self.rightTorso.loadSpec(mech.components.rightTorso);

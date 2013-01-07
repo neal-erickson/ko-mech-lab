@@ -19,7 +19,6 @@
 		this.tonnage = tonnage;
 		this.armorValues = armorValues;
 		this.engine_id = engine_id;
-		this.components = components;
 
 		// Optional chassis specific settings
 		this.hasHands = options.hasHands || false;
@@ -30,14 +29,80 @@
 		this.armor = options.armor || 'standard';
 		this.heatSinks = options.heatSinks || 'single';
 		this.artemis = options.artemis || 'none';
+
+		this.components = components;
+
+		// Modify components with defaults if needed
+		
+		// head
+		if(!components.head){
+			components.head = new mechlab_loadouts.componentLayout({ slots: 1});
+		}
+		if(!components.head.criticalSlots){
+			components.head.criticalSlots = 1;
+		}
+
+		// CT
+		if(!components.centerTorso){
+			components.centerTorso = new mechlab_loadouts.componentLayout({ slots: 2});
+		}
+		if(!components.centerTorso.criticalSlots){
+			components.centerTorso.criticalSlots = 2;
+		}
+
+		// RT
+		if(!components.rightTorso){
+			components.rightTorso = new mechlab_loadouts.componentLayout({ slots: 12});
+		}
+		if(!components.rightTorso.criticalSlots){
+			components.rightTorso.criticalSlots = 12;
+		}
+
+		// LT
+		if(!components.leftTorso){
+			components.leftTorso = new mechlab_loadouts.componentLayout({ slots: 12});
+		}
+		if(!components.leftTorso.criticalSlots){
+			components.leftTorso.criticalSlots = 12;
+		}
+
+		// RA
+		if(!components.rightArm){
+			components.rightArm = new mechlab_loadouts.componentLayout({ slots: 10});
+		}
+		if(!components.rightArm.criticalSlots){
+			components.rightArm.criticalSlots = 10;
+		}
+
+		// LA
+		if(!components.leftArm){
+			components.leftArm = new mechlab_loadouts.componentLayout({ slots: 10});
+		}
+		if(!components.leftArm.criticalSlots){
+			components.leftArm.criticalSlots = 10;
+		}
+
+		// RL
+		if(!components.rightLeg){
+			components.rightLeg = new mechlab_loadouts.componentLayout({ slots: 2});
+		}
+		if(!components.rightLeg.criticalSlots){
+			components.rightLeg.criticalSlots = 2;
+		}
+
+		// LL
+		if(!components.leftLeg){
+			components.leftLeg = new mechlab_loadouts.componentLayout({ slots: 2});
+		}
+		if(!components.leftLeg.criticalSlots){
+			components.leftLeg.criticalSlots = 2;
+		}
 	};
 
-	mechlab_loadouts.componentLayout = function(criticalSlots, itemIds, options){
+	mechlab_loadouts.componentLayout = function(options){
 		if(!options) options = {};
-
-		this.criticalSlots = criticalSlots;		
-		this.itemIds = itemIds;
-
+		this.criticalSlots = options.slots || null;		
+		this.itemIds = options.items || [];
 		this.ams = options.ams === true;
 		this.ballisticHardpoints = options.ballistic || 0;
 		this.energyHardpoints = options.energy || 0;
@@ -70,18 +135,16 @@
 	// Mech loadouts
 
 	mechlab_loadouts.loadouts['11'] = new mechlab_loadouts.mechLoadout(
-		"DRG-1C", 60,
+		"DRG-1C", 
+		60,
 		[18, 56, 24, 36, 20, 36, 20, 40, 40, 56, 56],
 		engines.std300,
 		{
-			head: new mechlab_loadouts.componentLayout(1, []),
-			centerTorso: new mechlab_loadouts.componentLayout(2, [weapons.lrm10], { missile: 1}),
-			rightTorso: new mechlab_loadouts.componentLayout(12, [ammo.ac10]),
-			leftTorso: new mechlab_loadouts.componentLayout(12, [weapons.mediumLaser, ammo.lrm, ammo.lrm], { ams: true, energy: 2 }),
-			rightArm: new mechlab_loadouts.componentLayout(9, [weapons.autocannon2], { ballistic: 1 }),
-			leftArm: new mechlab_loadouts.componentLayout(9, [weapons.mediumLaser], { energy: 2 }),
-			rightLeg: new mechlab_loadouts.componentLayout(2, []),
-			leftLeg: new mechlab_loadouts.componentLayout(2, [])
+			centerTorso: new mechlab_loadouts.componentLayout({ items: [weapons.lrm10], missile: 1}),
+			rightTorso: new mechlab_loadouts.componentLayout({ items:[ammo.ac10]}),
+			leftTorso: new mechlab_loadouts.componentLayout({items:[weapons.mediumLaser, ammo.lrm, ammo.lrm], ams: true, energy: 2 }),
+			rightArm: new mechlab_loadouts.componentLayout({ slots: 9, items: [weapons.autocannon2], ballistic: 1 }),
+			leftArm: new mechlab_loadouts.componentLayout({ slots: 9, items: [weapons.mediumLaser], energy: 2 })
 		}
 	);
 
