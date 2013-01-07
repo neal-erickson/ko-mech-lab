@@ -503,6 +503,19 @@
             });
         };
 
+        self.centerTorsoMaximumArmor = ko.computed(function() {
+            return mechlab_enums.getStructure(self.maxTonnage()).centerTorso * 4;
+        });
+        self.sideTorsoMaximumArmor = ko.computed(function() {
+            return mechlab_enums.getStructure(self.maxTonnage()).sideTorso * 4;
+        });
+        self.armMaximumArmor = ko.computed(function() {
+            return mechlab_enums.getStructure(self.maxTonnage()).arms * 4;
+        });
+        self.legMaximumArmor = ko.computed(function() {
+            return mechlab_enums.getStructure(self.maxTonnage()).legs * 4;
+        });
+
         // TODO : all of the things. armor things.
         self.armorHead = new armorLocation(ko.observable(18)); // head maximum is always 18
 
@@ -510,40 +523,41 @@
         self.armorCenterTorso = new armorLocation(ko.observable(0));
         self.armorCenterTorsoRear = new armorLocation(ko.observable(0));
         self.armorCenterTorso.maximum = ko.computed(function() {
-            var max = mechlab_enums.getStructure(self.maxTonnage()).centerTorso * 4;
-            return max - self.armorCenterTorsoRear.value();
+            return self.centerTorsoMaximumArmor() - self.armorCenterTorsoRear.value();
         });
         self.armorCenterTorsoRear.maximum = ko.computed(function() {
-            var max = mechlab_enums.getStructure(self.maxTonnage()).centerTorso * 4;
-            //debugger;
-            return max - self.armorCenterTorso.value();
+            return self.centerTorsoMaximumArmor() - self.armorCenterTorso.value();
         });
-        self.armorCenterTorsoRear.maximum = ko.computed(function() {
-            return mechlab_enums.getStructure(self.maxTonnage()).centerTorso * 4;
+        
+        self.armorRightTorso = new armorLocation(ko.observable(0));
+        self.armorRightTorsoRear = new armorLocation(ko.observable(0));
+        self.armorRightTorso.maximum = ko.computed(function() {
+            return self.sideTorsoMaximumArmor() - self.armorRightTorsoRear.value();
         });
-        self.armorRightTorso = new armorLocation(ko.computed(function() {
-            return 56;
-        }));
-        self.armorRightTorsoRear = new armorLocation(ko.computed(function() {
-            return 56;
-        }));
-        self.armorLeftTorso = new armorLocation(ko.computed(function() {
-            return 56;
-        }));
-        self.armorLeftTorsoRear = new armorLocation(ko.computed(function() {
-            return 56;
-        }));
+        self.armorRightTorsoRear.maximum = ko.computed(function() {
+            return self.sideTorsoMaximumArmor() - self.armorRightTorso.value();
+        });
+
+        self.armorLeftTorso = new armorLocation(ko.observable(0));
+        self.armorLeftTorsoRear = new armorLocation(ko.observable(0));
+        self.armorLeftTorso.maximum = ko.computed(function() {
+            return self.sideTorsoMaximumArmor() - self.armorLeftTorsoRear.value();
+        });
+        self.armorLeftTorsoRear.maximum = ko.computed(function() {
+            return self.sideTorsoMaximumArmor() - self.armorLeftTorso.value();
+        });
+
         self.armorRightArm = new armorLocation(ko.computed(function() {
-            return mechlab_enums.getStructure(self.maxTonnage()).arms * 4;
+            return self.armMaximumArmor();
         }));
         self.armorLeftArm = new armorLocation(ko.computed(function() {
-            return mechlab_enums.getStructure(self.maxTonnage()).arms * 4;
+            return self.armMaximumArmor();
         }));
         self.armorRightLeg = new armorLocation(ko.computed(function() {
-            return mechlab_enums.getStructure(self.maxTonnage()).legs * 4;
+            return self.legMaximumArmor();
         }));
         self.armorLeftLeg = new armorLocation(ko.computed(function() {
-            return mechlab_enums.getStructure(self.maxTonnage()).legs * 4;
+            return self.legMaximumArmor();
         }));
 
         self.overallArmorValue = ko.computed(function() {
@@ -655,17 +669,17 @@
                 heatSinks: self.heatSinks(),
                 armor: self.armor(),
                 armorValues: [
-                    self.armorHead(),
-                    self.armorCenterTorso(),
-                    self.armorCenterTorsoRear(),
-                    self.armorRightTorso(),
-                    self.armorRightTorsoRear(),
-                    self.armorLeftTorso(),
-                    self.armorLeftTorsoRear(),
-                    self.armorRightArm(),
-                    self.armorLeftArm(),
-                    self.armorRightLeg(),
-                    self.armorLeftLeg()
+                    self.armorHead.value(),
+                    self.armorCenterTorso.value(),
+                    self.armorCenterTorsoRear.value(),
+                    self.armorRightTorso.value(),
+                    self.armorRightTorsoRear.value(),
+                    self.armorLeftTorso.value(),
+                    self.armorLeftTorsoRear.value(),
+                    self.armorRightArm.value(),
+                    self.armorLeftArm.value(),
+                    self.armorRightLeg.value(),
+                    self.armorLeftLeg.value()
                 ],
                 components: {
                     head: self.head.outputComponentConfig(),
