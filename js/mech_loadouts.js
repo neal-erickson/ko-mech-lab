@@ -35,11 +35,7 @@
 	mechlab_loadouts.componentLayout = function(criticalSlots, itemIds, options){
 		if(!options) options = {};
 
-		this.criticalSlots = criticalSlots;
-		// this.ballisticHardpoints = ballisticHardpoints;
-		// this.energyHardpoints = energyHardpoints;
-		// this.missileHardpoints = missileHardpoints;
-		
+		this.criticalSlots = criticalSlots;		
 		this.itemIds = itemIds;
 
 		this.ams = options.ams === true;
@@ -48,9 +44,7 @@
 		this.missileHardpoints = options.missile || 0;
 	};
 
-
 	// Quick id property bags for having fewer hardcoded ids	
-
 	var weapons = {
 		smallLaser: 1003,
 		mediumLaser: 1001,
@@ -91,21 +85,21 @@
 		}
 	);
 
-	mechlab_loadouts.loadouts['37'] = new mechlab_loadouts.mechLoadout(
-		"CDA-2A", 40,
-		[18, 22, 12, 12, 6, 12, 6, 8, 8, 12, 12],
-		engines.std320,
-		{
-			head: new mechlab_loadouts.componentLayout(1, []),
-			centerTorso: new mechlab_loadouts.componentLayout(2, [weapons.smallLaser], { energy: 2}),
-			rightTorso: new mechlab_loadouts.componentLayout(12, [weapons.mediumLaser], { ams: true, energy: 2 }),
-			leftTorso: new mechlab_loadouts.componentLayout(12, [weapons.mediumLaser], { energy: 2 }),
-			rightArm: new mechlab_loadouts.componentLayout(10, []),
-			leftArm: new mechlab_loadouts.componentLayout(10, []),
-			rightLeg: new mechlab_loadouts.componentLayout(2, []),
-			leftLeg: new mechlab_loadouts.componentLayout(2, [])
-		}
-	); 
+	// mechlab_loadouts.loadouts['37'] = new mechlab_loadouts.mechLoadout(
+	// 	"CDA-2A", 40,
+	// 	[18, 22, 12, 12, 6, 12, 6, 8, 8, 12, 12],
+	// 	engines.std320,
+	// 	{
+	// 		head: new mechlab_loadouts.componentLayout(1, []),
+	// 		centerTorso: new mechlab_loadouts.componentLayout(2, [weapons.smallLaser], { energy: 2}),
+	// 		rightTorso: new mechlab_loadouts.componentLayout(12, [weapons.mediumLaser], { ams: true, energy: 2 }),
+	// 		leftTorso: new mechlab_loadouts.componentLayout(12, [weapons.mediumLaser], { energy: 2 }),
+	// 		rightArm: new mechlab_loadouts.componentLayout(10, []),
+	// 		leftArm: new mechlab_loadouts.componentLayout(10, []),
+	// 		rightLeg: new mechlab_loadouts.componentLayout(2, []),
+	// 		leftLeg: new mechlab_loadouts.componentLayout(2, [])
+	// 	}
+	// ); 
 
 	// mechlab_loadouts.loadouts['21'] = new mechlab_loadouts.mechLoadout(
 	// 	"HBK-4J",

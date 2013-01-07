@@ -181,7 +181,7 @@
 						</div>
 
 						<div id="loadout-2">
-							<table>
+							<table id="armorLocations">
 								<tbody>
 									<tr>
 										<td>Head</td>
@@ -410,6 +410,8 @@
 
 		<script type="text/html" id="armorLocation">
 			<input type="number" min="0" data-bind="value: value, valueUpdate: 'keyup'"></input>
+			&nbsp;/&nbsp;
+			<span data-bind="text: maximum"></span>
 		</script>
 
 	</body>

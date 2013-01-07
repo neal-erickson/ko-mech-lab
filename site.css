@@ -60,6 +60,11 @@ tr.invalid td {
 	color: red;
 }
 
+/* Armor styles */
+table#armorLocations input {
+	width: 50px;
+}
+
 /* Item View styles */
 
 div#itemTabs {

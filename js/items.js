@@ -18,8 +18,7 @@
         });
     };
 
-
-    // TODO : Implement object with 'static' methods, then $.extend() on item 'types'
+    // These methods are $.extended onto the item objects so that code can be shared
     var itemSharedMethods = {
         isWeapon: function(){
             return !!this.weaponStats;

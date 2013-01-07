@@ -10,11 +10,11 @@
         self.showFixedItems = ko.observable(true); // TODO use
 
         // TODO : Make everything possible computed from this
-        self.mech = ko.observable().extend({ logChange: 'mech'});
+        self.mech = ko.observable();//.extend({ logChange: 'mech'});
 
         // Core mech stats
         self.name = ko.observable();
-		self.maxTonnage = ko.observable(50);
+		self.maxTonnage = ko.observable(20);//.extend({logChange:'maxTonnage'}); // this is intentionally not zero to avoid a bunch of awkward checks later
         self.hasHands = ko.observable(true);
         self.canHasJumpJets = ko.observable(false);
         self.ecm = ko.observable(false);
@@ -492,20 +492,30 @@
                 if(newValue < 0){
                     al.value(0);
                 }
-                else if(newValue > maximum()){
-                    al.value(maximum());
+                else if(newValue > al.maximum()){
+                    al.value(al.maximum());
                 }
             });
         };
 
         // TODO : all of the things. armor things.
-        self.armorHead = new armorLocation(ko.observable(18));
-        self.armorCenterTorso = new armorLocation(ko.computed(function() {
-            return 56;
-        }));
-        self.armorCenterTorsoRear = new armorLocation(ko.computed(function() {
-            return 56;
-        }));
+        self.armorHead = new armorLocation(ko.observable(18)); // head maximum is always 18
+
+        // Torsos depend on each other, which is awkward.
+        self.armorCenterTorso = new armorLocation(ko.observable(0));
+        self.armorCenterTorsoRear = new armorLocation(ko.observable(0));
+        self.armorCenterTorso.maximum = ko.computed(function() {
+            var max = mechlab_enums.getStructure(self.maxTonnage()).centerTorso * 4;
+            return max - self.armorCenterTorsoRear.value();
+        });
+        self.armorCenterTorsoRear.maximum = ko.computed(function() {
+            var max = mechlab_enums.getStructure(self.maxTonnage()).centerTorso * 4;
+            //debugger;
+            return max - self.armorCenterTorso.value();
+        });
+        self.armorCenterTorsoRear.maximum = ko.computed(function() {
+            return mechlab_enums.getStructure(self.maxTonnage()).centerTorso * 4;
+        });
         self.armorRightTorso = new armorLocation(ko.computed(function() {
             return 56;
         }));
@@ -519,16 +529,16 @@
             return 56;
         }));
         self.armorRightArm = new armorLocation(ko.computed(function() {
-            return 56;
+            return mechlab_enums.getStructure(self.maxTonnage()).arms * 4;
         }));
         self.armorLeftArm = new armorLocation(ko.computed(function() {
-            return 56;
+            return mechlab_enums.getStructure(self.maxTonnage()).arms * 4;
         }));
         self.armorRightLeg = new armorLocation(ko.computed(function() {
-            return 56;
+            return mechlab_enums.getStructure(self.maxTonnage()).legs * 4;
         }));
         self.armorLeftLeg = new armorLocation(ko.computed(function() {
-            return 56;
+            return mechlab_enums.getStructure(self.maxTonnage()).legs * 4;
         }));
 
         self.overallArmorValue = ko.computed(function() {
