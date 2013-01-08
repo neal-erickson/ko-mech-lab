@@ -9,12 +9,12 @@
 
         self.showFixedItems = ko.observable(true); // TODO use
 
-        // TODO : Make everything possible computed from this
+        // TODO : Make everything possible computed from this?
         self.mech = ko.observable();//.extend({ logChange: 'mech'});
 
         // Core mech stats
         self.name = ko.observable();
-		self.maxTonnage = ko.observable(20);//.extend({logChange:'maxTonnage'}); // this is intentionally not zero to avoid a bunch of awkward checks later
+		self.maxTonnage = ko.observable(20); // this is intentionally not zero to avoid a bunch of awkward checks later
         self.hasHands = ko.observable(true);
         self.canHasJumpJets = ko.observable(false);
         self.ecm = ko.observable(false);
@@ -65,7 +65,7 @@
             // Otherwise, our mech needs a minimum of 10 sinks to keep from lighting on fire
         });
 
-        // Component Xtor /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Component Xtor //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     	// Constructor for mech 'component' such as left arm, center torso, etc
     	// Includes slot info, hardpoints, other info
@@ -129,7 +129,16 @@
             });
 
             component.hps = ko.computed(function(){
-                return 0;
+                return component.weapons().reduce(function(previous, current){
+                    var divisor = current.weaponStats.cooldown.toFloat();
+                    //if(divisor === 0) divisor = 1;
+                    // var multiplier = current.weaponStats.heat.toFloat();
+                    // if(multiplier === 0) multiplier = 1;
+                    // var damage = multiplier * current.weaponStats.damage.toFloat();
+                    var hps = (current.weaponStats.heat.toFloat() / divisor);
+                    console.log('hps ', current.name, hps);
+                    return previous + hps;
+                }, 0);
             });
 
             var calculateHardpointsUsed = function(weaponType) {
@@ -240,7 +249,7 @@
                 return component.criticalSlotsOpen() < 0;
             });//.extend({ logChange: component.name() + ' criticalSlotsInvalid'});
 
-    		// This is the computed value that pads out the slots with empty placeholders for visual display. Should not be used for computation.
+    		// This is the computed value that pads out the slots with empty placeholders for visual display. 
 			component.displaySlots = ko.computed(function() {
 				var slots = component.slots();
 				var placeholders = [];
@@ -572,7 +581,7 @@
                 self.armorLeftTorsoRear.value().toFloat() +
                 self.armorRightLeg.value().toFloat() + 
                 self.armorLeftLeg.value().toFloat();
-        });//.extend({ logChange: 'oav'});
+        });
 
 		self.armorWeight = ko.computed(function() {
 			var armorPerTon = self.armor() === 'standard' ? 32.0 : 34.85; // TODO : Double check value
@@ -638,6 +647,7 @@
             self.leftArm.loadSpec(mech.components.leftArm);
             self.rightLeg.loadSpec(mech.components.rightLeg);
             self.leftLeg.loadSpec(mech.components.leftLeg);
+            self.engineComponent.loadSpec(mech.components.engine);
 
             // Load engine
             var engine = mechlab_items.getById(mech.engine_id);
@@ -689,12 +699,13 @@
                     rightArm: self.rightArm.outputComponentConfig(),
                     leftArm: self.leftArm.outputComponentConfig(),
                     rightLeg: self.rightLeg.outputComponentConfig(),
-                    leftLeg: self.leftLeg.outputComponentConfig()
+                    leftLeg: self.leftLeg.outputComponentConfig(),
+                    engine: self.engineComponent.outputComponentConfig()
                 }
             };
 
             var output = JSON.stringify(outputMech);
-            console.log(output);
+            //console.log(output);
             return output;
         };
 

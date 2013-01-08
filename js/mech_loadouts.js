@@ -97,6 +97,11 @@
 		if(!components.leftLeg.criticalSlots){
 			components.leftLeg.criticalSlots = 2;
 		}
+
+		// Engine heat sinks
+		if(!components.engine){
+			components.engine = new mechlab_loadouts.componentLayout({ slots: 0 });
+		}
 	};
 
 	mechlab_loadouts.componentLayout = function(options){
@@ -148,21 +153,16 @@
 		}
 	);
 
-	// mechlab_loadouts.loadouts['37'] = new mechlab_loadouts.mechLoadout(
-	// 	"CDA-2A", 40,
-	// 	[18, 22, 12, 12, 6, 12, 6, 8, 8, 12, 12],
-	// 	engines.std320,
-	// 	{
-	// 		head: new mechlab_loadouts.componentLayout(1, []),
-	// 		centerTorso: new mechlab_loadouts.componentLayout(2, [weapons.smallLaser], { energy: 2}),
-	// 		rightTorso: new mechlab_loadouts.componentLayout(12, [weapons.mediumLaser], { ams: true, energy: 2 }),
-	// 		leftTorso: new mechlab_loadouts.componentLayout(12, [weapons.mediumLaser], { energy: 2 }),
-	// 		rightArm: new mechlab_loadouts.componentLayout(10, []),
-	// 		leftArm: new mechlab_loadouts.componentLayout(10, []),
-	// 		rightLeg: new mechlab_loadouts.componentLayout(2, []),
-	// 		leftLeg: new mechlab_loadouts.componentLayout(2, [])
-	// 	}
-	// ); 
+	mechlab_loadouts.loadouts['37'] = new mechlab_loadouts.mechLoadout(
+		"CDA-2A", 40,
+		[18, 22, 12, 12, 6, 12, 6, 8, 8, 12, 12],
+		engines.std320,
+		{
+			centerTorso: new mechlab_loadouts.componentLayout({items: [weapons.smallLaser], energy: 2}),
+			rightTorso: new mechlab_loadouts.componentLayout({items: [weapons.mediumLaser], ams: true, energy: 2 }),
+			leftTorso: new mechlab_loadouts.componentLayout({items: [weapons.mediumLaser], energy: 2 })
+		}
+	); 
 
 	// mechlab_loadouts.loadouts['21'] = new mechlab_loadouts.mechLoadout(
 	// 	"HBK-4J",
