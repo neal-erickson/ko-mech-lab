@@ -131,12 +131,8 @@
             component.hps = ko.computed(function(){
                 return component.weapons().reduce(function(previous, current){
                     var divisor = current.weaponStats.cooldown.toFloat();
-                    //if(divisor === 0) divisor = 1;
-                    // var multiplier = current.weaponStats.heat.toFloat();
-                    // if(multiplier === 0) multiplier = 1;
-                    // var damage = multiplier * current.weaponStats.damage.toFloat();
                     var hps = (current.weaponStats.heat.toFloat() / divisor);
-                    console.log('hps ', current.name, hps);
+                    //console.log('hps ', current.name, hps);
                     return previous + hps;
                 }, 0);
             });
@@ -569,18 +565,25 @@
             return self.legMaximumArmor();
         }));
 
+        // Convenience array + iterator
+        self.armorLocations = [
+            self.armorHead,
+            self.armorCenterTorso,
+            self.armorCenterTorsoRear,
+            self.armorRightTorso,
+            self.armorRightTorsoRear,
+            self.armorLeftTorso,
+            self.armorLeftTorsoRear,
+            self.armorRightArm,
+            self.armorLeftArm,
+            self.armorRightLeg,
+            self.armorLeftLeg
+        ];
+
         self.overallArmorValue = ko.computed(function() {
-            return self.armorHead.value().toFloat() +
-                self.armorCenterTorso.value().toFloat() + 
-                self.armorCenterTorsoRear.value().toFloat() +
-                self.armorRightArm.value().toFloat() +
-                self.armorLeftArm.value().toFloat() +
-                self.armorRightTorso.value().toFloat() +
-                self.armorRightTorsoRear.value().toFloat() +
-                self.armorLeftTorso.value().toFloat() +
-                self.armorLeftTorsoRear.value().toFloat() +
-                self.armorRightLeg.value().toFloat() + 
-                self.armorLeftLeg.value().toFloat();
+            return self.armorLocations.reduce(function(previous, current){
+                return previous + current.value().toFloat();
+            }, 0);
         });
 
 		self.armorWeight = ko.computed(function() {
@@ -606,6 +609,13 @@
 
         // Loading / Saving ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
+        // Used to prevent weird problems when loading armor values due to maximum calculations
+        self.resetArmorLocations = function(){
+            self.armorLocations.forEach(function(location){
+                location.value(0);
+            });
+        };
+
         self.loadMech = function(mech){
             // Save the loadout
             self.mech(mech);
@@ -626,6 +636,7 @@
             self.heatSinks(mech.heatSinks);
 
             // Copy in base armor values
+            self.resetArmorLocations();
             self.armorHead.value(mech.armorValues[0]);
             self.armorCenterTorso.value(mech.armorValues[1]);
             self.armorCenterTorsoRear.value(mech.armorValues[2]);

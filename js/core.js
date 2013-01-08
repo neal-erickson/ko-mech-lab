@@ -49,11 +49,19 @@
 			{
 				id: "37",
 				name: "CDA-2A"
-			}//,
-			// {
-			// 	id: "35",
-			// 	name: "RVN-4X"
-			// }
+			},
+			{
+				id: 32,
+				name: "AWS-9M"
+			},
+			{
+				id: "35",
+				name: "RVN-4X"
+			},
+			{
+				id: 21,
+				name: "HBK-4J"
+			}
 		]);
 
 		var getSavedMechs = function() {
