@@ -108,16 +108,13 @@
 
             component.alpha = ko.computed(function(){
                 return component.weapons().reduce(function(previous, current){
-                    var multiplier = current.weaponStats.ammoPerShot.toFloat();
-                    if(multiplier === 0) multiplier = 1;
-                    var damage = multiplier * current.weaponStats.damage.toFloat();
-                    return previous + damage;
+                    return previous + current.getDamage();
                 }, 0);
             });
 
             component.dps = ko.computed(function(){
                 return component.weapons().reduce(function(previous, current, index, array){
-                    return previous + (current.weaponStats.damage.toFloat() / current.weaponStats.cooldown.toFloat());
+                    return previous + current.getDps();
                 }, 0);
             });
 
@@ -130,10 +127,7 @@
 
             component.hps = ko.computed(function(){
                 return component.weapons().reduce(function(previous, current){
-                    var divisor = current.weaponStats.cooldown.toFloat();
-                    var hps = (current.weaponStats.heat.toFloat() / divisor);
-                    //console.log('hps ', current.name, hps);
-                    return previous + hps;
+                    return previous + current.getHps();
                 }, 0);
             });
 

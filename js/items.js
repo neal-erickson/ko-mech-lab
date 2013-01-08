@@ -37,6 +37,24 @@
         }
     };
 
+    var weaponMethods = {
+        getDamage: function(){
+            var multiplier = this.weaponStats.numFiring.toFloat();
+            return multiplier * this.weaponStats.damage.toFloat();
+        },
+        getHps: function() {
+            if(this.weaponStats.heat.toFloat() === 0) return 0; // machine gun pass through
+            var hps = this.weaponStats.heat.toFloat() / (this.weaponStats.cooldown.toFloat());
+            console.log('hps', this.name, hps);
+            return hps;
+        }
+    };
+    weaponMethods.getDps = function() {
+        var divisor = this.weaponStats.cooldown.toFloat() || 1;
+        //console.log('dps', this.name, this.getDamage() / divisor);
+        return this.getDamage() / divisor;
+    }
+
     // This function is to modify the created items object
     // with better methods, ordering, etc.
     var cleanupItems = function(items) {
@@ -96,6 +114,10 @@
         $.each(allItems, function(index, item){
             $.extend(item, itemSharedMethods);
             //console.log(item.name, item.isWeapon(), item.isEngine(), item.isAmmo(), item.isHeatSink());
+        });
+
+        items.weapons.forEach(function(weapon){
+            $.extend(weapon, weaponMethods);
         });
 
         return items; // give it back bro
