@@ -24,6 +24,8 @@
 			$(document).ready(function() {
 				loadMechlabItems(function(items){
 					mechlab_items = items;
+					mechlab_loadouts.initializeLoadouts();
+
 					window.testVM = new mechlab.coreVM();
 
 			  		ko.applyBindings(window.testVM, $('div#primary')[0]);
@@ -36,12 +38,13 @@
 			<hr />
 			<div id="chassisSelection" style="margin-bottom: 10px;">
 				<span>Select mech:</span>
-				<select id="chassisSelect" data-bind="
-					options: mechChassis, 
-					optionsText: function(option){ return option.name; }, 
-					value: selectedChassis">
+				<select id="chassisSelect" 
+					style="width: 100px;"
+					data-bind="options: mechChassis, optionsText: function(option){ return option.name; }, value: selectedChassis">
 				</select>
-				<select id="variantSelect" data-bind="options: variantOptions, optionsText: function(option){ return option.name.toUpperCase(); }, value: selectedVariant">
+				<select id="variantSelect" 
+					style="width: 100px;"
+					data-bind="options: variantOptions, optionsText: function(option){ return option.name.toUpperCase(); }, value: selectedVariant">
 				</select>
 				<button id="buttonSelectMech" data-bind="click: selectMech">Go</button>
 
@@ -399,9 +402,9 @@
 			<b><span data-bind="text: name, css: { 'invalid': criticalSlotsInvalid }"></span></b>
 			<div class="hardpoint-summary">
 				<div class="ballistic" data-bind="visible: ballisticHardpoints() > 0, text: ballisticHardpointDisplayText"></div>
-				<div class="energy" data-bind="visible: energyHardpoints() > 0, text: energyHardpointDisplayText" >E</div>
-				<div class="missile" data-bind="visible: missileHardpoints() > 0, text: missileHardpointDisplayText" >M</div>
-				<!--<div class="none" data-bind="visible: !missileHardpoints() && !energyHardpoints() && !ballisticHardpoints()">empty</span>-->
+				<div class="energy" data-bind="visible: energyHardpoints() > 0, text: energyHardpointDisplayText">E</div>
+				<div class="missile" data-bind="visible: missileHardpoints() > 0, text: missileHardpointDisplayText">M</div>
+				<div data-bind="visible: ams()">AMS</div>
 			</div>
 			<div style="clear:both;"></div>
 			<ul class="slot-list" 

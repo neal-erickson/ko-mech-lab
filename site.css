@@ -168,7 +168,7 @@ div.loadout-container .invalid {
 .hardpoint-summary div {
 	color:black;
 	font-weight: bold;
-	margin-right: 5px;
+	margin-right: 10px;
 	float: left;
 	padding:2px;
 	border-radius: 3px;

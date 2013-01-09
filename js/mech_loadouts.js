@@ -115,142 +115,138 @@
 	};
 
 	// Quick id property bags for having fewer hardcoded ids	
-	var weapons = {
-		smallLaser: 1003,
-		mediumLaser: 1001,
-		smallPulseLaser: 1012,
-		mediumPulseLaser: 1011,
-		erPpc: 1006,
-		autocannon2: 1018,
-		machineGun: 1024,
-		streakSrm2: 1032,
-		srm4: 1004,
-		srm6: 1031,
-		lrm10: 1027
+	mechlab_loadouts.initializeLoadouts = function(){
+		var weapons = mechlab_enums.weapons;
+		var ammo = mechlab_enums.ammo;
+		var modules = mechlab_enums.modules;
+		var engines = mechlab_enums.engines;
+
+		mechlab_loadouts.loadouts['11'] = new mechlab_loadouts.mechLoadout(
+			"DRG-1C", 
+			60,
+			[18, 56, 24, 36, 20, 36, 20, 40, 40, 56, 56],
+			engines.std300,
+			{
+				centerTorso: new mechlab_loadouts.componentLayout({ items: [weapons.lrm10], missile: 1}),
+				rightTorso: new mechlab_loadouts.componentLayout({ items:[ammo.ac2], ams: true }),
+				leftTorso: new mechlab_loadouts.componentLayout({items:[weapons.mediumLaser, ammo.lrm, ammo.lrm], energy: 2 }),
+				rightArm: new mechlab_loadouts.componentLayout({ slots: 9, items: [weapons.autocannon2], ballistic: 1 }),
+				leftArm: new mechlab_loadouts.componentLayout({ slots: 9, items: [weapons.mediumLaser], energy: 2 })
+			}
+		);
+
+		mechlab_loadouts.loadouts['10'] = new mechlab_loadouts.mechLoadout(
+			"DRG-1N", 
+			60,
+			[18, 54, 24, 32, 16, 32, 16, 28, 28, 36, 36],
+			engines.std300,
+			{
+				centerTorso: new mechlab_loadouts.componentLayout({ items: [weapons.lrm10], missile: 2}),
+				rightTorso: new mechlab_loadouts.componentLayout({ items:[ammo.ac5, ammo.ac5], ams: true}),
+				leftTorso: new mechlab_loadouts.componentLayout({items:[weapons.mediumLaser, ammo.lrm, ammo.lrm], energy: 1 }),
+				rightArm: new mechlab_loadouts.componentLayout({ slots: 9, items: [weapons.autocannon5], ballistic: 2 }),
+				leftArm: new mechlab_loadouts.componentLayout({ slots: 9, items: [weapons.mediumLaser], energy: 1 })
+			}
+		);
+
+		mechlab_loadouts.loadouts['23'] = new mechlab_loadouts.mechLoadout(
+			"DRG-5N", 
+			60,
+			[18, 54, 24, 32, 16, 32, 16, 28, 28, 36, 36],
+			engines.std300,
+			{
+				centerTorso: new mechlab_loadouts.componentLayout({ items: [weapons.lrm10], missile: 1 }),
+				rightTorso: new mechlab_loadouts.componentLayout({ items:[modules.case, ammo.uac5], ams: true}),
+				leftTorso: new mechlab_loadouts.componentLayout({items:[modules.case, ammo.lrm, ammo.lrm] }),
+				rightArm: new mechlab_loadouts.componentLayout({ slots: 9, items: [weapons.ultraAc5], ballistic: 3 }),
+				leftArm: new mechlab_loadouts.componentLayout({ slots: 9, items: [weapons.mediumLaser], energy: 2 })
+			}
+		);
+
+		mechlab_loadouts.loadouts['37'] = new mechlab_loadouts.mechLoadout(
+			"CDA-2A", 40,
+			[18, 22, 12, 12, 6, 12, 6, 8, 8, 12, 12],
+			engines.std320,
+			{
+				centerTorso: new mechlab_loadouts.componentLayout({items: [weapons.smallLaser], energy: 2}),
+				rightTorso: new mechlab_loadouts.componentLayout({items: [weapons.mediumLaser], ams: true, energy: 2 }),
+				leftTorso: new mechlab_loadouts.componentLayout({items: [weapons.mediumLaser], energy: 2 })
+			}
+		); 
+
+		mechlab_loadouts.loadouts['32'] = new mechlab_loadouts.mechLoadout(
+			"AWS-9M", 
+			80,
+			[18, 60, 40, 48, 20, 48, 20, 52, 52, 68, 68],
+			engines.xl320,
+			{
+				head: new mechlab_loadouts.componentLayout({ items: [weapons.smallPulseLaser], energy: 1}),
+				centerTorso: new mechlab_loadouts.componentLayout({ items: [weapons.mediumPulseLaser, weapons.streakSrm2], missile: 2, energy: 2}),
+				rightTorso: new mechlab_loadouts.componentLayout({ items:[weapons.erPpc, modules.doubleHeatSink, modules.doubleHeatSink], ams: true, energy: 1 }),
+				leftTorso: new mechlab_loadouts.componentLayout({items:[weapons.erPpc, modules.doubleHeatSink, modules.doubleHeatSink], energy: 1 }),
+				rightArm: new mechlab_loadouts.componentLayout({ slots: 9, items: [weapons.erPpc, modules.doubleHeatSink, modules.doubleHeatSink], energy: 1 }),
+				leftArm: new mechlab_loadouts.componentLayout({ slots: 8, items: [weapons.streakSrm2, modules.doubleHeatSink, modules.doubleHeatSink], missile: 1 }),
+				rightLeg: new mechlab_loadouts.componentLayout({ items: [ammo.streakSrm]}),
+				engine: new mechlab_loadouts.componentLayout({ items: [modules.doubleHeatSink, modules.doubleHeatSink]})
+			},
+			{
+				heatSinks: 'double'
+			}
+		);
+
+		mechlab_loadouts.loadouts['35'] = new mechlab_loadouts.mechLoadout(
+			"RVN-4X",
+			35,
+			[18, 32, 10, 22, 8, 22, 8, 22, 22, 30, 30],
+			engines.std175,
+			{
+				head: new mechlab_loadouts.componentLayout({items: [modules.heatSink]}),
+				centerTorso: new mechlab_loadouts.componentLayout({items: [modules.jumpJetV]}),
+				rightTorso: new mechlab_loadouts.componentLayout({items: [weapons.srm6, modules.jumpJetV, modules.jumpJetV], missile: 1}),
+				leftTorso: new mechlab_loadouts.componentLayout({items: [modules.jumpJetV, modules.jumpJetV, ammo.srm], ams: true }),
+				rightArm: new mechlab_loadouts.componentLayout({items: [weapons.mediumLaser, weapons.mediumLaser], energy: 2 }),
+				leftArm: new mechlab_loadouts.componentLayout({items: [weapons.machineGun, weapons.machineGun, ammo.machineGun], ballistic: 2}),
+				rightLeg: new mechlab_loadouts.componentLayout({items: [modules.heatSink, modules.heatSink]}),
+				leftLeg: new mechlab_loadouts.componentLayout({items: [modules.heatSink, modules.heatSink]})
+			},
+			{
+				jumpJets: true
+			}
+		);
+
+		mechlab_loadouts.loadouts['21'] = new mechlab_loadouts.mechLoadout(
+			"HBK-4J",
+			50,
+			[18, 52, 10, 40, 8, 40, 8, 32, 32, 40, 40],
+			engines.std200,
+			{
+				head: new mechlab_loadouts.componentLayout({items: [weapons.smallLaser], energy: 1}),
+				rightTorso: new mechlab_loadouts.componentLayout({items:[weapons.lrm10, weapons.lrm10, weapons.mediumLaser, weapons.mediumLaser, weapons.mediumLaser], energy: 3, missile: 2}),
+				leftTorso: new mechlab_loadouts.componentLayout({items: [modules.heatSink, modules.heatSink, ammo.lrm, ammo.lrm], ams: true }),
+				rightArm: new mechlab_loadouts.componentLayout({slots: 8, items: [weapons.mediumLaser], energy: 1}),
+				leftArm: new mechlab_loadouts.componentLayout({slots: 8, items: [weapons.mediumLaser], energy: 1}),
+				rightLeg: new mechlab_loadouts.componentLayout({items: [modules.heatSink, modules.heatSink]}),
+				leftLeg: new mechlab_loadouts.componentLayout({items: [modules.heatSink, modules.heatSink]})
+			}
+		); 
+
+		mechlab_loadouts.loadouts['3'] = new mechlab_loadouts.mechLoadout(
+			"JR-7D",
+			35,
+			[14, 20, 6, 16, 8, 16, 8, 8, 8, 12, 12],
+			engines.std245,
+			{
+				head: new mechlab_loadouts.componentLayout({items: [modules.heatSink]}),
+				centerTorso: new mechlab_loadouts.componentLayout({items: [weapons.srm4, modules.jumpJetV], missile: 2}),
+				rightTorso: new mechlab_loadouts.componentLayout({items:[modules.jumpJetV, modules.jumpJetV, ammo.srm]}),
+				leftTorso: new mechlab_loadouts.componentLayout({items: [modules.jumpJetV, modules.jumpJetV], ams: true }),
+				rightArm: new mechlab_loadouts.componentLayout({slots: 10, items: [weapons.mediumLaser, weapons.mediumLaser], energy: 2}),
+				leftArm: new mechlab_loadouts.componentLayout({slots: 10, items: [weapons.mediumLaser, weapons.mediumLaser], energy: 2})
+			},
+			{
+				jumpJets: true
+			}
+		); 
 	};
-
-	var ammo = {
-		machineGun: 2011,
-		ac10: 2005,
-		streakSrm: 2029,
-		srm: 2028,
-		lrm: 2027
-	};
-
-	var modules = {
-		heatSink: 3000,
-		doubleHeatSink: 3001,
-		jumpJetV: 1504
-	};
-
-	var engines = {
-		std175: 3233,
-		std200: 3238,
-		std245: 3247,
-		std300: 3258,
-		std320: 3262,
-		xl320: 3362
-	};
-
-	// Mech loadouts
-
-	mechlab_loadouts.loadouts['11'] = new mechlab_loadouts.mechLoadout(
-		"DRG-1C", 
-		60,
-		[18, 56, 24, 36, 20, 36, 20, 40, 40, 56, 56],
-		engines.std300,
-		{
-			centerTorso: new mechlab_loadouts.componentLayout({ items: [weapons.lrm10], missile: 1}),
-			rightTorso: new mechlab_loadouts.componentLayout({ items:[ammo.ac10]}),
-			leftTorso: new mechlab_loadouts.componentLayout({items:[weapons.mediumLaser, ammo.lrm, ammo.lrm], ams: true, energy: 2 }),
-			rightArm: new mechlab_loadouts.componentLayout({ slots: 9, items: [weapons.autocannon2], ballistic: 1 }),
-			leftArm: new mechlab_loadouts.componentLayout({ slots: 9, items: [weapons.mediumLaser], energy: 2 })
-		}
-	);
-
-	mechlab_loadouts.loadouts['37'] = new mechlab_loadouts.mechLoadout(
-		"CDA-2A", 40,
-		[18, 22, 12, 12, 6, 12, 6, 8, 8, 12, 12],
-		engines.std320,
-		{
-			centerTorso: new mechlab_loadouts.componentLayout({items: [weapons.smallLaser], energy: 2}),
-			rightTorso: new mechlab_loadouts.componentLayout({items: [weapons.mediumLaser], ams: true, energy: 2 }),
-			leftTorso: new mechlab_loadouts.componentLayout({items: [weapons.mediumLaser], energy: 2 })
-		}
-	); 
-
-	mechlab_loadouts.loadouts['32'] = new mechlab_loadouts.mechLoadout(
-		"AWS-9M", 
-		80,
-		[18, 60, 40, 48, 20, 48, 20, 52, 52, 68, 68],
-		engines.xl320,
-		{
-			head: new mechlab_loadouts.componentLayout({ items: [weapons.smallPulseLaser], energy: 1}),
-			centerTorso: new mechlab_loadouts.componentLayout({ items: [weapons.mediumPulseLaser, weapons.streakSrm2], missile: 2, energy: 2}),
-			rightTorso: new mechlab_loadouts.componentLayout({ items:[weapons.erPpc, modules.doubleHeatSink, modules.doubleHeatSink], ams: true, energy: 1 }),
-			leftTorso: new mechlab_loadouts.componentLayout({items:[weapons.erPpc, modules.doubleHeatSink, modules.doubleHeatSink], energy: 1 }),
-			rightArm: new mechlab_loadouts.componentLayout({ slots: 9, items: [weapons.erPpc, modules.doubleHeatSink, modules.doubleHeatSink], energy: 1 }),
-			leftArm: new mechlab_loadouts.componentLayout({ slots: 8, items: [weapons.streakSrm2, modules.doubleHeatSink, modules.doubleHeatSink], missile: 1 }),
-			rightLeg: new mechlab_loadouts.componentLayout({ items: [ammo.streakSrm]}),
-			engine: new mechlab_loadouts.componentLayout({ items: [modules.doubleHeatSink, modules.doubleHeatSink]})
-		},
-		{
-			heatSinks: 'double'
-		}
-	);
-
-	mechlab_loadouts.loadouts['35'] = new mechlab_loadouts.mechLoadout(
-		"RVN-4X",
-		35,
-		[18, 32, 10, 22, 8, 22, 8, 22, 22, 30, 30],
-		engines.std175,
-		{
-			head: new mechlab_loadouts.componentLayout({items: [modules.heatSink]}),
-			centerTorso: new mechlab_loadouts.componentLayout({items: [modules.jumpJetV]}),
-			rightTorso: new mechlab_loadouts.componentLayout({items: [weapons.srm6, modules.jumpJetV, modules.jumpJetV], missile: 1}),
-			leftTorso: new mechlab_loadouts.componentLayout({items: [modules.jumpJetV, modules.jumpJetV, ammo.srm], ams: true }),
-			rightArm: new mechlab_loadouts.componentLayout({items: [weapons.mediumLaser, weapons.mediumLaser], energy: 2 }),
-			leftArm: new mechlab_loadouts.componentLayout({items: [weapons.machineGun, weapons.machineGun, ammo.machineGun], ballistic: 2}),
-			rightLeg: new mechlab_loadouts.componentLayout({items: [modules.heatSink, modules.heatSink]}),
-			leftLeg: new mechlab_loadouts.componentLayout({items: [modules.heatSink, modules.heatSink]})
-		},
-		{
-			jumpJets: true
-		}
-	);
-
-	mechlab_loadouts.loadouts['21'] = new mechlab_loadouts.mechLoadout(
-		"HBK-4J",
-		50,
-		[18, 52, 10, 40, 8, 40, 8, 32, 32, 40, 40],
-		engines.std200,
-		{
-			head: new mechlab_loadouts.componentLayout({items: [weapons.smallLaser], energy: 1}),
-			rightTorso: new mechlab_loadouts.componentLayout({items:[weapons.lrm10, weapons.lrm10, weapons.mediumLaser, weapons.mediumLaser, weapons.mediumLaser], energy: 3, missile: 2}),
-			leftTorso: new mechlab_loadouts.componentLayout({items: [modules.heatSink, modules.heatSink, ammo.lrm, ammo.lrm], ams: true }),
-			rightArm: new mechlab_loadouts.componentLayout({slots: 8, items: [weapons.mediumLaser], energy: 1}),
-			leftArm: new mechlab_loadouts.componentLayout({slots: 8, items: [weapons.mediumLaser], energy: 1}),
-			rightLeg: new mechlab_loadouts.componentLayout({items: [modules.heatSink, modules.heatSink]}),
-			leftLeg: new mechlab_loadouts.componentLayout({items: [modules.heatSink, modules.heatSink]})
-		}
-	); 
-
-	mechlab_loadouts.loadouts['3'] = new mechlab_loadouts.mechLoadout(
-		"JR-7D",
-		35,
-		[14, 20, 6, 16, 8, 16, 8, 8, 8, 12, 12],
-		engines.std245,
-		{
-			head: new mechlab_loadouts.componentLayout({items: [modules.heatSink]}),
-			centerTorso: new mechlab_loadouts.componentLayout({items: [weapons.srm4, modules.jumpJetV], missile: 2}),
-			rightTorso: new mechlab_loadouts.componentLayout({items:[modules.jumpJetV, modules.jumpJetV, ammo.srm]}),
-			leftTorso: new mechlab_loadouts.componentLayout({items: [modules.jumpJetV, modules.jumpJetV], ams: true }),
-			rightArm: new mechlab_loadouts.componentLayout({slots: 10, items: [weapons.mediumLaser, weapons.mediumLaser], energy: 2}),
-			leftArm: new mechlab_loadouts.componentLayout({slots: 10, items: [weapons.mediumLaser, weapons.mediumLaser], energy: 2})
-		},
-		{
-			jumpJets: true
-		}
-	); 
 
 })(jQuery);

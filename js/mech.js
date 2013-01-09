@@ -176,28 +176,6 @@
                 return createHardpointDisplayText(component.missileHardpointsUsed(), component.missileHardpoints(), 'M');
             });
 
-    		component.hardpointDisplayText = ko.computed(function() {
-    			var text = '';
-    			if(component.ballisticHardpoints() > 0) {
-    				//text += component.ballisticHardpointsUsed() + '/' + component.ballisticHardpoints() + '<span class="ballistic">B</span> ';
-                    text += '<span class="ballistic">' + component.ballisticHardpointsUsed() + '/' + component.ballisticHardpoints() + 'B</span';
-    			}
-    			if(component.energyHardpoints() > 0) {
-    				text += '<span class="energy">' + component.energyHardpointsUsed() + '/' + component.energyHardpoints() + 'E</span>';
-    			}
-    			if(component.missileHardpoints() > 0) {
-    				text += '<span class="missile">' + component.missileHardpointsUsed() + '/' + component.missileHardpoints() + 'M</span>' ;
-    			}
-    			if(component.ams()) {
-    				text += '<span class="ams">' + component.amsUsed() + '/1AMS</span>';
-    			}
-
-                if(text === ''){
-                    return 'None';
-                }
-    			return text;
-    		});
-
             var Slot = function(name, options){
                 this.name = name;
 
@@ -237,9 +215,6 @@
                                 energy: item.isWeapon() && item.weaponStats.type == 1,
                                 missile: item.isWeapon() && item.weaponStats.type == 2,
                             });
-                            // if(item.isWeapon()){
-                            //     slot.type = mechlab_enums.betterWeaponTypes.getName(item.weaponStats.type);
-                            // }
                             slots.push(slot);
     					};
                     } else {
@@ -252,7 +227,6 @@
                         slots.push(slot);
                     }
 				});
-					
 				return slots;
 			});//.extend({ logChange: 'slots'});
 
@@ -287,24 +261,23 @@
     		};
 
             var checkEquipmentType = function(item) {
-                if(item.isJumpJets()){
-                    return self.canHasJumpJets(); // TODO : Enforce orrect jump jet class
-                }
-                if(item.isHeatSink()){
-                    if(self.heatSinks() === 'single'){
-                        return item.name === 'HeatSink_MkI';
-                    }
-                    return item.name === 'DoubleHeatSink_MkI';
-                }
+                if(!item.isModule()) return true;
 
-                // TODO remove this
-                switch(item.cType){
-                    case 'CGECMStats':
+                switch(item.getModuleType()){
+                    case 'jumpJets':
+                        return self.canHasJumpJets(); // TODO : Enforce orrect jump jet class
+                    case 'heatSink':
+                        if(self.heatSinks() === 'single'){
+                            return item.name === 'HeatSink_MkI';
+                        }
+                        return item.name === 'DoubleHeatSink_MkI';
+                    case 'ecm':
                         return self.ecm();
-                };
-
-                // TODO : Ecm, Beagle, CASE
-
+                    case 'beagle':
+                        return true; // TODO
+                    case 'case':
+                        return true; // TODO
+                }
                 return true; // default pass through
             };
 
@@ -380,13 +353,13 @@
 
             component.outputComponentConfig = function(){
                 return new mechlab_loadouts.componentLayout({
-                        slots: component.criticalSlots(), 
-                        items: component.itemIds(), 
-                        ams: component.ams(),
-                        ballistic: component.ballisticHardpoints(),
-                        energy: component.energyHardpoints(),
-                        missile: component.missileHardpoints()
-                    });
+                    slots: component.criticalSlots(), 
+                    items: component.itemIds(), 
+                    ams: component.ams(),
+                    ballistic: component.ballisticHardpoints(),
+                    energy: component.energyHardpoints(),
+                    missile: component.missileHardpoints()
+                });
             };
 
     	}; // end component xtor

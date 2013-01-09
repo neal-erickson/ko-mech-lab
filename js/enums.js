@@ -85,4 +85,46 @@
 		return mechlab_enums.structureTable[tons];
 	};
 
+	mechlab_enums.weapons = {
+		smallLaser: 1003,
+		mediumLaser: 1001,
+		smallPulseLaser: 1012,
+		mediumPulseLaser: 1011,
+		erPpc: 1006,
+		autocannon5: 1019,
+		ultraAc5: 1025,
+		autocannon2: 1018,
+		machineGun: 1024,
+		streakSrm2: 1032,
+		srm4: 1004,
+		srm6: 1031,
+		lrm10: 1027
+	};
+
+	mechlab_enums.ammo = {
+		machineGun: 2011,
+		ac2: 2005,
+		ac5: 2006,
+		uac5: 2012,
+		streakSrm: 2029,
+		srm: 2028,
+		lrm: 2027
+	};
+
+	mechlab_enums.modules = {
+		heatSink: 3000,
+		doubleHeatSink: 3001,
+		'case': 9003, 
+		jumpJetV: 1504
+	};
+
+	mechlab_enums.engines = {
+		std175: 3233,
+		std200: 3238,
+		std245: 3247,
+		std300: 3258,
+		std320: 3262,
+		xl320: 3362
+	};
+
 })(jQuery);

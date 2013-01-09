@@ -45,7 +45,7 @@
 		var Chassis = function(name, prefix){
 			this.name = name;
 			this.prefix = prefix;
-		}
+		};
 		self.selectedChassis = ko.observable();
 		self.mechChassis = ko.observableArray([
 			//new Chassis("Commando", "com"),
@@ -63,33 +63,6 @@
 				return mech.name.toLowerCase().substring(0, 3) == self.selectedChassis().prefix.toLowerCase();
 			});
 		});//.extend({logChange: 'vo'});
-
-		// self.mechChoices = ko.observableArray([
-		// 	{
-		// 		id: "11",
-		// 		name: "DRG-1C"
-		// 	},
-		// 	{
-		// 		id: "37",
-		// 		name: "CDA-2A"
-		// 	},
-		// 	{
-		// 		id: 32,
-		// 		name: "AWS-9M"
-		// 	},
-		// 	{
-		// 		id: "35",
-		// 		name: "RVN-4X"
-		// 	},
-		// 	{
-		// 		id: 21,
-		// 		name: "HBK-4J"
-		// 	},
-		// 	{
-		// 		id: 3,
-  //        		name: "JR7-D",
-		// 	}
-		// ]);
 
 		var getSavedMechs = function() {
 			var saved = [];

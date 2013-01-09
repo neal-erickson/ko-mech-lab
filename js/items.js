@@ -34,6 +34,9 @@
         },
         isJumpJets: function(){
             return this.cType === 'CJumpJetStats';
+        },
+        isModule: function(){
+            return !this.isEngine() && !this.isWeapon() && !this.isAmmo();
         }
     };
 
@@ -47,13 +50,33 @@
             var hps = this.weaponStats.heat.toFloat() / (this.weaponStats.cooldown.toFloat());
             console.log('hps', this.name, hps);
             return hps;
+        },
+        getDps: function(){
+            var divisor = this.weaponStats.cooldown.toFloat() || 1;
+            //console.log('dps', this.name, this.getDamage() / divisor);
+            return this.getDamage() / divisor;
         }
     };
-    weaponMethods.getDps = function() {
-        var divisor = this.weaponStats.cooldown.toFloat() || 1;
-        //console.log('dps', this.name, this.getDamage() / divisor);
-        return this.getDamage() / divisor;
-    }
+    var moduleMethods = {
+        getModuleType: function(){
+            switch(this.cType){
+                case 'CHeatSinkStats':
+                    return 'heatSink';
+                case 'CJumpJetStats':
+                    return 'jumpJets';
+                case 'CGECMStats':
+                    return 'ecm';
+                case 'CDummyHeadStats':
+                    return 'commandConsole';
+                case 'CCASEStats':
+                    return 'case';
+                case 'CBAPStats':
+                    return 'beagle';
+                case 'CArtemisIVStats':
+                    return 'artemis';
+            }
+        }
+    };
 
     // This function is to modify the created items object
     // with better methods, ordering, etc.
@@ -96,6 +119,7 @@
                 case 'CHeatSinkStats':
                 case 'CCASEStats':
                 case 'CGECMStats':
+                    $.extend(item, moduleMethods);
                     items.equipment.push(item);
                     break;
             }
