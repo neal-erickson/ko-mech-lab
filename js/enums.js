@@ -88,6 +88,7 @@
 	mechlab_enums.weapons = {
 		smallLaser: 1003,
 		mediumLaser: 1001,
+		largeLaser: 1008,
 		smallPulseLaser: 1012,
 		mediumPulseLaser: 1011,
 		erPpc: 1006,
@@ -96,9 +97,13 @@
 		autocannon2: 1018,
 		machineGun: 1024,
 		streakSrm2: 1032,
+		srm2: 1030,
 		srm4: 1004,
 		srm6: 1031,
-		lrm10: 1027
+		lrm10: 1027,
+		narc: 1029,
+		tag: 1037,
+		flamer: 1007
 	};
 
 	mechlab_enums.ammo = {
@@ -108,7 +113,8 @@
 		uac5: 2012,
 		streakSrm: 2029,
 		srm: 2028,
-		lrm: 2027
+		lrm: 2027,
+		narc: 2017
 	};
 
 	mechlab_enums.modules = {
@@ -119,11 +125,13 @@
 	};
 
 	mechlab_enums.engines = {
+		std150: 3228,
 		std175: 3233,
 		std200: 3238,
 		std245: 3247,
 		std300: 3258,
 		std320: 3262,
+		xl210: 3340,
 		xl320: 3362
 	};
 

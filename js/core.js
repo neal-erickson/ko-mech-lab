@@ -48,8 +48,9 @@
 		};
 		self.selectedChassis = ko.observable();
 		self.mechChassis = ko.observableArray([
-			//new Chassis("Commando", "com"),
+			new Chassis("Commando", "com"),
 			new Chassis("Jenner", "jr7"),
+			new Chassis("Raven", "rvn"),
 			new Chassis("Dragon", "drg"),
 			new Chassis("Hunchback", "hbk")
 		]);

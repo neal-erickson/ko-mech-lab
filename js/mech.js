@@ -390,6 +390,9 @@
             this.name = name;
             this.slots = slots;
             this.tons = 0; // set tonnage
+            this.isWeapon = function() {
+                return false;
+            };
         };
 
     	// Mech hardpoints
@@ -579,7 +582,7 @@
         });
 
 		self.armorWeight = ko.computed(function() {
-			var armorPerTon = self.armor() === 'standard' ? 32.0 : 34.85; // TODO : Double check value
+			var armorPerTon = self.armor() === 'standard' ? 32.0 : 35.84; // TODO : Double check value
 			return self.overallArmorValue() / armorPerTon;
 		});
 
