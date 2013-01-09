@@ -1,7 +1,7 @@
 /* Core styles */
 
 body {
-	font-family: monospace;
+	font-family: Helvetica;
 }
 
 div#primary {
@@ -20,15 +20,16 @@ p, h1, h2, h3 {
 	margin-bottom: 2px;
 }
 
-ul.slot-list {
-	font-family: monospace;
-	list-style-type: none;
-	padding-left: 0px;
-	margin-top: 2px;
-	margin-bottom: 2px;
+a {
+	text-decoration: none;
+	color: inherit;
 }
 
 /* Primary layout styles */
+
+div.primary-container {
+	background-color: black;
+}
 
 div.area {
 	border: solid 1px black;
@@ -69,6 +70,13 @@ table#armorLocations input {
 
 div#itemTabs {
 	font-family: monospace;
+}
+
+ul.slot-list {
+	list-style-type: none;
+	padding-left: 0px;
+	margin-top: 2px;
+	margin-bottom: 2px;
 }
 
 div#itemTabs ul {
@@ -117,6 +125,26 @@ div.loadout-container ul li.empty {
 	font-style: italic;
 	background-color: #C0C0C0;
 }
+div.loadout-container ul li.energy,
+div.loadout-container ul li.ballistic,
+div.loadout-container ul li.missile {
+	border-width: 2px;
+}
+
+div.loadout-container ul li.energy {
+	/*color: #FF3333;*/
+	/*background-color: #FF3333;*/
+	border-color: #E60000;
+}
+
+div.loadout-container ul li.ballistic {
+	border-color: #FFD119;
+	border-width: 2px;
+}
+
+div.loadout-container ul li.missile {
+	border-color: #00B800;
+}
 
 div.loadout-container ul li.removeable {
 	/*background:none;*/
@@ -128,6 +156,34 @@ div.loadout-container ul.dropHighlight {
 
 div.loadout-container .invalid {
 	color:red;
+}
+
+/* hardpoint display */
+
+.hardpoint-summary {
+	clear: both;
+	height:24px;
+}
+
+.hardpoint-summary div {
+	color:black;
+	font-weight: bold;
+	margin-right: 5px;
+	float: left;
+	padding:2px;
+	border-radius: 3px;
+}
+
+.hardpoint-summary .ballistic {
+	background-color: #FFD119;
+}
+
+.hardpoint-summary .energy {
+	background-color: #E60000;
+}
+
+.hardpoint-summary .missile {
+	background-color: #00B800;
 }
 
 /* jQueryUI tabs overridden */

@@ -124,7 +124,8 @@
 		autocannon2: 1018,
 		machineGun: 1024,
 		streakSrm2: 1032,
-		srm6:1031,
+		srm4: 1004,
+		srm6: 1031,
 		lrm10: 1027
 	};
 
@@ -145,6 +146,7 @@
 	var engines = {
 		std175: 3233,
 		std200: 3238,
+		std245: 3247,
 		std300: 3258,
 		std320: 3262,
 		xl320: 3362
@@ -230,6 +232,24 @@
 			leftArm: new mechlab_loadouts.componentLayout({slots: 8, items: [weapons.mediumLaser], energy: 1}),
 			rightLeg: new mechlab_loadouts.componentLayout({items: [modules.heatSink, modules.heatSink]}),
 			leftLeg: new mechlab_loadouts.componentLayout({items: [modules.heatSink, modules.heatSink]})
+		}
+	); 
+
+	mechlab_loadouts.loadouts['3'] = new mechlab_loadouts.mechLoadout(
+		"JR-7D",
+		35,
+		[14, 20, 6, 16, 8, 16, 8, 8, 8, 12, 12],
+		engines.std245,
+		{
+			head: new mechlab_loadouts.componentLayout({items: [modules.heatSink]}),
+			centerTorso: new mechlab_loadouts.componentLayout({items: [weapons.srm4, modules.jumpJetV], missile: 2}),
+			rightTorso: new mechlab_loadouts.componentLayout({items:[modules.jumpJetV, modules.jumpJetV, ammo.srm]}),
+			leftTorso: new mechlab_loadouts.componentLayout({items: [modules.jumpJetV, modules.jumpJetV], ams: true }),
+			rightArm: new mechlab_loadouts.componentLayout({slots: 10, items: [weapons.mediumLaser, weapons.mediumLaser], energy: 2}),
+			leftArm: new mechlab_loadouts.componentLayout({slots: 10, items: [weapons.mediumLaser, weapons.mediumLaser], energy: 2})
+		},
+		{
+			jumpJets: true
 		}
 	); 
 

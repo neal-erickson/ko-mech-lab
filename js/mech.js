@@ -163,34 +163,53 @@
     			return component.missileHardpoints() - component.missileHardpointsUsed();
     		});//.extend({ logChange: 'missileSlotsOpen'});
 
+            var createHardpointDisplayText = function(used, total, type){
+                return used + '/' + total + ' ' + type;
+            }
+            component.ballisticHardpointDisplayText = ko.computed(function() {
+                return createHardpointDisplayText(component.ballisticHardpointsUsed(), component.ballisticHardpoints(), 'B');
+            });
+            component.energyHardpointDisplayText = ko.computed(function() {
+                return createHardpointDisplayText(component.energyHardpointsUsed(), component.energyHardpoints(), 'E');
+            });
+            component.missileHardpointDisplayText = ko.computed(function() {
+                return createHardpointDisplayText(component.missileHardpointsUsed(), component.missileHardpoints(), 'M');
+            });
+
     		component.hardpointDisplayText = ko.computed(function() {
     			var text = '';
     			if(component.ballisticHardpoints() > 0) {
-    				text += component.ballisticHardpointsUsed() + '/' + component.ballisticHardpoints() + 'B ';
+    				//text += component.ballisticHardpointsUsed() + '/' + component.ballisticHardpoints() + '<span class="ballistic">B</span> ';
+                    text += '<span class="ballistic">' + component.ballisticHardpointsUsed() + '/' + component.ballisticHardpoints() + 'B</span';
     			}
     			if(component.energyHardpoints() > 0) {
-    				text += + component.energyHardpointsUsed() + '/' + component.energyHardpoints() + 'E ';
+    				text += '<span class="energy">' + component.energyHardpointsUsed() + '/' + component.energyHardpoints() + 'E</span>';
     			}
     			if(component.missileHardpoints() > 0) {
-    				text += component.missileHardpointsUsed() + '/' + component.missileHardpoints() + 'M ' ;
+    				text += '<span class="missile">' + component.missileHardpointsUsed() + '/' + component.missileHardpoints() + 'M</span>' ;
     			}
     			if(component.ams()) {
-    				text += component.amsUsed() + '/1 AMS';
+    				text += '<span class="ams">' + component.amsUsed() + '/1AMS</span>';
     			}
 
                 if(text === ''){
-                    return '(None)';
+                    return 'None';
                 }
-    			return '(' + text + ')';
+    			return text;
     		});
 
             var Slot = function(name, options){
                 this.name = name;
+
                 this.data = options.data || {};
                 this.empty = options.empty || false;
                 this.removeable = options.removeable || false;
                 this.first = options.first || false;
                 this.last = options.last || false;
+
+                this.energy = options.energy || false;
+                this.missile = options.missile || false;
+                this.ballistic = options.ballistic || false;
             };
 
             var isRemoveable = function(item){
@@ -213,8 +232,14 @@
                                 data: item,
                                 removeable: isRemoveable(item),
                                 first: i == 0,
-                                last: i == item.slots - 1
+                                last: i == item.slots - 1,
+                                ballistic: item.isWeapon() && item.weaponStats.type == 0,
+                                energy: item.isWeapon() && item.weaponStats.type == 1,
+                                missile: item.isWeapon() && item.weaponStats.type == 2,
                             });
+                            // if(item.isWeapon()){
+                            //     slot.type = mechlab_enums.betterWeaponTypes.getName(item.weaponStats.type);
+                            // }
                             slots.push(slot);
     					};
                     } else {

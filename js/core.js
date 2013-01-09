@@ -39,30 +39,57 @@
 		// Load items from separate namespace
 		self.items = mechlab_items;
 
-		// Currently, hardcoding implemented mechs
-		//self.mechChoices = ko.observableArray(self.items.mechs);
-		self.mechChoices = ko.observableArray([
-			{
-				id: "11",
-				name: "DRG-1C"
-			},
-			{
-				id: "37",
-				name: "CDA-2A"
-			},
-			{
-				id: 32,
-				name: "AWS-9M"
-			},
-			{
-				id: "35",
-				name: "RVN-4X"
-			},
-			{
-				id: 21,
-				name: "HBK-4J"
-			}
+		// Create double drop down for mech chassis + variant
+		self.mechChoices = ko.observableArray(self.items.mechs);
+
+		var Chassis = function(name, prefix){
+			this.name = name;
+			this.prefix = prefix;
+		}
+		self.selectedChassis = ko.observable();
+		self.mechChassis = ko.observableArray([
+			//new Chassis("Commando", "com"),
+			new Chassis("Jenner", "jr7"),
+			new Chassis("Dragon", "drg"),
+			new Chassis("Hunchback", "hbk")
 		]);
+
+		self.selectedVariant = ko.observable();
+		self.variantOptions = ko.computed(function() {
+			if(!self.selectedChassis()) {
+				return [];
+			}
+			return self.mechChoices().filter(function(mech){
+				return mech.name.toLowerCase().substring(0, 3) == self.selectedChassis().prefix.toLowerCase();
+			});
+		});//.extend({logChange: 'vo'});
+
+		// self.mechChoices = ko.observableArray([
+		// 	{
+		// 		id: "11",
+		// 		name: "DRG-1C"
+		// 	},
+		// 	{
+		// 		id: "37",
+		// 		name: "CDA-2A"
+		// 	},
+		// 	{
+		// 		id: 32,
+		// 		name: "AWS-9M"
+		// 	},
+		// 	{
+		// 		id: "35",
+		// 		name: "RVN-4X"
+		// 	},
+		// 	{
+		// 		id: 21,
+		// 		name: "HBK-4J"
+		// 	},
+		// 	{
+		// 		id: 3,
+  //        		name: "JR7-D",
+		// 	}
+		// ]);
 
 		var getSavedMechs = function() {
 			var saved = [];
@@ -100,7 +127,7 @@
 
 		// Callback for selecting mech variant
 		self.selectMech = function() {
-			var mech = mechlab_loadouts.load(self.selectedMech().id);
+			var mech = mechlab_loadouts.load(self.selectedVariant().id);
 			loadIntoView(mech);
 		};
 

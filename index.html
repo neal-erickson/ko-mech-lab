@@ -37,9 +37,11 @@
 			<div id="chassisSelection" style="margin-bottom: 10px;">
 				<span>Select mech:</span>
 				<select id="chassisSelect" data-bind="
-					options: mechChoices, 
-					optionsText: function(option){ return option.name.toUpperCase(); }, 
-					value: selectedMech">
+					options: mechChassis, 
+					optionsText: function(option){ return option.name; }, 
+					value: selectedChassis">
+				</select>
+				<select id="variantSelect" data-bind="options: variantOptions, optionsText: function(option){ return option.name.toUpperCase(); }, value: selectedVariant">
 				</select>
 				<button id="buttonSelectMech" data-bind="click: selectMech">Go</button>
 
@@ -49,7 +51,7 @@
 				<button id="clearButton" data-bind="click: clearSaved">Clear</button>
 			</div>
 
-			<div data-bind="with: mechViewModel, visible: mechChosen" style="display:none;">
+			<div data-bind="with: mechViewModel, visible: mechChosen" style="display:none;" class="primary-container">
 				<!--Mech Overview-->
 				<div class="content-block" style="float:left;width:135px;">
 					<table>
@@ -395,12 +397,16 @@
 
 		<script type="text/html" id="component-template">
 			<b><span data-bind="text: name, css: { 'invalid': criticalSlotsInvalid }"></span></b>
-			<p>
-				<span id="hardpointDisplayTextSpan" data-bind="text: hardpointDisplayText" />
-			</p>
+			<div class="hardpoint-summary">
+				<div class="ballistic" data-bind="visible: ballisticHardpoints() > 0, text: ballisticHardpointDisplayText"></div>
+				<div class="energy" data-bind="visible: energyHardpoints() > 0, text: energyHardpointDisplayText" >E</div>
+				<div class="missile" data-bind="visible: missileHardpoints() > 0, text: missileHardpointDisplayText" >M</div>
+				<!--<div class="none" data-bind="visible: !missileHardpoints() && !energyHardpoints() && !ballisticHardpoints()">empty</span>-->
+			</div>
+			<div style="clear:both;"></div>
 			<ul class="slot-list" 
 				data-bind="foreach: displaySlots, jqueryui : { widget: 'droppable', options: { accept: accept, activeClass: 'dropHighlight', drop: drop } }, delegatedHandler: 'click'">
-				<li data-bind="css: { 'first': first, 'last': last, 'empty': empty, 'removeable': removeable }">
+				<li data-bind="css: { 'first': first, 'last': last, 'empty': empty, 'removeable': removeable, 'energy': energy, 'ballistic': ballistic, 'missile': missile }">
 					<span class="name" data-bind="text: name"></span>
 					<a href="#" style="float:right;" data-bind="visible: removeable"
 						data-click="removeItem">x</a>

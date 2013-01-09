@@ -5,6 +5,22 @@
 	        this[constantsList[i]] = i;
 	    }
 	    this.allValues = constantsList;
+
+	    this.getName = function(value){
+	    	//debugger;
+	    	var name = null;
+	    	this.allValues.forEach(function(constant){
+				if(this[constant] == value){
+					name = constant;
+					return false;
+				}
+			}, this);
+			return name;
+	    };
+
+	    if(Object.freeze){
+	    	Object.freeze(this);
+	    }
 	}
 
 	Enum.prototype.values = function() {
@@ -23,7 +39,17 @@
 	mechlab_enums.weaponTypes = {
 		ballistic: 0,
 		energy: 1,
-		missile: 2
+		missile: 2,
+		ams: 4
+	};
+
+	mechlab_enums.getWeaponType = function(value){
+		mechlab_enums.weaponTypes.forEach(function(weaponType){
+			if(mechlab_enums.weaponTypes[weaponType] === value){
+				return weaponType;
+			}
+		})
+		return null; // failure default
 	};
 
 	// Adding a lookup for tonnage vs structure values
