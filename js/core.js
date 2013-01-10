@@ -21,6 +21,22 @@
 			return (this * divisor) / divisor;
 		};
 
+		ko.bindingHandlers.booleanValue = {
+		    init: function(element, valueAccessor, allBindingsAccessor) {
+		        var observable = valueAccessor(),
+		            interceptor = ko.computed({
+		                read: function() {
+		                    return observable().toString();
+		                },
+		                write: function(newValue) {
+		                    observable(newValue === "true");
+		                }
+		            });
+
+		        ko.applyBindingsToNode(element, { value: interceptor });
+		    }
+		};
+
 		ko.extenders.logChange = function(target, option) {
 		    target.subscribe(function(newValue) {
 		       console.log(option + ": " + newValue);

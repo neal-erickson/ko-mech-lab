@@ -270,9 +270,9 @@
 											<label>Internal Structure</label>
 										</td>
 										<td>
-											<select id="structureSelect" data-bind="value: structure">
-												<option value="standard">Standard</option>
-												<option value="endosteel">Endo Steel</option>
+											<select id="structureSelect2" data-bind="booleanValue: endoSteelStructure">
+												<option value="false">Standard</option>
+												<option value="true">Endo Steel</option>
 											</select>
 										</td>
 									</tr>
@@ -281,9 +281,9 @@
 											<label>Armor Type</label>
 										</td>
 										<td>
-											<select id="armorSelect" data-bind="value: armor">
-												<option value="standard">Standard</option>
-												<option value="ferroFibrous">Ferro-Fibrous</option>
+											<select id="armorSelect" data-bind="booleanValue: ferroFibrousArmor">
+												<option value="false">Standard</option>
+												<option value="true">Ferro-Fibrous</option>
 											</select>
 										</td>
 									</tr>
@@ -292,9 +292,9 @@
 											<label>Heat Sinks</label>
 										</td>
 										<td>
-											<select id="heatSinkSelect" data-bind="value: heatSinks">
-												<option value="single">Single</option>
-												<option value="double">Double</option>
+											<select id="heatSinkSelect" data-bind="booleanValue: doubleHeatSinks">
+												<option value="false">Single</option>
+												<option value="true">Double</option>
 											</select>
 										</td>
 									</tr>
@@ -303,9 +303,9 @@
 											<label>Artemis</label>
 										</td>
 										<td>
-											<select id="artemisSelect" data-bind="value: artemis" disabled>
-												<option value="none">None</option>
-												<option value="equipped">Equipped</option>
+											<select id="artemisSelect" data-bind="booleanValue: artemisEquipped" disabled>
+												<option value="false">None</option>
+												<option value="true">Equipped</option>
 											</select>
 										</td>
 									</tr>

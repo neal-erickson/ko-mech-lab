@@ -26,10 +26,10 @@
 		this.jumpJets = options.jumpJets || false;
 		this.ecm = options.ecm || false;
 
-		this.structure = options.structure || 'standard';
-		this.armor = options.armor || 'standard';
-		this.heatSinks = options.heatSinks || 'single';
-		this.artemis = options.artemis || 'none';
+		this.endoSteel = options.endoSteel || false;
+		this.ferroFibrous = options.ferroFibrous || false;
+		this.doubleHeatSinks = options.heatSinks || false;
+		this.artemis = options.artemis || false;
 
 		this.components = components;
 
@@ -226,7 +226,7 @@
 				leftLeg: new mechlab_loadouts.componentLayout({items: [modules.heatSink]})
 			},
 			{
-				armor: 'ferroFibrous'
+				ferroFibrous: true
 			}
 		);
 
@@ -279,7 +279,7 @@
 			},
 			{
 				jumpJets: true,
-				armor: 'ferroFibrous'
+				ferroFibrous: true
 			}
 		);
 
@@ -330,7 +330,7 @@
 			},
 			{
 				ecm: true,
-				heatSinks: 'double'
+				doubleHeatSinks: true
 			}
 		);
 
@@ -454,8 +454,8 @@
 				leftArm: new mechlab_loadouts.componentLayout({slots: 8})
 			},
 			{
-				structure: 'endoSteel',
-				artemis: 'equipped'
+				endoSteel: true,
+				artemis: true
 			}
 		);
 
@@ -517,7 +517,7 @@
 				engine: new mechlab_loadouts.componentLayout({ items: [modules.doubleHeatSink, modules.doubleHeatSink]})
 			},
 			{
-				heatSinks: 'double'
+				doubleHeatSinks: true
 			}
 		);
 

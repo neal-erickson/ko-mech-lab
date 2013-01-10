@@ -20,19 +20,10 @@
         self.ecm = ko.observable(false);
 
 		// Upgrade settings
-		self.structure = ko.observable('standard');
-        self.structureIsEndoSteel = ko.computed(function() {
-            return self.structure() != 'standard';
-        });
-		self.armor = ko.observable('standard');
-        self.armorIsFerroFibrous = ko.computed(function() {
-            return self.armor() != 'standard';
-        });
-		self.heatSinks = ko.observable('single');
-        self.heatSinksAreDouble = ko.computed(function() {
-            return self.heatSinks() == 'double';
-        });
-		self.artemis = ko.observable('none');//.extend({logChange: 'artemis'});
+        self.endoSteelStructure = ko.observable(false);//.extend({ logChange: 'hasEndoSteel'});
+		self.ferroFibrousArmor = ko.observable(false);
+		self.doubleHeatSinks = ko.observable(false);
+        self.artemisEquipped = ko.observable(false);
 
 		// Engine components
 		self.engine = ko.observable();
@@ -267,10 +258,10 @@
                     case 'jumpJets':
                         return self.canHasJumpJets(); // TODO : Enforce orrect jump jet class
                     case 'heatSink':
-                        if(self.heatSinks() === 'single'){
-                            return item.name === 'HeatSink_MkI';
+                        if(self.doubleHeatSinks()){
+                            return item.name === 'DoubleHeatSink_MkI';
                         }
-                        return item.name === 'DoubleHeatSink_MkI';
+                        return item.name === 'HeatSink_MkI';
                     case 'ecm':
                         return self.ecm();
                     case 'beagle':
@@ -381,10 +372,10 @@
             if(item.cType != 'CHeatSinkStats') return; // only heat sinks allowed
             if(self.engineComponent.criticalSlotsOpen() < 1) return false; // Check that there is a slot
             // Check heat sink type
-            if(self.heatSinks() === 'single'){
-                return item.name === 'HeatSink_MkI';
+            if(self.doubleHeatSinks()){
+                return item.name === 'DoubleHeatSink_MkI';
             }
-            return item.name === 'DoubleHeatSink_MkI';
+            return item.name === 'HeatSink_MkI';
         };
 
         // Convenience xtor for "fixed" hardpoint items (gyro, etc)
@@ -438,16 +429,16 @@
             $.each(self.componentsList, function(index, item){
                 slots += item.criticalSlotsOpen();
             });
-            if(self.structureIsEndoSteel()){
+            if(self.endoSteelStructure()){
                 slots -= 14;
             }
-            if(self.armorIsFerroFibrous()){
+            if(self.ferroFibrousArmor()){
                 slots -= 14;
             }
             return slots;
         });//.extend({logChange: 'rcs'});
 
-        self.heatSinksAreDouble.subscribe(function(newValue){
+        self.doubleHeatSinks.subscribe(function(newValue){
             // This manual subscription is for clearing out existing heat sinks if the kind are switched
              $.each(self.componentsListPlusEngineSinks, function(index, component){
                 var heatSinkId = newValue ? 3000 : 3001;
@@ -584,12 +575,13 @@
         });
 
 		self.armorWeight = ko.computed(function() {
-			var armorPerTon = self.armor() === 'standard' ? 32.0 : 35.84; // TODO : Double check value
+			var armorPerTon = self.ferroFibrousArmor() ? 35.84 : 32.0;
 			return self.overallArmorValue() / armorPerTon;
 		});
 
         self.structureWeight = ko.computed(function() {
-            var multiplier = self.structure() === 'standard' ? 0.1 : 0.05;
+            //var multiplier = self.structure() === 'standard' ? 0.1 : 0.05;
+            var multiplier = self.endoSteelStructure() ? 0.05 : 0.1;
             return self.maxTonnage() * multiplier;
         });
 
@@ -627,10 +619,10 @@
             self.ecm(mech.ecm);
 
             // Upgrades etc
-            self.structure(mech.structure);
-            self.armor(mech.armor);
-            self.artemis(mech.artemis);
-            self.heatSinks(mech.heatSinks);
+            self.endoSteelStructure(mech.endoSteel);
+            self.ferroFibrousArmor(mech.ferroFibrous);
+            self.artemisEquipped(mech.artemis);
+            self.doubleHeatSinks(mech.doubleHeatSinks);
 
             // Copy in base armor values
             self.resetArmorLocations();
@@ -682,10 +674,10 @@
                 jumpJets: self.canHasJumpJets(),
                 ecm: self.ecm(),
                 engine_id: self.engine().id,
-                structure: self.structure(),
-                artemis: self.artemis(),
-                heatSinks: self.heatSinks(),
-                armor: self.armor(),
+                endoSteel: self.endoSteelStructure(),
+                artemis: self.artemisEquipped(),
+                doubleHeatSinks: self.doubleHeatSinks(),
+                ferroFibrous: self.ferroFibrousArmor(),
                 armorValues: [
                     self.armorHead.value(),
                     self.armorCenterTorso.value(),
