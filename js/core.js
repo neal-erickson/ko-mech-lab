@@ -58,28 +58,14 @@
 		// Create double drop down for mech chassis + variant
 		self.mechChoices = ko.observableArray(self.items.mechs);
 
-		var Chassis = function(name, prefix){
-			this.name = name;
-			this.prefix = prefix;
-		};
+		// var Chassis = function(name, prefix){
+		// 	this.name = name;
+		// 	this.prefix = prefix;
+		// };
 
+		// This is bound to the dropdown with <optgroup> elements, so it has to be handled delicately
 		self.selectedChassis = ko.observable();
-
-		self.mechChassis = ko.observableArray([
-			new Chassis("Commando", "com"),
-			new Chassis("Jenner", "jr7"),
-			new Chassis("Raven", "rvn"),
-			new Chassis("Cicada", "cda"),
-			new Chassis("Centurion", "cn9"),
-			new Chassis("Hunchback", "hbk"),
-			new Chassis("Dragon", "drg"),
-			new Chassis("Catapult", "cpl"),
-			new Chassis("Cataphract", "ctf"),
-			new Chassis("Awesome", "aws"),
-			new Chassis("Stalker", "stk"),
-			new Chassis("Atlas", "as7")
-		]);
-
+		
 		self.selectedVariant = ko.observable();
 		self.variantOptions = ko.computed(function() {
 			if(!self.selectedChassis()) {
@@ -90,7 +76,7 @@
 				if(mech.name.toLowerCase().slice(-7) == 'founder') {
 					return false;
 				}
-				return mech.name.toLowerCase().substring(0, 3) == self.selectedChassis().prefix.toLowerCase();
+				return mech.name.toLowerCase().substring(0, 3) == self.selectedChassis().toLowerCase();
 			});
 		});//.extend({logChange: 'vo'});
 
