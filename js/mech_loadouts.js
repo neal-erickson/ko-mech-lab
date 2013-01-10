@@ -459,6 +459,19 @@
 			}
 		);
 
+		mechlab_loadouts.loadouts['45'] = new mechlab_loadouts.mechLoadout(
+			"CN9-YLW", 50, 2,
+			[18, 50, 14, 36, 12, 36, 12, 32, 32, 47, 47], 
+			engines.std215,
+			{
+				centerTorso: new mechlab_loadouts.componentLayout({ items: [weapons.mediumLaser, weapons.mediumLaser], energy: 2}),
+				rightTorso: new mechlab_loadouts.componentLayout({items:[modules.heatSink, ammo.ac20, ammo.ac20, ammo.ac20], ams: true}),
+				leftTorso: new mechlab_loadouts.componentLayout({items: [modules.heatSink] }),
+				rightArm: new mechlab_loadouts.componentLayout({slots: 10, items: [weapons.autocannon20], ballistic: 1}),
+				leftArm: new mechlab_loadouts.componentLayout({slots: 8})
+			}
+		);
+
 		// Dragon //////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		mechlab_loadouts.loadouts['11'] = new mechlab_loadouts.mechLoadout(
@@ -499,6 +512,23 @@
 				leftArm: new mechlab_loadouts.componentLayout({ slots: 9, items: [weapons.mediumLaser], energy: 2 })
 			}
 		);
+
+		// Catapult //////////////////////////////////////////////////////////////////////////////////
+
+		mechlab_loadouts.loadouts['13'] = new mechlab_loadouts.mechLoadout(
+			"CPLT-A1", 65, 2,
+			[18, 48, 22, 42, 18, 42, 18, 40, 40, 48, 48],
+			engines.std260,
+			{
+				centerTorso: new mechlab_loadouts.componentLayout({ items: [modules.heatSink]}),
+				rightTorso: new mechlab_loadouts.componentLayout({items:[modules.jumpJet3, modules.jumpJet3, ammo.lrm, ammo.lrm], ams: true}),
+				leftTorso: new mechlab_loadouts.componentLayout({items: [modules.jumpJet3, modules.jumpJet3, ammo.lrm, ammo.lrm] }),
+				rightArm: new mechlab_loadouts.componentLayout({slots: 10, items: [weapons.lrm15], missile: 3}),
+				leftArm: new mechlab_loadouts.componentLayout({slots: 10, items: [weapons.lrm15], missile: 3}),
+				rightLeg: new mechlab_loadouts.componentLayout({items: [modules.heatSink, modules.heatSink]}),
+				leftLeg: new mechlab_loadouts.componentLayout({items: [modules.heatSink, modules.heatSink]})
+			}
+		); 
 
 		// AWESOME ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
 

@@ -105,6 +105,7 @@
 		srm4: 1004,
 		srm6: 1031,
 		lrm10: 1027,
+		lrm15: 1028,
 		narc: 1029,
 		tag: 1037,
 		flamer: 1007
@@ -128,6 +129,7 @@
 		heatSink: 3000,
 		doubleHeatSink: 3001,
 		'case': 9003, 
+		jumpJet3: 1502,
 		jumpJetV: 1504
 	};
 
@@ -135,7 +137,9 @@
 		std150: 3228,
 		std175: 3233,
 		std200: 3238,
+		std215: 3241,
 		std245: 3247,
+		std260: 3250,
 		std280: 3254,
 		std300: 3258,
 		std320: 3262,
