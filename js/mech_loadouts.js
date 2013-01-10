@@ -28,7 +28,7 @@
 
 		this.endoSteel = options.endoSteel || false;
 		this.ferroFibrous = options.ferroFibrous || false;
-		this.doubleHeatSinks = options.heatSinks || false;
+		this.doubleHeatSinks = options.doubleHeatSinks || false;
 		this.artemis = options.artemis || false;
 
 		this.components = components;
@@ -443,7 +443,7 @@
 		);
 
 		mechlab_loadouts.loadouts['29'] = new mechlab_loadouts.mechLoadout(
-			"CN9-D", 50, 2,
+			"CN9-D", 50, 1,
 			[18, 36, 14, 26, 12, 26, 12, 32, 32, 32, 32], 
 			engines.xl300,
 			{
@@ -460,7 +460,7 @@
 		);
 
 		mechlab_loadouts.loadouts['45'] = new mechlab_loadouts.mechLoadout(
-			"CN9-YLW", 50, 2,
+			"CN9-YLW", 50, 3,
 			[18, 50, 14, 36, 12, 36, 12, 32, 32, 47, 47], 
 			engines.std215,
 			{
@@ -530,7 +530,186 @@
 			}
 		); 
 
+		mechlab_loadouts.loadouts['12'] = new mechlab_loadouts.mechLoadout(
+			"CPLT-C1", 65, 2,
+			[18, 48, 22, 38, 16, 38, 16, 26, 26, 36, 36], 
+			engines.std260,
+			{
+				head: new mechlab_loadouts.componentLayout({ items: [modules.heatSink]}),
+				centerTorso: new mechlab_loadouts.componentLayout({ items: [weapons.mediumLaser, weapons.mediumLaser], energy: 2}),
+				rightTorso: new mechlab_loadouts.componentLayout({items:[modules.jumpJet3, modules.jumpJet3, ammo.lrm, weapons.mediumLaser], ams: true, energy: 1}),
+				leftTorso: new mechlab_loadouts.componentLayout({items: [modules.jumpJet3, modules.jumpJet3, ammo.lrm, weapons.mediumLaser], energy: 1 }),
+				rightArm: new mechlab_loadouts.componentLayout({slots: 10, items: [weapons.lrm15], missile: 1}),
+				leftArm: new mechlab_loadouts.componentLayout({slots: 10, items: [weapons.lrm15], missile: 1}),
+				rightLeg: new mechlab_loadouts.componentLayout({items: [modules.heatSink, modules.heatSink]}),
+				leftLeg: new mechlab_loadouts.componentLayout({items: [modules.heatSink, modules.heatSink]})
+			}
+		); 
+
+		mechlab_loadouts.loadouts['24'] = new mechlab_loadouts.mechLoadout(
+			"CPLT-C4", 65, 2,
+			[18, 48, 22, 38, 16, 38, 16, 26, 26, 36, 36], 
+			engines.std260,
+			{
+				centerTorso: new mechlab_loadouts.componentLayout({ items: [weapons.smallLaser, weapons.smallLaser], energy: 2}),
+				rightTorso: new mechlab_loadouts.componentLayout({items:[modules.jumpJet3, modules.jumpJet3, ammo.lrm, ammo.lrm], ams: true, energy: 1}),
+				leftTorso: new mechlab_loadouts.componentLayout({items: [modules.jumpJet3, modules.jumpJet3, ammo.lrm, ammo.lrm], energy: 1 }),
+				rightArm: new mechlab_loadouts.componentLayout({slots: 10, items: [weapons.lrm20], missile: 2}),
+				leftArm: new mechlab_loadouts.componentLayout({slots: 10, items: [weapons.lrm20], missile: 2})
+			}
+		); 
+
+		mechlab_loadouts.loadouts['19'] = new mechlab_loadouts.mechLoadout(
+			"CPLT-K2", 65, 1,
+			[18, 48, 22, 40, 16, 40, 16, 36, 36, 40, 40], 
+			engines.std260,
+			{
+				centerTorso: new mechlab_loadouts.componentLayout({ items: [modules.heatSink, ammo.machineGun]}),
+				rightTorso: new mechlab_loadouts.componentLayout({items:[weapons.mediumLaser, weapons.machineGun, modules.heatSink, modules.heatSink, modules.heatSink], ams: true, energy: 1, ballistic: 1}),
+				leftTorso: new mechlab_loadouts.componentLayout({items: [weapons.mediumLaser, weapons.machineGun, modules.heatSink, modules.heatSink], energy: 1, ballistic: 1 }),
+				rightArm: new mechlab_loadouts.componentLayout({slots: 10, items: [weapons.ppc], energy: 1}),
+				leftArm: new mechlab_loadouts.componentLayout({slots: 10, items: [weapons.ppc], energy: 1}),
+				rightLeg: new mechlab_loadouts.componentLayout({items: [modules.heatSink, modules.heatSink]}),
+				leftLeg: new mechlab_loadouts.componentLayout({items: [modules.heatSink, modules.heatSink]})
+			}
+		); 
+
+		// Cataphract /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		mechlab_loadouts.loadouts['41'] = new mechlab_loadouts.mechLoadout(
+			"CTF-1X", 70, 2,
+			[18, 52, 18, 32, 12, 32, 12, 44, 44, 44, 44], 
+			engines.std280,
+			{
+				head: new mechlab_loadouts.componentLayout({ items: [modules.heatSink]}),
+				centerTorso: new mechlab_loadouts.componentLayout({}),
+				rightTorso: new mechlab_loadouts.componentLayout({items:[weapons.mediumLaser, weapons.autocannon10, ammo.ac10], energy: 1, ballistic: 1}),
+				leftTorso: new mechlab_loadouts.componentLayout({items: [weapons.mediumLaser], energy: 1, ams: true }),
+				rightArm: new mechlab_loadouts.componentLayout({slots: 9, items: [weapons.ppc, weapons.mediumLaser], energy: 2}),
+				leftArm: new mechlab_loadouts.componentLayout({slots: 8, items: [weapons.mediumLaser], energy: 1}),
+				rightLeg: new mechlab_loadouts.componentLayout({items: [modules.heatSink, modules.heatSink]}),
+				leftLeg: new mechlab_loadouts.componentLayout({items: [modules.heatSink, modules.heatSink]}),
+				engine: new mechlab_loadouts.componentLayout({ items: [modules.heatSink]})
+			}
+		); 
+
+		mechlab_loadouts.loadouts['42'] = new mechlab_loadouts.mechLoadout(
+			"CTF-2X", 70, 2,
+			[18, 60, 26, 40, 20, 40, 20, 44, 44, 52, 52], 
+			engines.std280,
+			{
+				centerTorso: new mechlab_loadouts.componentLayout({}),
+				rightTorso: new mechlab_loadouts.componentLayout({items:[weapons.mediumLaser, weapons.autocannon10], energy: 1, ballistic: 1}),
+				leftTorso: new mechlab_loadouts.componentLayout({items: [weapons.mediumLaser, ammo.ac10, ammo.ac10, ammo.srm], energy: 1, ams: true }),
+				rightArm: new mechlab_loadouts.componentLayout({slots: 9, items: [weapons.largeLaser], energy: 1}),
+				leftArm: new mechlab_loadouts.componentLayout({slots: 8, items: [weapons.srm4], missile: 2}),
+				rightLeg: new mechlab_loadouts.componentLayout({items: [modules.heatSink, modules.heatSink]}),
+				leftLeg: new mechlab_loadouts.componentLayout({items: [modules.heatSink]}),
+				engine: new mechlab_loadouts.componentLayout({ items: [modules.heatSink]})
+			}
+		); 
+
+		mechlab_loadouts.loadouts['44'] = new mechlab_loadouts.mechLoadout(
+			"CTF-4X", 70, 2,
+			[18, 62, 26, 40, 20, 40, 20, 44, 44, 60, 60], 
+			engines.std210,
+			{
+				head: new mechlab_loadouts.componentLayout({ items: [weapons.lrm5], missile: 1}),
+				centerTorso: new mechlab_loadouts.componentLayout({items: [weapons.largeLaser], energy: 2}),
+				rightTorso: new mechlab_loadouts.componentLayout({items:[modules.heatSink, modules.heatSink, ammo.ac5, ammo.ac5, ammo.lrm] }),
+				leftTorso: new mechlab_loadouts.componentLayout({items: [modules.heatSink, modules.heatSink, ammo.ac5, ammo.ac5], ams: true }),
+				rightArm: new mechlab_loadouts.componentLayout({slots: 9, items: [weapons.autocannon5], ballistic: 2}),
+				leftArm: new mechlab_loadouts.componentLayout({slots: 9, items: [weapons.autocannon5], ballistic: 2}),
+				rightLeg: new mechlab_loadouts.componentLayout({items: [modules.heatSink, modules.heatSink]}),
+				leftLeg: new mechlab_loadouts.componentLayout({items: [modules.heatSink, modules.heatSink]})
+			}
+		); 
+
+		mechlab_loadouts.loadouts['40'] = new mechlab_loadouts.mechLoadout(
+			"CTF-3D", 70, 2,
+			[18, 52, 18, 32, 18, 32, 18, 44, 44, 38, 38], 
+			engines.xl280,
+			{
+				head: new mechlab_loadouts.componentLayout({ items: [modules.heatSink]}),
+				centerTorso: new mechlab_loadouts.componentLayout({items: [modules.heatSink, modules.heatSink]}),
+				rightTorso: new mechlab_loadouts.componentLayout({items:[weapons.lb10x, weapons.mediumLaser, modules.case, ammo.uac5], energy: 1, ballistic: 1}),
+				leftTorso: new mechlab_loadouts.componentLayout({items: [weapons.mediumLaser, modules.case, ammo.lb10x, ammo.lb10x, modules.heatSink, modules.heatSink], energy: 1, ams: true }),
+				rightArm: new mechlab_loadouts.componentLayout({slots: 9, items: [weapons.mediumLaser, weapons.ultraAc5], energy: 1, ballistic: 1}),
+				leftArm: new mechlab_loadouts.componentLayout({slots: 8, items: [weapons.mediumLaser], energy: 1}),
+				rightLeg: new mechlab_loadouts.componentLayout({items: [modules.jumpJet3, modules.jumpJet3]}),
+				leftLeg: new mechlab_loadouts.componentLayout({items: [modules.jumpJet3, modules.jumpJet3]}),
+				engine: new mechlab_loadouts.componentLayout({ items: [modules.heatSink]})
+			},
+			{
+				jumpJets: true
+			}
+		); 
+
 		// AWESOME ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
+
+		mechlab_loadouts.loadouts['14'] = new mechlab_loadouts.mechLoadout(
+			"AWS-8Q", 80, 2,
+			[18, 60, 38, 48, 20, 48, 20, 48, 48, 66, 66], 
+			engines.std240,
+			{
+				head: new mechlab_loadouts.componentLayout({ items: [weapons.smallLaser], energy: 1}),
+				centerTorso: new mechlab_loadouts.componentLayout({ items: [modules.heatSink, modules.heatSink]}),
+				rightTorso: new mechlab_loadouts.componentLayout({ items:[weapons.ppc, modules.heatSink, modules.heatSink, modules.heatSink], ams: true, energy: 2 }),
+				leftTorso: new mechlab_loadouts.componentLayout({items:[weapons.ppc, modules.heatSink, modules.heatSink, modules.heatSink, modules.heatSink, modules.heatSink], energy: 2 }),
+				rightArm: new mechlab_loadouts.componentLayout({ slots: 9, items: [weapons.ppc, modules.heatSink, modules.heatSink, modules.heatSink, modules.heatSink, modules.heatSink], energy: 2 }),
+				leftArm: new mechlab_loadouts.componentLayout({ slots: 8 }),
+				rightLeg: new mechlab_loadouts.componentLayout({ items: [modules.heatSink, modules.heatSink]}),
+				leftLeg: new mechlab_loadouts.componentLayout({items: [modules.heatSink, modules.heatSink]})
+			}
+		);
+
+		mechlab_loadouts.loadouts['15'] = new mechlab_loadouts.mechLoadout(
+			"AWS-8R", 80, 1,
+			[18, 60, 38, 48, 20, 48, 20, 48, 48, 66, 66], 
+			engines.std240,
+			{
+				head: new mechlab_loadouts.componentLayout({ items: [weapons.smallLaser], energy: 1}),
+				centerTorso: new mechlab_loadouts.componentLayout({ items: [ammo.lrm, ammo.lrm]}),
+				rightTorso: new mechlab_loadouts.componentLayout({ items:[modules.heatSink, modules.heatSink, modules.heatSink, modules.heatSink, modules.heatSink, modules.heatSink, weapons.lrm15], ams: true, missile: 2 }),
+				leftTorso: new mechlab_loadouts.componentLayout({ items:[modules.heatSink, modules.heatSink, modules.heatSink, modules.heatSink, modules.heatSink, modules.heatSink, weapons.lrm15], missile: 2 }),
+				rightArm: new mechlab_loadouts.componentLayout({ slots: 9, items: [weapons.largeLaser, modules.heatSink], energy: 2 }),
+				leftArm: new mechlab_loadouts.componentLayout({ slots: 8, items: [modules.heatSink, modules.heatSink]}),
+				rightLeg: new mechlab_loadouts.componentLayout({ items: [modules.heatSink, modules.heatSink]}),
+				leftLeg: new mechlab_loadouts.componentLayout({items: [modules.heatSink, modules.heatSink]})
+			}
+		);
+
+		mechlab_loadouts.loadouts['30'] = new mechlab_loadouts.mechLoadout(
+			"AWS-8T", 80, 2,
+			[18, 60, 38, 48, 20, 48, 20, 48, 48, 66, 66], 
+			engines.std240,
+			{
+				head: new mechlab_loadouts.componentLayout({ items: [weapons.smallLaser], energy: 1}),
+				centerTorso: new mechlab_loadouts.componentLayout({ items: [ammo.lrm, ammo.lrm]}),
+				rightTorso: new mechlab_loadouts.componentLayout({ items:[modules.heatSink, modules.heatSink, modules.heatSink, modules.heatSink, modules.heatSink, weapons.lrm15], ams: true, missile: 1 }),
+				leftTorso: new mechlab_loadouts.componentLayout({ items:[modules.heatSink, modules.heatSink, modules.heatSink, modules.heatSink, weapons.lrm15], missile: 1 }),
+				rightArm: new mechlab_loadouts.componentLayout({ slots: 9, items: [weapons.largeLaser, modules.heatSink], energy: 2 }),
+				leftArm: new mechlab_loadouts.componentLayout({ slots: 8, items: [weapons.largeLaser], energy: 2}),
+				rightLeg: new mechlab_loadouts.componentLayout({ items: [modules.heatSink, modules.heatSink]}),
+				leftLeg: new mechlab_loadouts.componentLayout({items: [modules.heatSink, modules.heatSink]})
+			}
+		);
+
+		mechlab_loadouts.loadouts['31'] = new mechlab_loadouts.mechLoadout(
+			"AWS-8V", 80, 2,
+			[18, 60, 38, 48, 20, 48, 20, 48, 48, 66, 66], 
+			engines.std240,
+			{
+				head: new mechlab_loadouts.componentLayout({ items: [weapons.smallLaser], energy: 1}),
+				centerTorso: new mechlab_loadouts.componentLayout({ items: [ammo.lrm, ammo.lrm]}),
+				rightTorso: new mechlab_loadouts.componentLayout({ items:[weapons.lrm15, modules.heatSink, modules.heatSink, modules.heatSink, modules.heatSink, modules.heatSink, modules.heatSink], ams: true, missile: 3 }),
+				leftTorso: new mechlab_loadouts.componentLayout({ items: [weapons.largeLaser, modules.heatSink, modules.heatSink, modules.heatSink, modules.heatSink, modules.heatSink, modules.heatSink, modules.heatSink], energy: 2 }),
+				rightArm: new mechlab_loadouts.componentLayout({ slots: 9, items: [weapons.ppc], energy: 1 }),
+				leftArm: new mechlab_loadouts.componentLayout({ slots: 8, items: [modules.heatSink, modules.heatSink]}),
+				rightLeg: new mechlab_loadouts.componentLayout({ items: [modules.heatSink, modules.heatSink]}),
+				leftLeg: new mechlab_loadouts.componentLayout({items: [modules.heatSink, modules.heatSink]})
+			}
+		);
 
 		mechlab_loadouts.loadouts['32'] = new mechlab_loadouts.mechLoadout(
 			"AWS-9M", 80, 2,
@@ -550,6 +729,25 @@
 				doubleHeatSinks: true
 			}
 		);
+
+		// Stalker ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		// TODO stalker
+		// mechlab_loadouts.loadouts['15'] = new mechlab_loadouts.mechLoadout(
+		// 	"AWS-8R", 80, 1,
+		// 	[18, 60, 38, 48, 20, 48, 20, 48, 48, 66, 66], 
+		// 	engines.std240,
+		// 	{
+		// 		head: new mechlab_loadouts.componentLayout({ items: [weapons.smallLaser], energy: 1}),
+		// 		centerTorso: new mechlab_loadouts.componentLayout({ items: [ammo.lrm, ammo.lrm]}),
+		// 		rightTorso: new mechlab_loadouts.componentLayout({ items:[modules.heatSink, modules.heatSink, modules.heatSink, modules.heatSink, modules.heatSink, modules.heatSink, weapons.lrm15], ams: true, missile: 2 }),
+		// 		leftTorso: new mechlab_loadouts.componentLayout({ items:[modules.heatSink, modules.heatSink, modules.heatSink, modules.heatSink, modules.heatSink, modules.heatSink, weapons.lrm15], missile: 2 }),
+		// 		rightArm: new mechlab_loadouts.componentLayout({ slots: 9, items: [weapons.largeLaser, modules.heatSink], energy: 2 }),
+		// 		leftArm: new mechlab_loadouts.componentLayout({ slots: 8, items: [modules.heatSink, modules.heatSink]}),
+		// 		rightLeg: new mechlab_loadouts.componentLayout({ items: [modules.heatSink, modules.heatSink]}),
+		// 		leftLeg: new mechlab_loadouts.componentLayout({items: [modules.heatSink, modules.heatSink]})
+		// 	}
+		// );
 
 	}; // end loadout initialization
 

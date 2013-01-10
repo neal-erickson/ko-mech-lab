@@ -392,6 +392,32 @@
 									</tr>
 								</tbody>
 							</table>
+							<p>Mechs</p>
+							<table>
+								<tbody data-bind="foreach: $parent.items.mechs">
+									<tr>
+										<td>
+											<span data-bind="text: name"></span>
+										</td>
+										<td>
+											&nbsp;|&nbsp;<span data-bind="text: id"></span>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<p>Engines</p>
+							<table>
+								<tbody data-bind="foreach: $parent.items.engines">
+									<tr>
+										<td>
+											<span data-bind="text: name"></span>
+										</td>
+										<td>
+											&nbsp;|&nbsp;<span data-bind="text: id"></span>
+										</td>
+									</tr>
+								</tbody>
+							</table>
 						</div>
 					</div>
 				</div>

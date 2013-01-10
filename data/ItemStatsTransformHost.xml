@@ -155,9 +155,30 @@ type
 		<Mech id="45" name="cn9-ylw" mdf="\centurion\cn9-ylw.mdf">
 			<Loc nameTag="@cn9-ylw" descTag="@cn9-ylw_desc" iconTag="40"/>
 		</Mech>
-		
-		<Mech id="54" name="ctf-hero01" mdf="\cataphract\ctf-hero01.mdf">
+		<Mech id="46" name="stk-5m" mdf="\stalker\stk-5m.mdf">
+			<Loc nameTag="@stk-5m" descTag="@stk-5m_desc" iconTag="47"/>
+		</Mech>
+		<Mech id="47" name="stk-3f" mdf="\stalker\stk-3f.mdf">
+			<Loc nameTag="@stk-3f" descTag="@stk-3f_desc" iconTag="48"/>
+		</Mech>
+		<Mech id="48" name="stk-3h" mdf="\stalker\stk-3h.mdf">
+			<Loc nameTag="@stk-3h" descTag="@stk-3h_desc" iconTag="49"/>
+		</Mech>
+		<Mech id="49" name="stk-4n" mdf="\stalker\stk-4n.mdf">
+			<Loc nameTag="@stk-4n" descTag="@stk-4n_desc" iconTag="50"/>
+		</Mech>
+		<Mech id="50" name="stk-5s" mdf="\stalker\stk-5s.mdf">
+			<Loc nameTag="@stk-5s" descTag="@stk-5s_desc" iconTag="51"/>
+		</Mech>
+
+	    <Mech id="54" name="ctf-hero01" mdf="\cataphract\ctf-hero01.mdf">
 			<Loc nameTag="@ctf-hero01" descTag="@ctf-hero01_desc" iconTag="46"/>
+		</Mech>
+		<Mech id="55" name="drg-fang" mdf="\dragon\drg-fang.mdf">
+			<Loc nameTag="@drg-fang" descTag="@drg-fang_desc" iconTag="52"/>
+		</Mech>
+		<Mech id="56" name="drg-flame" mdf="\dragon\drg-flame.mdf">
+			<Loc nameTag="@drg-flame" descTag="@drg-flame_desc" iconTag="53"/>
 		</Mech>
 	
 		<Mech id="996" name="jr7-d-founder" mdf="\jenner\jr7-d-founder.mdf">
@@ -197,7 +218,7 @@ type
        radius = used for explosion radius
        duration = 0 single shot, -1.0 player controlled duration (button held down), > 0 set duration 
 	  	 slots = integer value of equipment slots weapon uses !-->
-			<WeaponStats Health="10" slots="10" type="0" projectileclass="bullet" numFiring="1" damage="20" heatdamage="0" impulse="1.0" heat="6.0" cooldown="4.0" ammoType="AC20Ammo" ammoPerShot="1" minRange="0" longRange="270" maxRange="810" tons="14" duration="0.0" lifetime="10.0" speed="750" volleydelay="0" gravity="0,0,-9.8" maxDepth="10.0"/>
+			<WeaponStats Health="10" slots="10" type="0" projectileclass="bullet" numFiring="1" damage="20" heatdamage="0" impulse="0.1" heat="6.0" cooldown="4.0" ammoType="AC20Ammo" ammoPerShot="1" minRange="0" longRange="270" maxRange="810" tons="14" duration="0.0" lifetime="10.0" speed="900" volleydelay="0" gravity="0,0,-9.8" maxDepth="10.0"/>
       <!-- Effects used by the weapon!-->
 			<EffectList>
 				<Effect name="Projectile" asset="objects/weapons/autocannon_shell.cgf" scale="1.0" mass="10"/>
@@ -214,7 +235,7 @@ type
 		</Weapon>
 		<Weapon id="1001" name="MediumLaser">
 			<Loc nameTag="@ML" descTag="@ML_desc" iconTag="16"/>
-			<WeaponStats Health="10" slots="1" type="1" projectileclass="" numFiring="1" damage="5" heatdamage="0" impulse="0.1" heat="4.0" cooldown="3.0" ammoType="" ammoPerShot="0" minRange="0" longRange="270" maxRange="540" visRange="1500" tons="1" duration="1.0" lifetime="0" speed="0" volleydelay="0.0" maxDepth="10.0"/>
+			<WeaponStats Health="10" slots="1" type="1" projectileclass="" numFiring="1" damage="5" heatdamage="0" impulse="0.0" heat="4.0" cooldown="3.0" ammoType="" ammoPerShot="0" minRange="0" longRange="270" maxRange="540" visRange="1500" tons="1" duration="1.0" lifetime="0" speed="0" volleydelay="0.0" maxDepth="10.0"/>
 			<EffectList>
 				<Effect name="Beam" asset="Objects/weapons/laser_beam_medium.cgf"/>
 				<Effect name="BeamCap" asset="Objects/weapons/laser_impact_medium.cgf"/>
@@ -230,7 +251,7 @@ type
 		</Weapon>
 		<Weapon id="1002" name="LRM20">
 			<Loc nameTag="@LRM20" descTag="@LRM20_desc" iconTag="3"/>
-			<WeaponStats Health="10" slots="5" type="2" projectileclass="javelin" numFiring="20" damage="1.8" heatdamage="0" impulse="0.8" heat="6.0" cooldown="4.75" ammoType="LRMAmmo" ammoPerShot="20" minRange="180" longRange="1000.0" maxRange="1000.0" tons="10" duration="0.0" lifetime="15.0" speed="100" volleydelay="0.5" peakdist="0.6" peaktime="-0.333" minheight="20" maxheight="150" uselock="1" trackingstrength="2.0" radius="4.0" hitpoints="1.0" UseTAG="1"  formation_speed="2.5"  formation_size="0.1"  formation_size_per_index="0.005" artemisAmmoType="LRMAmmoArtemis"/>
+			<WeaponStats Health="10" slots="5" type="2" projectileclass="javelin" numFiring="20" damage="1.8" heatdamage="0" impulse="0.4" heat="6.0" cooldown="4.75" ammoType="LRMAmmo" ammoPerShot="20" minRange="180" longRange="1000.0" maxRange="1000.0" tons="10" duration="0.0" lifetime="15.0" speed="100" volleydelay="0.5" peakdist="0.6" peaktime="-0.333" minheight="20" maxheight="150" uselock="1" trackingstrength="2.0" radius="4.0" hitpoints="1.0" UseTAG="1"  formation_speed="2.5"  formation_size="0.1"  formation_size_per_index="0.005" artemisAmmoType="LRMAmmoArtemis"/>
 			<EffectList>
 				<Effect name="Projectile" asset="objects/weapons/lrm_missile.cgf" mass="1.0"/>
 				<Effect name="ProjectileMaterial" asset="mat_rocket"/>
@@ -249,7 +270,7 @@ type
 		</Weapon>
 		<Weapon id="1003" name="SmallLaser">
 			<Loc nameTag="@SL" descTag="@SL_desc" iconTag="11"/>
-			<WeaponStats Health="10" slots="1" type="1" projectileclass="" numFiring="1" damage="3" heatdamage="0" impulse="0.1" heat="2.0" cooldown="2.25" ammoType="" ammoPerShot="0" minRange="0" longRange="90" maxRange="180" visRange="1500" tons="0.5" duration="0.75" lifetime="0" speed="0" volleydelay="0.0" maxDepth="10.0"/>
+			<WeaponStats Health="10" slots="1" type="1" projectileclass="" numFiring="1" damage="3" heatdamage="0" impulse="0.0" heat="2.0" cooldown="2.25" ammoType="" ammoPerShot="0" minRange="0" longRange="90" maxRange="180" visRange="1500" tons="0.5" duration="0.75" lifetime="0" speed="0" volleydelay="0.0" maxDepth="10.0"/>
 			<EffectList>
 				<Effect name="Beam" asset="Objects/weapons/laser_beam_small.cgf"/>
 				<Effect name="BeamCap" asset="Objects/weapons/laser_impact_small.cgf"/>
@@ -264,7 +285,7 @@ type
 		</Weapon>
 		<Weapon id="1004" name="SRM4">
 			<Loc nameTag="@SRM4" descTag="@SRM4_desc" iconTag="12"/>
-			<WeaponStats Health="10" slots="1" type="2" projectileclass="waypointrocket" numFiring="4" damage="2.5" heatdamage="0" impulse="1.0" heat="3" cooldown="3.75" ammoType="SRMAmmo" ammoPerShot="4" minRange="0" longRange="270.0" maxRange="270.0" tons="2" duration="0.0" lifetime="15.0" speed="300" volleydelay="0.25" maxheight="0" radius="3.5"  artemisAmmoType="SRMAmmoArtemis" formation_size="0.01"  formation_size_per_index="0.025"/>
+			<WeaponStats Health="10" slots="1" type="2" projectileclass="waypointrocket" numFiring="4" damage="2.5" heatdamage="0" impulse="0.192" heat="3" cooldown="3.75" ammoType="SRMAmmo" ammoPerShot="4" minRange="0" longRange="270.0" maxRange="270.0" tons="2" duration="0.0" lifetime="15.0" speed="300" volleydelay="0.25" maxheight="0" radius="3.5"  artemisAmmoType="SRMAmmoArtemis" formation_size="0.01"  formation_size_per_index="0.025"/>
 			<EffectList>
 				<Effect name="Projectile" asset="objects/weapons/lrm_missile.cgf" mass="1.0"/>
 				<Effect name="ProjectileMaterial" asset="mat_rocket"/>
@@ -280,7 +301,7 @@ type
 		</Weapon>
 		<Weapon id="1005" name="ERLargeLaser">
 			<Loc nameTag="@ERLL" descTag="@ERLL_desc" iconTag="13"/>
-			<WeaponStats Health="10" slots="2" type="1" projectileclass="" numFiring="1" damage="9" heatdamage="0" impulse="0.1" heat="10.0" cooldown="3.25" ammoType="" ammoPerShot="0" minRange="0" longRange="675" maxRange="1350" visRange="1500" tons="5" duration="1.0" lifetime="0" speed="0" volleydelay="0.0" maxDepth="10.0"/>
+			<WeaponStats Health="10" slots="2" type="1" projectileclass="" numFiring="1" damage="9" heatdamage="0" impulse="0.0" heat="10.0" cooldown="3.25" ammoType="" ammoPerShot="0" minRange="0" longRange="675" maxRange="1350" visRange="1500" tons="5" duration="1.0" lifetime="0" speed="0" volleydelay="0.0" maxDepth="10.0"/>
 			<EffectList>
 				<Effect name="Beam" asset="Objects/weapons/laser_beam_large.cgf"/>
 				<Effect name="BeamCap" asset="Objects/weapons/laser_impact_large.cgf"/>
@@ -296,7 +317,7 @@ type
 		</Weapon>
 		<Weapon id="1006" name="ERPPC">
 			<Loc nameTag="@ERPPC" descTag="@ERPPC_desc" iconTag="14"/>
-			<WeaponStats Health="10" slots="3" type="1" projectileclass="bullet" numFiring="1" damage="10" heatdamage="0" impulse="1.0" heat="13.0" cooldown="3" ammoType="" ammoPerShot="0" minRange="0" longRange="810" maxRange="1620" tons="7" duration="0" lifetime="10" speed="1200" volleydelay="0" maxDepth="10.0"/>
+			<WeaponStats Health="10" slots="3" type="1" projectileclass="bullet" numFiring="1" damage="10" heatdamage="0" impulse="0.03" heat="13.0" cooldown="3" ammoType="" ammoPerShot="0" minRange="0" longRange="810" maxRange="1620" tons="7" duration="0" lifetime="10" speed="2000" volleydelay="0" maxDepth="10.0"/>
 			<EffectList>
 				<Effect name="Projectile" asset="objects/weapons/ppc_projectile.cgf" mass="1.0"/>
 				<Effect name="ProjectileMaterial" asset="mat_ppc" />
@@ -312,7 +333,7 @@ type
 		</Weapon>
 		<Weapon id="1007" name="Flamer">
 			<Loc nameTag="@Flamer" descTag="@Flamer_desc" iconTag="15"/>
-			<WeaponStats Health="10" slots="1" type="1" projectileclass="" numFiring="1" damage="0.4" heatdamage="0.2" impulse="0.1" heat="0.6" cooldown="0.0" ammoType="" ammoPerShot="0" minRange="0" longRange="64.0" maxRange="64.0" tons="1" duration="-1.0" lifetime="1.0" speed="100" volleydelay="0.25" maxheight="0" coneoffire="10" heatinctime="5.0" maxDepth="10.0"/>
+			<WeaponStats Health="10" slots="1" type="1" projectileclass="" numFiring="1" damage="0.4" heatdamage="0.2" impulse="0.0" heat="0.6" cooldown="0.0" ammoType="" ammoPerShot="0" minRange="0" longRange="64.0" maxRange="64.0" tons="1" duration="-1.0" lifetime="1.0" speed="100" volleydelay="0.25" maxheight="0" coneoffire="10" heatinctime="5.0" maxDepth="10.0"/>
 			<EffectList>
 				<Effect name="Beam" asset=""/>
 				<Effect name="ParticleBeam" asset="mech_weapons.flamer.flame_jet"/>
@@ -327,7 +348,7 @@ type
 		</Weapon>
 		<Weapon id="1008" name="LargeLaser">
 			<Loc nameTag="@LL" descTag="@LL_desc" iconTag="16"/>
-			<WeaponStats Health="10" slots="2" type="1" projectileclass="" numFiring="1" damage="9" heatdamage="0" impulse="0.1" heat="7.0" cooldown="3.25" ammoType="" ammoPerShot="0" minRange="0" longRange="450" maxRange="900" visRange="1500" tons="5" duration="1.0" lifetime="0" speed="0" volleydelay="0.0" maxDepth="10.0"/>
+			<WeaponStats Health="10" slots="2" type="1" projectileclass="" numFiring="1" damage="9" heatdamage="0" impulse="0.0" heat="7.0" cooldown="3.25" ammoType="" ammoPerShot="0" minRange="0" longRange="450" maxRange="900" visRange="1500" tons="5" duration="1.0" lifetime="0" speed="0" volleydelay="0.0" maxDepth="10.0"/>
 			<EffectList>
 				<Effect name="Beam" asset="Objects/weapons/laser_beam_large.cgf"/>
 				<Effect name="BeamCap" asset="Objects/weapons/laser_impact_large.cgf"/>
@@ -343,7 +364,7 @@ type
 		</Weapon>
 		<Weapon id="1009" name="PPC">
 			<Loc nameTag="@PPC" descTag="@PPC_desc" iconTag="17"/>
-			<WeaponStats Health="10" slots="3" type="1" projectileclass="bullet" numFiring="1" damage="10" heatdamage="0" impulse="1.0" heat="9.0" cooldown="3" ammoType="" ammoPerShot="0" minRange="90" longRange="540" maxRange="1080" tons="7" duration="0" lifetime="10" speed="1200" volleydelay="0" maxDepth="10.0"/>
+			<WeaponStats Health="10" slots="3" type="1" projectileclass="bullet" numFiring="1" damage="10" heatdamage="0" impulse="0.03" heat="9.0" cooldown="3" ammoType="" ammoPerShot="0" minRange="90" longRange="540" maxRange="1080" tons="7" duration="0" lifetime="10" speed="2000" volleydelay="0" maxDepth="10.0"/>
 			<EffectList>
 				<Effect name="Projectile" asset="objects/weapons/ppc_projectile.cgf" mass="1.0"/>
 				<Effect name="ProjectileMaterial" asset="mat_ppc"/>
@@ -360,7 +381,7 @@ type
 		</Weapon>
 		<Weapon id="1010" name="LargePulseLaser">
 			<Loc nameTag="@LPL" descTag="@LPL_desc" iconTag="18"/>
-			<WeaponStats Health="10" slots="2" type="1" projectileclass="" numFiring="1" damage="10" heatdamage="0" impulse="0.1" heat="9.0" cooldown="3.25" ammoType="" ammoPerShot="0" minRange="0" longRange="300" maxRange="600" visRange="1500" tons="7" duration="0.75" lifetime="0" speed="0" volleydelay="0.0" maxDepth="10.0"/>
+			<WeaponStats Health="10" slots="2" type="1" projectileclass="" numFiring="1" damage="10" heatdamage="0" impulse="0.0" heat="9.0" cooldown="3.25" ammoType="" ammoPerShot="0" minRange="0" longRange="300" maxRange="600" visRange="1500" tons="7" duration="0.75" lifetime="0" speed="0" volleydelay="0.0" maxDepth="10.0"/>
 			<EffectList>
 				<Effect name="Beam" asset="Objects/weapons/laser_beam_pulse_large.cgf"/>
 				<Effect name="BeamCap" asset="Objects/weapons/laser_impact_large.cgf"/>
@@ -375,7 +396,7 @@ type
 		</Weapon>
 		<Weapon id="1011" name="MediumPulseLaser">
 			<Loc nameTag="@MPL" descTag="@MPL_desc" iconTag="19"/>
-			<WeaponStats Health="10" slots="1" type="1" projectileclass="" numFiring="1" damage="6" heatdamage="0" impulse="0.1" heat="5.0" cooldown="3.0" ammoType="" ammoPerShot="0" minRange="0" longRange="180" maxRange="360" visRange="1500" tons="2" duration="0.75" lifetime="0" speed="0" volleydelay="0.0" maxDepth="10.0"/>
+			<WeaponStats Health="10" slots="1" type="1" projectileclass="" numFiring="1" damage="6" heatdamage="0" impulse="0.0" heat="5.0" cooldown="3.0" ammoType="" ammoPerShot="0" minRange="0" longRange="180" maxRange="360" visRange="1500" tons="2" duration="0.75" lifetime="0" speed="0" volleydelay="0.0" maxDepth="10.0"/>
 			<EffectList>
 				<Effect name="Beam" asset="Objects/weapons/laser_beam_pulse_medium.cgf"/>
 				<Effect name="BeamCap" asset="Objects/weapons/laser_impact_medium.cgf"/>
@@ -391,7 +412,7 @@ type
 		</Weapon>
 		<Weapon id="1012" name="SmallPulseLaser">
 			<Loc nameTag="@SPL" descTag="@SPL_desc" iconTag="20"/>
-			<WeaponStats Health="10" slots="1" type="1" projectileclass="" numFiring="1" damage="3" heatdamage="0" impulse="0.1" heat="3.0" cooldown="2.25" ammoType="" ammoPerShot="0" minRange="0" longRange="90" maxRange="180" visRange="1500" tons="1" duration="0.5" lifetime="0" speed="0" volleydelay="0.0" maxDepth="10.0"/>
+			<WeaponStats Health="10" slots="1" type="1" projectileclass="" numFiring="1" damage="3" heatdamage="0" impulse="0.0" heat="3.0" cooldown="2.25" ammoType="" ammoPerShot="0" minRange="0" longRange="90" maxRange="180" visRange="1500" tons="1" duration="0.5" lifetime="0" speed="0" volleydelay="0.0" maxDepth="10.0"/>
 			<EffectList>
 				<Effect name="Beam" asset="Objects/weapons/laser_beam_pulse_small.cgf"/>
 				<Effect name="BeamCap" asset="Objects/weapons/laser_impact_small.cgf"/>
@@ -425,7 +446,7 @@ type
 		<!-- <Weapon id="1017" name="Thumper Cannon"> -->
 		<Weapon id="1018" name="AutoCannon2">
 			<Loc nameTag="@AC2" descTag="@AC2_desc" iconTag="7"/>
-			<WeaponStats Health="10" slots="1" type="0" projectileclass="bullet" numFiring="1" damage="2" heatdamage="0" impulse="1.0" heat="1.0" cooldown="0.5" ammoType="AC2Ammo" ammoPerShot="1" minRange="0" longRange="720" maxRange="2160" tons="6" duration="0.0" lifetime="10.0" speed="2000" volleydelay="0" gravity="0,0,-9.8" maxDepth="10.0"/>
+			<WeaponStats Health="10" slots="1" type="0" projectileclass="bullet" numFiring="1" damage="2" heatdamage="0" impulse="0.0375" heat="1.0" cooldown="0.5" ammoType="AC2Ammo" ammoPerShot="1" minRange="0" longRange="720" maxRange="2160" tons="6" duration="0.0" lifetime="10.0" speed="2000" volleydelay="0" gravity="0,0,-9.8" maxDepth="10.0"/>
 			<EffectList>
 				<Effect name="Projectile" asset="objects/weapons/autocannon_shell.cgf" scale="1.0" mass="10"/>
 				<Effect name="ProjectileMaterial" asset="mat_ac2"/>
@@ -441,7 +462,7 @@ type
 		</Weapon>
 		<Weapon id="1019" name="AutoCannon5">
 			<Loc nameTag="@AC5" descTag="@AC5_desc" iconTag="25"/>
-			<WeaponStats Health="10" slots="4" type="0" projectileclass="bullet" numFiring="1" damage="5" heatdamage="0" impulse="1.0" heat="1.0" cooldown="1.7" ammoType="AC5Ammo" ammoPerShot="1" minRange="0" longRange="540" maxRange="1620" tons="8" duration="0.0" lifetime="10.0" speed="900" volleydelay="0" gravity="0,0,-9.8" maxDepth="10.0"/>
+			<WeaponStats Health="10" slots="4" type="0" projectileclass="bullet" numFiring="1" damage="5" heatdamage="0" impulse="0.03" heat="1.0" cooldown="1.7" ammoType="AC5Ammo" ammoPerShot="1" minRange="0" longRange="540" maxRange="1620" tons="8" duration="0.0" lifetime="10.0" speed="1300" volleydelay="0" gravity="0,0,-9.8" maxDepth="10.0"/>
 			<EffectList>
 				<Effect name="Projectile" asset="objects/weapons/autocannon_shell.cgf" scale="1.0" mass="10"/>
 				<Effect name="ProjectileMaterial" asset="mat_ac5"/>
@@ -457,7 +478,7 @@ type
 		</Weapon>
 		<Weapon id="1020" name="AutoCannon10">
 			<Loc nameTag="@AC10" descTag="@AC10_desc" iconTag="9"/>
-			<WeaponStats Health="10" slots="7" type="0" projectileclass="bullet" numFiring="1" damage="10" heatdamage="0" impulse="1.0" heat="3.0" cooldown="2.5" ammoType="AC10Ammo" ammoPerShot="1" minRange="0" longRange="450" maxRange="1350" tons="12" duration="0.0" lifetime="10.0" speed="850" volleydelay="0" gravity="0,0,-9.8" maxDepth="10.0"/>
+			<WeaponStats Health="10" slots="7" type="0" projectileclass="bullet" numFiring="1" damage="10" heatdamage="0" impulse="0.03" heat="3.0" cooldown="2.5" ammoType="AC10Ammo" ammoPerShot="1" minRange="0" longRange="450" maxRange="1350" tons="12" duration="0.0" lifetime="10.0" speed="1100" volleydelay="0" gravity="0,0,-9.8" maxDepth="10.0"/>
 			<EffectList>
 				<Effect name="Projectile" asset="objects/weapons/autocannon_shell.cgf" scale="1.0" mass="10"/>
 				<Effect name="ProjectileMaterial" asset="mat_ac10"/>
@@ -473,7 +494,7 @@ type
 		</Weapon>
 		<Weapon id="1021" name="GaussRifle">
 			<Loc nameTag="@GaussRifle" descTag="@GaussRifle_desc" iconTag="21"/>
-			<WeaponStats Health="3" slots="7" type="0" projectileclass="bullet" numFiring="1" damage="15" heatdamage="0" impulse="1.0" heat="1.0" cooldown="4" ammoType="GaussAmmo" ammoPerShot="1" minRange="0" longRange="660" maxRange="1980" tons="15" duration="0.0" lifetime="10" speed="1200" volleydelay="0" groupedlocally="1" ExplodeChance="0.9" InternalExplosionDmg="20" maxDepth="10.0"/>
+			<WeaponStats Health="3" slots="7" type="0" projectileclass="bullet" numFiring="1" damage="15" heatdamage="0" impulse="0.05" heat="1.0" cooldown="4" ammoType="GaussAmmo" ammoPerShot="1" minRange="0" longRange="660" maxRange="1980" tons="15" duration="0.0" lifetime="10" speed="1200" volleydelay="0" groupedlocally="1" ExplodeChance="0.9" InternalExplosionDmg="20" maxDepth="10.0"/>
 			<EffectList>
 				<Effect name="Projectile" asset="objects/weapons/gauss_round.cgf" scale="1.0" mass="1.0"/>
 				<Effect name="ProjectileMaterial" asset="mat_gauss"/>
@@ -491,7 +512,7 @@ type
 		<!-- <Weapon id="1022" name="Grenade Launcher"> -->
 		<Weapon id="1023" name="LB10XAutoCannon">
 			<Loc nameTag="@LB10-XAC" descTag="@LB10-XAC_desc" iconTag="27"/> 
-			<WeaponStats Health="10" slots="6" type="0" projectileclass="bullet" numFiring="1" numPerShot="10" damage="1" heatdamage="0" impulse="1.0" heat="2.0" cooldown="2.5" ammoType="LB10-XACAmmo" ammoPerShot="1" minRange="0" longRange="540" maxRange="1620" tons="11" duration="0.0" lifetime="10.0" speed="850" volleydelay="0" spread="3" gravity="0,0,-9.8" maxDepth="10.0"/>
+			<WeaponStats Health="10" slots="6" type="0" projectileclass="bullet" numFiring="1" numPerShot="10" damage="1" heatdamage="0" impulse="0.15" heat="2.0" cooldown="2.5" ammoType="LB10-XACAmmo" ammoPerShot="1" minRange="0" longRange="540" maxRange="1620" tons="11" duration="0.0" lifetime="10.0" speed="1100" volleydelay="0" spread="3" gravity="0,0,-9.8" maxDepth="10.0"/>
 			<EffectList>
 				<Effect name="Projectile" asset="objects/weapons/autocannon_shell.cgf" scale="1.0" mass="10"/>
 				<Effect name="ProjectileMaterial" asset="mat_ac2"/>
@@ -521,7 +542,7 @@ type
 		</Weapon>
 		<Weapon id="1025" name="UltraAutoCannon5">
 			<Loc nameTag="@UAC5" descTag="@UAC5_desc" iconTag="28"/>
-			<WeaponStats Health="10" slots="5" type="0" projectileclass="bullet" numFiring="1" damage="5" heatdamage="0" impulse="1.0" heat="1.0" cooldown="1.1" ammoType="UltraAC5Ammo" ammoPerShot="1" minRange="0" longRange="600" maxRange="1800" tons="9" duration="0.0" lifetime="10.0" speed="900" volleydelay="0.5" ShotsDuringCooldown="1" JammingChance="0.25" JammedTime="5.0" gravity="0,0,-9.8" maxDepth="10.0"/>
+			<WeaponStats Health="10" slots="5" type="0" projectileclass="bullet" numFiring="1" damage="5" heatdamage="0" impulse="0.03" heat="1.0" cooldown="1.1" ammoType="UltraAC5Ammo" ammoPerShot="1" minRange="0" longRange="600" maxRange="1800" tons="9" duration="0.0" lifetime="10.0" speed="1300" volleydelay="0.5" ShotsDuringCooldown="1" JammingChance="0.25" JammedTime="5.0" gravity="0,0,-9.8" maxDepth="10.0"/>
 			<EffectList>
 				<Effect name="Projectile" asset="objects/weapons/autocannon_shell.cgf" scale="1.0" mass="10"/>
 				<Effect name="ProjectileMaterial" asset="mat_ac5"/>
@@ -537,7 +558,7 @@ type
 		</Weapon>
 		<Weapon id="1026" name="LRM5">
 			<Loc nameTag="@LRM5" descTag="@LRM5_desc" iconTag="4"/>
-			<WeaponStats Health="10" slots="1" type="2" projectileclass="javelin" numFiring="5" damage="1.8" heatdamage="0" impulse="0.8" heat="2.0" cooldown="3.25" ammoType="LRMAmmo" ammoPerShot="5" minRange="180" longRange="1000.0" maxRange="1000.0" tons="2" duration="0.0" lifetime="15.0" speed="100" volleydelay="0.5" peakdist="0.6" peaktime="-0.333" minheight="20" maxheight="150" uselock="1" trackingstrength="2.0" radius="4.0" UseTAG="1"  formation_speed="2.5"  formation_size="0.1"  formation_size_per_index="0.01" artemisAmmoType="LRMAmmoArtemis"/>
+			<WeaponStats Health="10" slots="1" type="2" projectileclass="javelin" numFiring="5" damage="1.8" heatdamage="0" impulse="0.4" heat="2.0" cooldown="3.25" ammoType="LRMAmmo" ammoPerShot="5" minRange="180" longRange="1000.0" maxRange="1000.0" tons="2" duration="0.0" lifetime="15.0" speed="100" volleydelay="0.5" peakdist="0.6" peaktime="-0.333" minheight="20" maxheight="150" uselock="1" trackingstrength="2.0" radius="4.0" UseTAG="1"  formation_speed="2.5"  formation_size="0.1"  formation_size_per_index="0.01" artemisAmmoType="LRMAmmoArtemis"/>
 			<EffectList>
 				<Effect name="Projectile" asset="objects/weapons/lrm_missile.cgf" mass="1.0"/>
 				<Effect name="ProjectileMaterial" asset="mat_rocket"/>
@@ -556,7 +577,7 @@ type
 		</Weapon>
 		<Weapon id="1027" name="LRM10">
 			<Loc nameTag="@LRM10" descTag="@LRM10_desc" iconTag="5"/>
-			<WeaponStats Health="10" slots="2" type="2" projectileclass="javelin" numFiring="10" damage="1.8" heatdamage="0" impulse="0.8" heat="4.0" cooldown="3.75" ammoType="LRMAmmo" ammoPerShot="10" minRange="180" longRange="1000.0" maxRange="1000.0" tons="5" duration="0.0" lifetime="15.0" speed="100" volleydelay="0.5" peakdist="0.6" peaktime="-0.333" minheight="20" maxheight="150" uselock="1" trackingstrength="2.0" radius="4.0" UseTAG="1"  formation_speed="2.5"  formation_size="0.1"  formation_size_per_index="0.01" artemisAmmoType="LRMAmmoArtemis"/>
+			<WeaponStats Health="10" slots="2" type="2" projectileclass="javelin" numFiring="10" damage="1.8" heatdamage="0" impulse="0.4" heat="4.0" cooldown="3.75" ammoType="LRMAmmo" ammoPerShot="10" minRange="180" longRange="1000.0" maxRange="1000.0" tons="5" duration="0.0" lifetime="15.0" speed="100" volleydelay="0.5" peakdist="0.6" peaktime="-0.333" minheight="20" maxheight="150" uselock="1" trackingstrength="2.0" radius="4.0" UseTAG="1"  formation_speed="2.5"  formation_size="0.1"  formation_size_per_index="0.01" artemisAmmoType="LRMAmmoArtemis"/>
 			<EffectList>
 				<Effect name="Projectile" asset="objects/weapons/lrm_missile.cgf" mass="1.0"/>
 				<Effect name="ProjectileMaterial" asset="mat_rocket"/>
@@ -575,7 +596,7 @@ type
 		</Weapon>
 		<Weapon id="1028" name="LRM15">
 			<Loc nameTag="@LRM15" descTag="@LRM15_desc" iconTag="6"/>
-			<WeaponStats Health="10" slots="3" type="2" projectileclass="javelin" numFiring="15" damage="1.8" heatdamage="0" impulse="0.8" heat="5.0" cooldown="4.25" ammoType="LRMAmmo" ammoPerShot="15" minRange="180" longRange="1000.0" maxRange="1000.0" tons="7" duration="0.0" lifetime="15.0" speed="100" volleydelay="0.5" peakdist="0.6" peaktime="-0.333" minheight="20" maxheight="150" uselock="1" trackingstrength="2.0" radius="4.0" UseTAG="1"  formation_speed="2.5"  formation_size="0.1"  formation_size_per_index="0.006" artemisAmmoType="LRMAmmoArtemis"/>
+			<WeaponStats Health="10" slots="3" type="2" projectileclass="javelin" numFiring="15" damage="1.8" heatdamage="0" impulse="0.4" heat="5.0" cooldown="4.25" ammoType="LRMAmmo" ammoPerShot="15" minRange="180" longRange="1000.0" maxRange="1000.0" tons="7" duration="0.0" lifetime="15.0" speed="100" volleydelay="0.5" peakdist="0.6" peaktime="-0.333" minheight="20" maxheight="150" uselock="1" trackingstrength="2.0" radius="4.0" UseTAG="1"  formation_speed="2.5"  formation_size="0.1"  formation_size_per_index="0.006" artemisAmmoType="LRMAmmoArtemis"/>
 			<EffectList>
 				<Effect name="Projectile" asset="objects/weapons/lrm_missile.cgf" mass="1.0"/>
 				<Effect name="ProjectileMaterial" asset="mat_rocket"/>
@@ -594,7 +615,7 @@ type
 		</Weapon>
 		<Weapon id="1029" name="NarcBeacon">
 			<Loc nameTag="@NARC" descTag="@NARC_desc" iconTag="32"/>
-			<WeaponStats Health="10" slots="2" type="2" projectileclass="narc" numFiring="1" damage="0.0" heatdamage="0" impulse="0.0" heat="0" cooldown="3.5" ammoType="NARCAmmo" ammoPerShot="1" minRange="0" longRange="270.0" maxRange="270.0" tons="3" duration="0.0" lifetime="15.0" speed="250" volleydelay="0.25" maxheight="0" radius="3.5" TAG="1.5" TAGDecay="0.25" TAGTracking="1.5" TAGDuration="15.0" hitpoints="2.0"/>
+			<WeaponStats Health="10" slots="2" type="2" projectileclass="narc" numFiring="1" damage="0.0" heatdamage="0" impulse="0.0" heat="0" cooldown="3.5" ammoType="NARCAmmo" ammoPerShot="1" minRange="0" longRange="270.0" maxRange="270.0" tons="3" duration="0.0" lifetime="15.0" speed="250" volleydelay="0.25" maxheight="0" radius="3.5" TAG="1.5" TAGDecay="0.25" TAGTracking="1.5" TAGDuration="20.0" hitpoints="2.0"/>
 			<EffectList>
 				<Effect name="Projectile" asset="objects/weapons/lrm_missile.cgf" mass="1.0"/>
 				<Effect name="ProjectileMaterial" asset="mat_rocket"/>
@@ -605,7 +626,7 @@ type
 		</Weapon>
 		<Weapon id="1030" name="SRM2">
 			<Loc nameTag="@SRM2" descTag="@SRM2_desc" iconTag="26"/>
-			<WeaponStats Health="10" slots="1" type="2" projectileclass="waypointrocket" numFiring="2" damage="2.5" heatdamage="0" impulse="1.0" heat="2" cooldown="3.5" ammoType="SRMAmmo" ammoPerShot="2" minRange="0" longRange="270.0" maxRange="270.0" tons="1" duration="0.0" lifetime="15.0" speed="300" volleydelay="0.25" maxheight="0" radius="3.5"  artemisAmmoType="SRMAmmoArtemis" formation_size="0.01"  formation_size_per_index="0.025"/>
+			<WeaponStats Health="10" slots="1" type="2" projectileclass="waypointrocket" numFiring="2" damage="2.5" heatdamage="0" impulse="0.192" heat="2" cooldown="3.5" ammoType="SRMAmmo" ammoPerShot="2" minRange="0" longRange="270.0" maxRange="270.0" tons="1" duration="0.0" lifetime="15.0" speed="300" volleydelay="0.25" maxheight="0" radius="3.5"  artemisAmmoType="SRMAmmoArtemis" formation_size="0.01"  formation_size_per_index="0.025"/>
 			<EffectList>
 				<Effect name="Projectile" asset="objects/weapons/lrm_missile.cgf" mass="1.0"/>
 				<Effect name="ProjectileMaterial" asset="mat_rocket"/>
@@ -620,7 +641,7 @@ type
 		</Weapon>
 		<Weapon id="1031" name="SRM6">
 			<Loc nameTag="@SRM6" descTag="@SRM6_desc" iconTag="29"/>
-			<WeaponStats Health="10" slots="2" type="2" projectileclass="waypointrocket" numFiring="6" damage="2.5" heatdamage="0" impulse="1.0" heat="4.0" cooldown="4.0" ammoType="SRMAmmo" ammoPerShot="6" minRange="0" longRange="270.0" maxRange="270.0" tons="3" duration="0.0" lifetime="15.0" speed="300" volleydelay="0.25" radius="3.5"  artemisAmmoType="SRMAmmoArtemis" formation_size="0.01"  formation_size_per_index="0.025"/>
+			<WeaponStats Health="10" slots="2" type="2" projectileclass="waypointrocket" numFiring="6" damage="2.5" heatdamage="0" impulse="0.192" heat="4.0" cooldown="4.0" ammoType="SRMAmmo" ammoPerShot="6" minRange="0" longRange="270.0" maxRange="270.0" tons="3" duration="0.0" lifetime="15.0" speed="300" volleydelay="0.25" radius="3.5"  artemisAmmoType="SRMAmmoArtemis" formation_size="0.01"  formation_size_per_index="0.025"/>
 			<EffectList>
 				<Effect name="Projectile" asset="objects/weapons/lrm_missile.cgf" mass="1.0"/>
 				<Effect name="ProjectileMaterial" asset="mat_rocket"/>
@@ -637,7 +658,7 @@ type
 		</Weapon>
 		<Weapon id="1032" name="StreakSRM2">
 			<Loc nameTag="@StreakSRM2" descTag="@StreakSRM2_desc" iconTag="30"/>
-			<WeaponStats Health="10" slots="1" type="2" projectileclass="homingrocket" numFiring="2" damage="2.5" heatdamage="0" impulse="1.0" heat="2" cooldown="3.5" ammoType="StreakSRMAmmo" ammoPerShot="2" minRange="0" longRange="270.0" maxRange="270.0" tons="1.5" duration="0.0" lifetime="15.0" speed="200" volleydelay="0.25" uselock="1" needlock="1"   maxheight ="0" radius="3.5" trackingstrength="100.0" />
+			<WeaponStats Health="10" slots="1" type="2" projectileclass="homingrocket" numFiring="2" damage="2.5" heatdamage="0" impulse="0.192" heat="2" cooldown="3.5" ammoType="StreakSRMAmmo" ammoPerShot="2" minRange="0" longRange="270.0" maxRange="270.0" tons="1.5" duration="0.0" lifetime="15.0" speed="200" volleydelay="0.25" uselock="1" needlock="1"   maxheight ="0" radius="3.5" trackingstrength="100.0" />
 			<EffectList>
 				<Effect name="Projectile" asset="objects/weapons/lrm_missile.cgf" mass="1.0"/>
 				<Effect name="ProjectileMaterial" asset="mat_rocket"/>
@@ -659,7 +680,7 @@ type
 		<!-- <Weapon id="1036" name="Mech Mortar/8"> -->
 		<Weapon id="1037" name="TAG">
 			<Loc nameTag="@TAG" descTag="@TAG_desc" iconTag="32"/>
-			<WeaponStats Health="10" slots="1" type="1" projectileclass="" numFiring="1" damage="0" heatdamage="0" impulse="0.0" heat="0.0" cooldown="0.0" ammoType="" ammoPerShot="0" minRange="0" longRange="450" maxRange="450" visRange="1500" tons="1.0" duration="-1.0" lifetime="0" speed="0" volleydelay="0.0" TAG="1.5" TAGDecay="0.25" TAGTracking="1.5" TAGDuration="1.0" maxDepth="0.0"/>
+			<WeaponStats Health="10" slots="1" type="1" projectileclass="" numFiring="1" damage="0" heatdamage="0" impulse="0.0" heat="0.0" cooldown="0.0" ammoType="" ammoPerShot="0" minRange="0" longRange="750" maxRange="750" visRange="1500" tons="1.0" duration="-1.0" lifetime="0" speed="0" volleydelay="0.0" TAG="1.5" TAGDecay="0.25" TAGTracking="1.5" TAGDuration="1.0" maxDepth="0.0"/>
 			<EffectList>
 				<Effect name="Beam" asset="Objects/weapons/laser_beam_tag.cgf"/>
 				<Effect name="BeamCap" asset="Objects/weapons/laser_impact_tag.cgf"/>
@@ -991,7 +1012,7 @@ type
 			<Loc nameTag="@DoubleHeatSink_MkI" descTag="@DoubleHeatSink_MkI_desc" iconTag="2"/>
 			<HeatSinkStats cooling="0.14" heatbase="-1.4"/>
 			<EffectList>
-				<Effect name="SteamEffect" asset="mech_effects.heatsinks.steam_a"/>
+				<Effect name="SteamEffect" asset="mech_effects.heatsinks.steam_double_a"/>
 			</EffectList>
 			<Audio OnDestroyedDialogue="BB_Mech_HeatSink_Destroyed"/>
 		</Module>
@@ -1289,7 +1310,7 @@ type
 		</Module>
 		<Module id="3330" name="Engine_XL_160" CType="CEngineStats">
 			<Loc nameTag="@Engine_XL_Fusion_160" descTag="@Engine_XL_Fusion_160_desc" iconTag="66"/>
-			<EngineStats slots="12" rating="160" weight="4.0." type="0" heatsinks="6" health="15"/>
+			<EngineStats slots="12" rating="160" weight="4.0" type="0" heatsinks="6" health="15"/>
 		</Module>
 		<Module id="3331" name="Engine_XL_165" CType="CEngineStats">
 			<Loc nameTag="@Engine_XL_Fusion_165" descTag="@Engine_XL_Fusion_165_desc" iconTag="67"/>
@@ -1532,95 +1553,140 @@ type
     <Module id="5500" name="Coconut_Monkey" CType="CCockpitItemStats">
       <Loc nameTag="@coconutmonkey" descTag="@coconutmonkey_desc" iconTag="3"/>
       <DescriptiveStats model="objects/purchasable/cockpit_standing/coconutmonkey/coconutmonkey.cga" material="objects/purchasable/cockpit_standing/coconutmonkey/coconutmonkey"/>
-      <PlacementStats slot="item_01" joint="CoconutMonkey_Head" mode="xy" force="0.75"/>
+      <PlacementStats slot="item_01" joint="CoconutMonkey_Head" mode="xy" force="0.75" cX="0.0" cY="0.0" cZ="0.075" Radius="0.15"/>
     </Module>
     <Module id="5501" name="Nvidia_Dawn" CType="CCockpitItemStats">
       <Loc nameTag="@nvidiadawn" descTag="@nvidiadawn_desc" iconTag="5"/>
       <DescriptiveStats model="objects/purchasable/cockpit_standing/dawn/dawn.cga" material="objects/purchasable/cockpit_standing/dawn/dawn_body"/>
-      <PlacementStats slot="item_01" joint="dawn_wings" mode="y" force="0.5"/>
+      <PlacementStats slot="item_01" joint="dawn_wings" mode="y" force="0.5" cX="0.0" cY="0.0" cZ="0.085" Radius="0.15"/>
     </Module>
     <Module id="5502" name="Hula_Girl" CType="CCockpitItemStats">
       <Loc nameTag="@hulagirl" descTag="@hulagirl_desc" iconTag="15"/>
       <DescriptiveStats model="objects/purchasable/cockpit_standing/hulagirl/hulagirl_a.cga" material="objects/purchasable/cockpit_standing/hulagirl/hulagirl_a"/>
-      <PlacementStats slot="item_01" joint="HulaGirl_UpperBody" mode="y" force="0.5"/>
+      <PlacementStats slot="item_01" joint="HulaGirl_UpperBody" mode="y" force="0.5" cX="0.0" cY="0.0" cZ="0.085" Radius="0.15"/>
     </Module>
 	<Module id="5503" name="GazelleDropShip" CType="CCockpitItemStats">
       <Loc nameTag="@GazelleDropShip" descTag="@GazelleDropShip_desc" iconTag="16"/>
       <DescriptiveStats model="objects/purchasable/cockpit_standing/gazelletoy/gazelletoy_a.cga" material="objects/purchasable/cockpit_standing/gazelletoy/gazelletoy_a"/>
-	  <PlacementStats slot="item_01" joint="" mode="y" force="0.5"/>
+	  <PlacementStats slot="item_01" joint="" mode="y" force="0.5" cX="0.0" cY="0.0" cZ="0.05" Radius="0.25"/>
     </Module>
-    
+    <!--- xmas items -->
     <Module id="5505" name="XmasLights" Ctype="CCockpitItemStats">
       <Loc nameTag="@XmasLights" descTag="@XmasLights_desc" icontag="18"/>
       <DescriptiveStats model="objects/purchasable/cockpit_hanging/xmaslgt/xmaslgt_%s.cga" material="objects/purchasable/cockpit_hanging/xmaslgt/xmaslgt_on" offmaterial="objects/purchasable/cockpit_hanging/xmaslgt/xmaslgt_off" addmechname="1"/>
-      <PlacementStats slot="item_02" aligntoslot="0" />
+      <PlacementStats slot="item_02" aligntoslot="0" cX="0.0" cY="0.0" cZ="0.0" Radius="1.0"/>
     </Module>
     <Module id="5506" name="SantaBobbleHead" Ctype="CCockpitItemStats">
       <Loc nameTag="@SantaBobbleHead" descTag="@SantaBobbleHead_desc" icontag="17"/>
       <DescriptiveStats model="objects/purchasable/cockpit_standing/santa/santa_a.cga" material="objects/purchasable/cockpit_standing/santa/santa_a"/>
-      <PlacementStats slot="item_01" joint="Santa_a_UpperBody" mode="xy" force="0.75"/>
+      <PlacementStats slot="item_01" joint="Santa_a_UpperBody" mode="xy" force="0.75" cX="0.0" cY="0.0" cZ="0.09" Radius="0.25"/>
     </Module>
     <Module id="5507" name="SnowmanBobbleHead" Ctype="CCockpitItemStats">
       <Loc nameTag="@SnowmanBobbleHead" descTag="@SnowmanBobbleHead_desc" icontag="21"/>
       <DescriptiveStats model="objects/purchasable/cockpit_standing/snowman/snowman_a.cga" material="objects/purchasable/cockpit_standing/snowman/snowman_a"/>
-      <PlacementStats slot="item_01" joint="snowman_a_upperbody" mode="xy" force="0.75"/>
+      <PlacementStats slot="item_01" joint="snowman_a_upperbody" mode="xy" force="0.75" cX="0.0" cY="0.0" cZ="0.07" Radius="0.15"/>
     </Module>
     <Module id="5508" name="XmasWreath" Ctype="CCockpitItemStats">
       <Loc nameTag="@XmasWreath" descTag="@XmasWreath_desc" icontag="20"/>
       <DescriptiveStats model="objects/purchasable/cockpit_mounted/wreath/wreath.cga" material="objects/purchasable/cockpit_mounted/wreath/wreath"/>
-      <PlacementStats slot="item_03"/>
+      <PlacementStats slot="item_03" cX="0.0" cY="0.0" cZ="-0.035" Radius="0.2"/>
     </Module>
     <Module id="5509" name="XmasTree" Ctype="CCockpitItemStats">
       <Loc nameTag="@XmasTree" descTag="@XmasTree_desc" icontag="19"/>
       <DescriptiveStats model="objects/purchasable/cockpit_standing/xmastree/xmastree.cga" material="objects/purchasable/cockpit_standing/xmastree/xmastree"/>
-      <PlacementStats slot="item_01" joint="xmastree_upperbody" mode="xy" force="0.35"/>
+      <PlacementStats slot="item_01" joint="xmastree_upperbody" mode="xy" force="0.35" cX="0.0" cY="0.0" cZ="0.07" Radius="0.15"/>
     </Module>
     <Module id="5510" name="LumpOfCoal" Ctype="CCockpitItemStats">
       <Loc nameTag="@LumpOfCoal" descTag="@LumpOfCoal_desc" icontag="22"/>
       <DescriptiveStats model="objects/purchasable/cockpit_standing/coal/coal.cga" material="objects/purchasable/cockpit_standing/coal/coal"/>
-      <PlacementStats slot="item_01"/>
+      <PlacementStats slot="item_01" cX="0.0" cY="0.0" cZ="0.05" Radius="0.15"/>
     </Module>
     <Module id="5511" name="XmasGift" Ctype="CCockpitItemStats">
       <Loc nameTag="@XmasGift" descTag="@XmasGift_desc" icontag="24"/>
       <DescriptiveStats model="objects/purchasable/cockpit_standing/presents/presents.cga" material="objects/purchasable/cockpit_standing/presents/presents"/>
-      <PlacementStats slot="item_01"/>
+      <PlacementStats slot="item_01" cX="0.0" cY="0.0" cZ="0.07" Radius="0.2"/>
     </Module>
     <Module id="5512" name="XmasElf" Ctype="CCockpitItemStats">
       <Loc nameTag="@XmasElf" descTag="@XmasElf_desc" icontag="25"/>
       <DescriptiveStats model="objects/purchasable/cockpit_standing/elf/elf_a.cga" material="objects/purchasable/cockpit_standing/elf/elf_a"/>
-      <PlacementStats slot="item_01" joint="elf_a_upperbody" mode="xy" force="0.4"/>
+      <PlacementStats slot="item_01" joint="elf_a_upperbody" mode="xy" force="0.4" cX="0.0" cY="0.0" cZ="0.09" Radius="0.25"/>
     </Module>
-    
+    <!-- new years items -->
+    <Module id="5513" name="NYBalloon" Ctype="CCockpitItemStats">
+      <Loc nameTag="@NYBalloon" descTag="@NYBalloon_desc" icontag="28"/>
+      <DescriptiveStats model="objects/purchasable/cockpit_hanging/balloons/balloons.cga" material="objects/purchasable/cockpit_hanging/balloons/balloons"/>
+      <PlacementStats slot="item_02" cX="0.0" cY="0.0" cZ="0.0" Radius="1.0"/>
+    </Module>
+    <Module id="5514" name="NYHat" Ctype="CCockpitItemStats">
+      <Loc nameTag="@NYHat" descTag="@NYHat_desc" icontag="29"/>
+      <DescriptiveStats model="objects/purchasable/cockpit_standing/nyhat/nyhat.cga" material="objects/purchasable/cockpit_standing/nyhat/nyhat"/>
+      <PlacementStats slot="item_01" cX="0.0" cY="0.0" cZ="0.07" Radius="0.2"/>
+    </Module>
+    <Module id="5515" name="NYHoloYear" Ctype="CCockpitItemStats">
+      <Loc nameTag="@NYHoloYear" descTag="@NYHoloYear_desc" icontag="30"/>
+      <DescriptiveStats model="objects/purchasable/cockpit_standing/holo3050/holo3050.cga" material="objects/purchasable/cockpit_standing/holo3050/holo3050"/>
+      <PlacementStats slot="item_01" defanim="Default" cX="0.0" cY="0.0" cZ="0.07" Radius="0.2"/>
+    </Module>
+    <Module id="5516" name="NYChampagneGlass" Ctype="CCockpitItemStats">
+      <Loc nameTag="@NYChampagneGlass" descTag="@NYChampagneGlass_desc" icontag="31"/>
+      <DescriptiveStats model="objects/purchasable/cockpit_standing/holochamp/holochamp.cga" material="objects/purchasable/cockpit_standing/holochamp/holochamp"/>
+      <PlacementStats slot="item_01" defanim="Default" cX="0.0" cY="0.0" cZ="0.07" Radius="0.2"/>
+    </Module>
+    <Module id="5517" name="NYClassyMech" Ctype="CCockpitItemStats">
+      <Loc nameTag="@NYClassyMech" descTag="@NYClassyMech_desc" icontag="32"/>
+      <DescriptiveStats model="objects/purchasable/cockpit_standing/classymech/classymech.cga" material="objects/purchasable/cockpit_standing/classymech/classymech"/>
+      <PlacementStats slot="item_01" joint="classymech_upperbody" mode="xy" force="0.65" cX="0.0" cY="0.0" cZ="0.07" Radius="0.2"/>
+    </Module>
+    <Module id="5518" name="NYIceBucket" Ctype="CCockpitItemStats">
+      <Loc nameTag="@NYIceBucket" descTag="@NYIceBucket_desc" icontag="33"/>
+      <DescriptiveStats model="objects/purchasable/cockpit_standing/bucket/bucket.cga" material="objects/purchasable/cockpit_standing/bucket/bucket"/>
+      <PlacementStats slot="item_01" cX="0.0" cY="0.0" cZ="0.07" Radius="0.2"/>
+    </Module>
+    <Module id="5708" name="NYBanner" Ctype="CCockpitItemStats">
+      <Loc nameTag="@NYBanner" descTag="@NYBanner_desc" icontag="34"/>
+      <DescriptiveStats model="objects/purchasable/cockpit_hanging/banner_a/banner_a_%s.cga" material="objects/purchasable/cockpit_hanging/banner_a/banner_a" addmechname="1"/>
+      <PlacementStats slot="item_02" cX="0.0" cY="0.0" cZ="0.0" Radius="1.0"/>
+    </Module>
 	<Module id="5700" name="Banner01" CType="CCockpitItemStats">
       <Loc nameTag="@Banner01" descTag="@Banner01_desc" iconTag="12"/>
       <DescriptiveStats model="objects/purchasable/cockpit_mounted/miniflag/miniflag_a.cga" material="objects/purchasable/cockpit_mounted/miniflag/miniflag_a"/>
-	  <PlacementStats slot="item_03" joint="" mode="y" force="0.5"/>
+	  <PlacementStats slot="item_03" cX="0.0" cY="0.0" cZ="-0.075" Radius="0.2"/>
     </Module>
 	<Module id="5701" name="Banner02" CType="CCockpitItemStats">
       <Loc nameTag="@Banner02" descTag="@Banner02_desc" iconTag="13"/>
       <DescriptiveStats model="objects/purchasable/cockpit_mounted/miniflag/miniflag_b.cga" material="objects/purchasable/cockpit_mounted/miniflag/miniflag_b"/>
-	  <PlacementStats slot="item_03" joint="" mode="y" force="0.5"/>
+	  <PlacementStats slot="item_03" cX="0.0" cY="0.0" cZ="-0.075" Radius="0.2"/>
     </Module>
 	<Module id="5702" name="Banner03" CType="CCockpitItemStats">
       <Loc nameTag="@Banner03" descTag="@Banner03_desc" iconTag="9"/>
       <DescriptiveStats model="objects/purchasable/cockpit_mounted/miniflag/miniflag_c.cga" material="objects/purchasable/cockpit_mounted/miniflag/miniflag_c"/>
-	  <PlacementStats slot="item_03" joint="" mode="y" force="0.5"/>
+	  <PlacementStats slot="item_03" cX="0.0" cY="0.0" cZ="-0.075" Radius="0.2"/>
     </Module>
 	<Module id="5703" name="Banner04" CType="CCockpitItemStats">
       <Loc nameTag="@Banner04" descTag="@Banner04_desc" iconTag="11"/>
       <DescriptiveStats model="objects/purchasable/cockpit_mounted/miniflag/miniflag_d.cga" material="objects/purchasable/cockpit_mounted/miniflag/miniflag_d"/>
-	  <PlacementStats slot="item_03" joint="" mode="y" force="0.5"/>
+	  <PlacementStats slot="item_03" cX="0.0" cY="0.0" cZ="-0.075" Radius="0.2"/>
     </Module>
 	<Module id="5704" name="Banner05" CType="CCockpitItemStats">
       <Loc nameTag="@Banner05" descTag="@Banner05_desc" iconTag="10"/>
       <DescriptiveStats model="objects/purchasable/cockpit_mounted/miniflag/miniflag_e.cga" material="objects/purchasable/cockpit_mounted/miniflag/miniflag_e"/>
-	  <PlacementStats slot="item_03" joint="" mode="y" force="0.5"/>
+	  <PlacementStats slot="item_03" cX="0.0" cY="0.0" cZ="-0.075" Radius="0.2"/>
     </Module>
 	<Module id="5705" name="Banner06" CType="CCockpitItemStats">
       <Loc nameTag="@Banner06" descTag="@Banner06_desc" iconTag="14"/>
       <DescriptiveStats model="objects/purchasable/cockpit_mounted/miniflag/miniflag_f.cga" material="objects/purchasable/cockpit_mounted/miniflag/miniflag_f"/>
-	  <PlacementStats slot="item_03" joint="" mode="y" force="0.5"/>
-    </Module>      
+	  <PlacementStats slot="item_03" cX="0.0" cY="0.0" cZ="-0.075" Radius="0.2"/>
+    </Module>
+    <Module id="5706" name="DevKillBanner" CType="CCockpitItemStats">
+      <Loc nameTag="@DevKillBanner" descTag="@DevKillBanner_desc" iconTag="26"/>
+      <DescriptiveStats model="objects/purchasable/cockpit_mounted/devkill/devkill_a.cga" material="objects/purchasable/cockpit_mounted/devkill/devkill_a"/>
+      <PlacementStats slot="item_03" cX="0.0" cY="0.0" cZ="-0.075" Radius="0.2"/>
+    </Module>
+    <Module id="5707" name="ContributorBanner" CType="CCockpitItemStats">
+      <Loc nameTag="@ContributorBanner" descTag="@ContributorBanner_desc" iconTag="27"/>
+      <DescriptiveStats model="objects/purchasable/cockpit_mounted/cmmnty/cmmnty_a.cga" material="objects/purchasable/cockpit_mounted/cmmnty/cmmnty_a"/>
+      <PlacementStats slot="item_03" cX="0.0" cY="0.0" cZ="-0.075" Radius="0.2"/>
+    </Module>  
   </ModuleList>
 	
 	<BoosterList>

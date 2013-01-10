@@ -48,7 +48,7 @@
         getHps: function() {
             if(this.weaponStats.heat.toFloat() === 0) return 0; // machine gun pass through
             var hps = this.weaponStats.heat.toFloat() / (this.weaponStats.cooldown.toFloat());
-            console.log('hps', this.name, hps);
+            //console.log('hps', this.name, hps);
             return hps;
         },
         getDps: function(){
