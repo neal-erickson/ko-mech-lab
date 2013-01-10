@@ -337,7 +337,9 @@
 
             var getItemsByIds = function(ids){
                 return ids.map(function(id){
-                    return mechlab_items.getById(id);
+                    var item = mechlab_items.getById(id);
+                    if(item == null) throw ('Could not find item id:' + id);
+                    return item;
                 });
             };
 

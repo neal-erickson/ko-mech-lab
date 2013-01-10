@@ -46,8 +46,13 @@
 			this.name = name;
 			this.prefix = prefix;
 		};
+
 		self.selectedChassis = ko.observable();
+
+		// TODO : re order these by tonnage
 		self.mechChassis = ko.observableArray([
+			new Chassis("Centurion", "cn9"),
+			new Chassis("Cicada", "cda"),
 			new Chassis("Commando", "com"),
 			new Chassis("Jenner", "jr7"),
 			new Chassis("Raven", "rvn"),
