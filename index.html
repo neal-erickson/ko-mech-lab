@@ -67,7 +67,7 @@
 							<tr>
 								<td>Speed:</td>
 								<td>
-									<span data-bind="text: speed().withDigits(2)"></span>
+									<span data-bind="text: speed().toFixed(2)"></span>
 								</td>
 							</tr>
 							<tr data-bind="css: { 'invalid' : !tonnageValid() }">
@@ -95,7 +95,7 @@
 							<tr>
 								<td>Alpha:</td>
 								<td>
-									<span data-bind="text: alphaStrike().withDigits(2)"></span>
+									<span data-bind="text: alphaStrike().toFixed(2)"></span>
 								</td>
 							</tr>
 							<tr>
@@ -327,7 +327,7 @@
 								<thead>
 									<tr>
 										<th></th>
-										<th>Id</th>
+										<!-- <th>Id</th> -->
 										<th>Tons</th>
 										<th>Slots</th>
 										<th>Damage</th>
@@ -339,9 +339,9 @@
 										<td>
 											<span data-bind="text: name"></span>
 										</td>
-										<td>
+										<!-- <td>
 											<span data-bind="text: id"></span>
-										</td>
+										</td> -->
 										<td>
 											<span data-bind="text: tons"></span>
 										</td>
@@ -370,7 +370,7 @@
 								<thead>
 									<tr>
 										<td></td>
-										<td>ID</td>
+										<!-- <td>ID</td> -->
 										<td>Tons</td>
 										<td>Slots</td>
 									</tr>
@@ -380,40 +380,14 @@
 										<td>
 											<span data-bind="text: name"></span>
 										</td>
-										<td>
+										<!-- <td>
 											<span data-bind="text: id"></span>
-										</td>
+										</td> -->
 										<td>
 											<span data-bind="text: tons"></span>
 										</td>
 										<td>
 											<span data-bind="text: slots"></span>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-							<p>Mechs</p>
-							<table>
-								<tbody data-bind="foreach: $parent.items.mechs">
-									<tr>
-										<td>
-											<span data-bind="text: name"></span>
-										</td>
-										<td>
-											&nbsp;|&nbsp;<span data-bind="text: id"></span>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-							<p>Engines</p>
-							<table>
-								<tbody data-bind="foreach: $parent.items.engines">
-									<tr>
-										<td>
-											<span data-bind="text: name"></span>
-										</td>
-										<td>
-											&nbsp;|&nbsp;<span data-bind="text: id"></span>
 										</td>
 									</tr>
 								</tbody>

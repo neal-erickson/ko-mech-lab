@@ -65,19 +65,19 @@
 
 		self.selectedChassis = ko.observable();
 
-		// TODO : re order these by tonnage
 		self.mechChassis = ko.observableArray([
-			new Chassis("Stalker", "stk"),
-			new Chassis("Awesome", "aws"),
-			new Chassis("Cataphract", "ctf"),
-			new Chassis("Catapult", "cpl"),
-			new Chassis("Centurion", "cn9"),
-			new Chassis("Cicada", "cda"),
 			new Chassis("Commando", "com"),
 			new Chassis("Jenner", "jr7"),
 			new Chassis("Raven", "rvn"),
+			new Chassis("Cicada", "cda"),
+			new Chassis("Centurion", "cn9"),
+			new Chassis("Hunchback", "hbk"),
 			new Chassis("Dragon", "drg"),
-			new Chassis("Hunchback", "hbk")
+			new Chassis("Catapult", "cpl"),
+			new Chassis("Cataphract", "ctf"),
+			new Chassis("Awesome", "aws"),
+			new Chassis("Stalker", "stk"),
+			new Chassis("Atlas", "as7")
 		]);
 
 		self.selectedVariant = ko.observable();
@@ -86,6 +86,10 @@
 				return [];
 			}
 			return self.mechChoices().filter(function(mech){
+				// This is a hack to avoid those annoying '-FOUNDER' entries
+				if(mech.name.toLowerCase().slice(-7) == 'founder') {
+					return false;
+				}
 				return mech.name.toLowerCase().substring(0, 3) == self.selectedChassis().prefix.toLowerCase();
 			});
 		});//.extend({logChange: 'vo'});
