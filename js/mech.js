@@ -86,8 +86,12 @@
 
             // Weight of item within this component
     		component.itemsWeight = ko.computed(function() {
-                return component.items().reduce(function(previousValue, currentValue, index, array){
-                    return previousValue + currentValue.tons.toFloat();
+                return component.items().reduce(function(previousItem, currentItem, index, array){
+                    var weight = currentItem.tons.toFloat();
+                    if(self.artemisEquipped() && currentItem.isWeapon() && currentItem.artemisRequired()){
+                        weight++;
+                    }
+                    return previousItem + weight;
                 }, 0);
     		});
 
@@ -109,6 +113,7 @@
                 }, 0);
             });
 
+            // TODO
             component.heatEfficiency = ko.computed(function(){
                 // return component.weapons().reduce(function(previous, current){
                 //     return previous + (current.weaponStats.heat.toFloat() )
@@ -208,6 +213,14 @@
                             });
                             slots.push(slot);
     					};
+
+                        if(self.artemisEquipped() && item.isWeapon() && item.artemisRequired()){
+                            slots.push(new Slot('Artemis', {
+                                removeable: false,
+                                first: true,
+                                last: true
+                            }));
+                        }
                     } else {
                         var slot = new Slot(item.name, {
                             data: item,

@@ -55,6 +55,11 @@
             var divisor = this.weaponStats.cooldown.toFloat() || 1;
             //console.log('dps', this.name, this.getDamage() / divisor);
             return this.getDamage() / divisor;
+        },
+        artemisRequired: function(){
+            //debugger;
+            var nameStart = this.name.slice(0, 3).toLowerCase();
+            return nameStart == 'srm' || nameStart == 'lrm';
         }
     };
     var moduleMethods = {
