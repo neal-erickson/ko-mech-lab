@@ -67,6 +67,7 @@
 
 		// TODO : re order these by tonnage
 		self.mechChassis = ko.observableArray([
+			new Chassis("Stalker", "stk"),
 			new Chassis("Awesome", "aws"),
 			new Chassis("Cataphract", "ctf"),
 			new Chassis("Catapult", "cpl"),
