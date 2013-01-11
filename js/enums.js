@@ -1,27 +1,26 @@
 (function($){
 
-	function Enum(constantsList) {
-	    for (var i in constantsList) {
-	        this[constantsList[i]] = i;
-	    }
-	    this.allValues = constantsList;
+	// Enum class for allowing better handling of constant values
+	var Enum = function (constantsList) {
+		var self = this;
+		$.each(constantsList, function (index, constant) {
+			self[constant] = index;
+		});
+		self.values = constantsList; // keep track for later
 
-	    this.getName = function(value){
-	    	//debugger;
-	    	var name = null;
-	    	this.allValues.forEach(function(constant){
-				if(this[constant] == value){
-					name = constant;
-					return false;
+		self.getName = function (value) {
+			var name = null;
+			$.each(self.values, function (index, item) {
+				if (self[item] == value) {
+					name = item;
+					return false; // this is 'break' for $.each()
 				}
-			}, this);
-			return name;
-	    };
-
-	    if(Object.freeze){
-	    	Object.freeze(this);
-	    }
-	}
+			});
+			return name; // might be null bee tee dubs
+		};
+		// Freeze it, if possible (no new properties)
+		if (Object.freeze) { Object.freeze(self); }
+	};
 
 	Enum.prototype.values = function() {
 	    return this.allValues;

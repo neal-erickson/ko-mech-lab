@@ -38,8 +38,7 @@
             if(!self.engine()) { return 0; }
             return self.engine().engineStats.rating.toFloat() * 16.2 / self.maxTonnage(); 
         });
-
-        self.engineHeatSinks = ko.observableArray();
+        
         self.numberOfEngineHeatSinks = ko.computed(function() {
             if(!self.engine()) return 0;
             var rating = self.engine().engineStats.rating.toFloat();
@@ -47,14 +46,6 @@
             var sinks = Math.max(totalSinks - 10, 0);
             return sinks;
         });//.extend({logChange: 'sinks'});
-
-        self.hasRequiredHeatSinks = ko.computed(function() {
-            // If its a rating 250 or above, no external heat sinks required
-            if(self.numberOfEngineHeatSinks() >= 10){
-                return true;
-            }
-            // Otherwise, our mech needs a minimum of 10 sinks to keep from lighting on fire
-        });
 
         // Component Xtor //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -100,6 +91,17 @@
                     return item.isWeapon();
                 });
             });//.extend({logChange: 'weapons'});
+
+            component.heatDissipatedPerSecond = ko.computed(function(){
+                var heatSinks = component.items().filter(function(item){
+                    return item.isHeatSink();
+                });
+                var multiplier = 0.10;
+                if(self.doubleHeatSinks()){
+                    multiplier = component.name() == 'Engine Heat Sinks' ? 0.2 : 0.14;
+                }
+                return heatSinks.length * multiplier;
+            }).extend({logChange: component.name() + '-hdps'});
 
             component.alpha = ko.computed(function(){
                 return component.weapons().reduce(function(previous, current){
@@ -375,10 +377,12 @@
         // This is a hacked component for accepting heat sinks only
         self.engineComponent = new Component('Engine Heat Sinks', {});
         self.engineComponent.useItemMultipleSlots(false);
+
+        // This manual subscription keeps the engine components critical slots synced
         self.numberOfEngineHeatSinks.subscribe(function(newValue){
             self.engineComponent.criticalSlots(newValue);
-            // TODO : remove existing???
         });
+
         var engineAccept = self.engineComponent.accept;
         self.engineComponent.accept = function(incoming){
             var item = ko.dataFor(incoming[0]);            
@@ -489,6 +493,26 @@
             return self.componentsList.reduce(function(previous, current){
                 return previous + current.hps();
             }, 0);
+        });
+
+        self.totalEngineHeatSinks = ko.computed(function(){
+            return self.numberOfEngineHeatSinks() + 0; // TODO: need to calculate heat sinks in all components
+        });
+
+       self.hasRequiredHeatSinks = ko.computed(function() {
+            // If its a rating 250 or above, no external heat sinks required
+            if(self.numberOfEngineHeatSinks() >= 10){
+                return true;
+            }
+            // Otherwise, our mech needs a minimum of 10 sinks to keep from lighting on fire
+            // TODO
+        });
+
+        self.heatDissipated = ko.computed(function(){
+            var heat = self.componentsList.reduce(function(previous, current){
+                return previous + current.heatDissipatedPerSecond();
+            }, 0);
+
         });
 
     	// Anna's contribution to the codebase:
