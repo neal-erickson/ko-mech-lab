@@ -74,7 +74,8 @@
 				<span>&nbsp;or load saved:</span>
 				<select data-bind="options: savedMechs, value: selectedSavedMech, optionsCaption: '(select saved mech)'"></select>
 				<button id="loadSavedButton" data-bind="click: loadSaved">Load</button>
-				<button id="clearButton" data-bind="click: clearSaved">Clear</button>
+				<button id="deleteSavedButton" data-bind="click: deleteSaved">Delete</button>
+				<button id="clearButton" data-bind="click: clearSaved">Clear All</button>
 			</div>
 
 			<div data-bind="with: mechViewModel, visible: mechChosen" style="display:none;" class="primary-container">
@@ -127,16 +128,34 @@
 									<span data-bind="text: dps().toFixed(2)"></span>
 								</td>
 							</tr>
-							<tr>
-								<td>Heat:</td>
+							<tr data-bind="css: { 'invalid' : !hasRequiredHeatSinks() }">
+								<td>H.Sinks:</td>
 								<td>
-									<span data-bind="text: heatEfficiency().toFixed(2)"></span>
+									<span data-bind="text: totalHeatSinks()"></span>
 								</td>
 							</tr>
 							<tr>
 								<td>HPS:</td>
 								<td>
 									<span data-bind="text: hps().toFixed(2)"></span>
+								</td>
+							</tr>
+							<tr>
+								<td>HDPS:</td>
+								<td>
+									<span data-bind="text: heatDissipatedPerSecond().toFixed(2)"></span>
+								</td>
+							</tr>
+							<tr>
+								<td>H. Ratio:</td>
+								<td>
+									<span data-bind="text: heatRatio().toFixed(2)"></span>
+								</td>
+							</tr>
+							<tr>
+								<td>MWO Heat:</td>
+								<td>
+									<span data-bind="text: mwoHeat().toFixed(2)"></span>
 								</td>
 							</tr>
 						</tbody>

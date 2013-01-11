@@ -41,17 +41,20 @@
     };
 
     var weaponMethods = {
+        getCooldownWithDuration: function() {
+            return this.weaponStats.cooldown.toFloat() + this.weaponStats.duration.toFloat();
+        },
         getDamage: function(){
             var multiplier = this.weaponStats.numFiring.toFloat();
             return multiplier * this.weaponStats.damage.toFloat();
         },
         getHps: function() {
             if(this.weaponStats.heat.toFloat() === 0) return 0; // machine gun pass through
-            var hps = this.weaponStats.heat.toFloat() / (this.weaponStats.cooldown.toFloat() || 1);
+            var hps = this.weaponStats.heat.toFloat() / (this.getCooldownWithDuration() || 1);
             return hps;
         },
         getDps: function(){
-            var divisor = this.weaponStats.cooldown.toFloat() || 1;
+            var divisor = this.getCooldownWithDuration() || 1;
             return this.getDamage() / divisor;
         },
         artemisRequired: function(){
@@ -77,6 +80,10 @@
                     return 'beagle';
                 case 'CArtemisIVStats':
                     return 'artemis';
+                case 'CDummyHeadStats':
+                    return 'ccc';
+                default:
+                    return '';
             }
         }
     };

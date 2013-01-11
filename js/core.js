@@ -127,9 +127,22 @@
 			loadIntoView(mech);
 		};
 
+		self.deleteSaved = function(){
+			var selected = self.selectedSavedMech();
+			if(!selected) return; // can't delete things that aren't real.
+
+			if(confirm('Delete saved loadout "' + self.selectedSavedMech() + '"?')){
+				// Remove key/value from IS
+				localStorage.removeItem(self.selectedSavedMech());
+				mechlab.refreshStorageMechs();
+			}
+		};
+
 		self.clearSaved = function() {
-			localStorage.clear();
-			mechlab.refreshStorageMechs();
+			if(confirm("Delete all saved loadouts?")){
+				localStorage.clear();
+				mechlab.refreshStorageMechs();
+			}
 		};
 
 	}; // end core vm xtor

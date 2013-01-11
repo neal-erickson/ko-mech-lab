@@ -39,13 +39,20 @@
             return self.engine().engineStats.rating.toFloat() * 16.2 / self.maxTonnage(); 
         });
         
-        self.numberOfEngineHeatSinks = ko.computed(function() {
+        self.theoreticalEngineHeatSinks = ko.computed(function(){
             if(!self.engine()) return 0;
             var rating = self.engine().engineStats.rating.toFloat();
-            var totalSinks = Math.round(Math.floor(rating / 25));
-            var sinks = Math.max(totalSinks - 10, 0);
+            return Math.round(Math.floor(rating / 25));
+        });
+
+        self.numberOfEngineHeatSinks = ko.computed(function(){
+            return Math.min(self.theoreticalEngineHeatSinks(), 10);
+        }).extend({logChange: 'engine heat sinks'});
+
+        self.numberOfEngineHeatSinkSlots = ko.computed(function() {
+            var sinks = Math.max(self.theoreticalEngineHeatSinks() - 10, 0);
             return sinks;
-        });//.extend({logChange: 'sinks'});
+        }).extend({logChange: 'engine heat sink slots'});
 
         // Component Xtor //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -92,16 +99,20 @@
                 });
             });//.extend({logChange: 'weapons'});
 
-            component.heatDissipatedPerSecond = ko.computed(function(){
-                var heatSinks = component.items().filter(function(item){
+            component.heatSinkCount = ko.computed(function(){
+                return component.items().filter(function(item){
                     return item.isHeatSink();
-                });
-                var multiplier = 0.10;
-                if(self.doubleHeatSinks()){
-                    multiplier = component.name() == 'Engine Heat Sinks' ? 0.2 : 0.14;
-                }
-                return heatSinks.length * multiplier;
-            }).extend({logChange: component.name() + '-hdps'});
+                }).length;
+            });
+
+            // component.heatDissipatedPerSecond = ko.computed(function(){
+            //     var heatSinks = component.heatSinkCount();
+            //     var multiplier = 0.10;
+            //     if(self.doubleHeatSinks()){
+            //         multiplier = component.name() == 'Engine Heat Sinks' ? 0.2 : 0.14;
+            //     }
+            //     return heatSinks.length * multiplier;
+            // }).extend({logChange: component.name() + '-hdps'});
 
             component.alpha = ko.computed(function(){
                 return component.weapons().reduce(function(previous, current){
@@ -116,12 +127,12 @@
             });
 
             // TODO
-            component.heatEfficiency = ko.computed(function(){
-                // return component.weapons().reduce(function(previous, current){
-                //     return previous + (current.weaponStats.heat.toFloat() )
-                // }, 0);
-                return 0;
-            });
+            // component.heatEfficiency = ko.computed(function(){
+            //     // return component.weapons().reduce(function(previous, current){
+            //     //     return previous + (current.weaponStats.heat.toFloat() )
+            //     // }, 0);
+            //     return 0;
+            // });
 
             component.hps = ko.computed(function(){
                 return component.weapons().reduce(function(previous, current){
@@ -215,15 +226,16 @@
                             });
                             slots.push(slot);
     					};
-
+                        // If this was an SRM or LRM, and Artemis IV is equipped, we need to add an extra crit slot
                         if(self.artemisEquipped() && item.isWeapon() && item.artemisRequired()){
-                            slots.push(new Slot('Artemis', {
+                            slots.push(new Slot('+ Artemis', {
                                 removeable: false,
+                                missile: true,
                                 first: true,
                                 last: true
                             }));
                         }
-                    } else {
+                    } else { // this is only used by engine heat sinks component
                         var slot = new Slot(item.name, {
                             data: item,
                             removeable: isRemoveable(item),
@@ -379,7 +391,7 @@
         self.engineComponent.useItemMultipleSlots(false);
 
         // This manual subscription keeps the engine components critical slots synced
-        self.numberOfEngineHeatSinks.subscribe(function(newValue){
+        self.numberOfEngineHeatSinkSlots.subscribe(function(newValue){
             self.engineComponent.criticalSlots(newValue);
         });
 
@@ -483,11 +495,11 @@
             }, 0);
         });
 
-        self.heatEfficiency = ko.computed(function(){
-            return self.componentsList.reduce(function(previous, current){
-                return previous + current.heatEfficiency();
-            }, 0);
-        });
+        // self.heatEfficiency = ko.computed(function(){
+        //     return self.componentsList.reduce(function(previous, current){
+        //         return previous + current.heatEfficiency();
+        //     }, 0);
+        // });
 
         self.hps = ko.computed(function(){
             return self.componentsList.reduce(function(previous, current){
@@ -495,8 +507,19 @@
             }, 0);
         });
 
+        self.totalComponentHeatSinks = ko.computed(function(){
+            return self.componentsList.reduce(function(previous, current){
+                return previous + current.heatSinkCount();
+            }, 0);
+        }).extend({logChange: 'tchs'});
+
         self.totalEngineHeatSinks = ko.computed(function(){
-            return self.numberOfEngineHeatSinks() + 0; // TODO: need to calculate heat sinks in all components
+            // Return the engine heat sinks + the number of engine component heat sinks (only thing allowed in that component)
+            return self.numberOfEngineHeatSinks() + self.engineComponent.items().length;
+        }).extend({logChange: 'tehs'});
+
+        self.totalHeatSinks = ko.computed(function(){
+            return self.totalComponentHeatSinks() + self.totalEngineHeatSinks();
         });
 
        self.hasRequiredHeatSinks = ko.computed(function() {
@@ -505,14 +528,36 @@
                 return true;
             }
             // Otherwise, our mech needs a minimum of 10 sinks to keep from lighting on fire
-            // TODO
+            return (self.totalHeatSinks()) >= 10;
         });
 
-        self.heatDissipated = ko.computed(function(){
-            var heat = self.componentsList.reduce(function(previous, current){
-                return previous + current.heatDissipatedPerSecond();
-            }, 0);
+       self.effectiveHeatSinks = ko.computed(function(){
+            var componentHeatSinks = self.totalComponentHeatSinks();
+            var engineHeatSinks = self.totalEngineHeatSinks();
+        
+            // For doubles, in engine work double, outside work 1.4
+            if(self.doubleHeatSinks()){
+                return (componentHeatSinks * 1.4) + (engineHeatSinks * 2);
+            }
+            // single heat sinks are way easier
+            return (componentHeatSinks + engineHeatSinks);
+       });
 
+        self.heatDissipatedPerSecond = ko.computed(function(){
+            return self.effectiveHeatSinks() / 10;
+        });
+
+        self.heatRatio = ko.computed(function() {
+            return self.hps() / self.heatDissipatedPerSecond();
+        });
+
+        // TODO : This formula sucks.
+        self.mwoHeat = ko.computed(function(){
+            // First try
+            //return 0.7 * Math.sqrt(10 / self.heatRatio());
+            // MechSpecs version LaznAzn
+            //return 0.7021 * Math.sqrt(Math.pow(self.heatDissipatedPerSecond() * 10 * self.hps(), 0.5026));
+            return 0.61 * Math.sqrt((self.effectiveHeatSinks()) / self.hps());
         });
 
     	// Anna's contribution to the codebase:
