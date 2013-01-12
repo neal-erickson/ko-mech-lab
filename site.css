@@ -21,9 +21,28 @@ p, h1, h2, h3 {
 	margin-bottom: 2px;
 }
 
-a {
+h1 {
+	font-size: 35px;
+	font-family: Impact;
+}
+
+body.mech-check a {
 	text-decoration: none;
 	color: inherit;
+}
+
+/* Entry Summary */
+
+body.entry-summary {
+	padding: 20px;
+}
+
+body.entry-summary h1, h2, h3 {
+	margin-bottom: 15px;
+}
+
+body.entry-summary p {
+	margin-bottom: 15px;
 }
 
 /* Primary layout styles */
