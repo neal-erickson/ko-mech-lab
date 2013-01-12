@@ -27,6 +27,17 @@
 		self.doubleHeatSinks = ko.observable(false);
         self.artemisEquipped = ko.observable(false);
 
+        self.featuresList = ko.computed(function(){
+            var features = [];
+            if(self.canHasJumpJets()){
+                features.push('Jump Jets');
+            }
+            if(self.ecm()){
+                features.push('ECM')
+            }
+            return features;
+        });
+
 		// Engine components
 		self.engine = ko.observable();
     	self.engineWeight = ko.computed(function() {

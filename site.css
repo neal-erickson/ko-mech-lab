@@ -109,7 +109,7 @@ div.loadout-container ul {
 	padding:0px 2px 2px 2px;
 	border-radius: 5px;
 	border:1px solid black;
-	background-color: #C0C0C0;
+	background-color: #EBEBEB;
 }
 
 div.loadout-container ul.dropHighlight {
@@ -205,6 +205,10 @@ div.loadout-container .invalid {
 	background-color: #00B800;
 }
 
+#upgrades select {
+	width: 140px;
+}
+
 /* jQueryUI tabs overridden */
 
 .ui-tabs {
@@ -224,7 +228,7 @@ div.loadout-container .invalid {
 }
 .ui-tabs .ui-tabs-nav li a {
 	display: block;
-	padding: 10px 20px;
+	padding: 5px 10px;
 	background: #f0f0f0;
 	border: 2px #ccc solid;
 	border-bottom-color: #ccc;

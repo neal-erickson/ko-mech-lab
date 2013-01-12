@@ -156,6 +156,10 @@
 						</tbody>
 					</table>
 					<hr />
+					<div data-bind="foreach: featuresList">
+						<p><span data-bind="text: $data"></span></p>
+					</div>
+					<hr />
 					<p>
 						<button data-bind="click: clearItems">Clear Items</button>
 					</p>
@@ -303,7 +307,7 @@
 						</div>
 
 						<div id="loadout-3">
-							<table>
+							<table id="upgrades">
 								<tbody>
 									<tr>
 										<td>

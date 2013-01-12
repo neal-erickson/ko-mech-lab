@@ -160,6 +160,9 @@
 				leftTorso: new mechlab_loadouts.componentLayout({items: [modules.heatSink, modules.heatSink, ammo.srm]}),
 				rightArm: new mechlab_loadouts.componentLayout({slots: 8, items: [weapons.srm4], missile: 2}),
 				leftArm: new mechlab_loadouts.componentLayout({slots: 8, items:[weapons.mediumLaser], energy: 1 }),
+			},
+			{
+				ecm: true
 			}
 		);
 
@@ -226,7 +229,8 @@
 				leftLeg: new mechlab_loadouts.componentLayout({items: [modules.heatSink]})
 			},
 			{
-				ferroFibrous: true
+				ferroFibrous: true,
+				ecm: true
 			}
 		);
 
