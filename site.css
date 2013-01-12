@@ -1,7 +1,8 @@
 /* Core styles */
 
 body {
-	font-family: Helvetica;
+	font-family: Trebuchet MS;
+	font-size:14px;
 }
 
 div#primary {
@@ -55,6 +56,23 @@ div.loadout ul {
 	width:165px;
 }
 
+table.mech-layout td {
+	vertical-align: top;
+}
+
+table.lines {
+}
+
+table.lines th {
+	font-weight: bold;
+}
+
+table.lines td {
+	border-top: 1px solid black;
+	border-collapse: collapse;
+	border-spacing: 0px;
+}
+
 /* Validity */
 
 tr.invalid td {
@@ -69,14 +87,7 @@ table#armorLocations input {
 /* Item View styles */
 
 div#itemTabs {
-	font-family: monospace;
-}
-
-ul.slot-list {
-	list-style-type: none;
-	padding-left: 0px;
-	margin-top: 2px;
-	margin-bottom: 2px;
+	/*font-family: monospace;*/
 }
 
 div#itemTabs ul {
@@ -86,8 +97,13 @@ div#itemTabs ul {
 
 /* Loadout editor styles */
 
-table.mech-layout td {
-	vertical-align: top;
+div.loadout-container ul {
+	list-style-type: none;
+	margin-top: 2px;
+	margin-bottom: 2px;
+	padding:2px;
+	border-radius: 5px;
+	border:1px solid black;
 }
 
 div.loadout-container ul li {
@@ -96,7 +112,7 @@ div.loadout-container ul li {
 	border-right: 1px solid black;
 	border-bottom: 1px dotted black;
 	background-color: white;
-	width:175px;
+	width:145px;
 }
 
 div.loadout-container ul li span.name {
@@ -128,7 +144,7 @@ div.loadout-container ul li.empty {
 div.loadout-container ul li.energy,
 div.loadout-container ul li.ballistic,
 div.loadout-container ul li.missile {
-	border-width: 2px;
+	border-width: 1px;
 }
 
 div.loadout-container ul li.energy {
@@ -139,7 +155,7 @@ div.loadout-container ul li.energy {
 
 div.loadout-container ul li.ballistic {
 	border-color: #FFD119;
-	border-width: 2px;
+	border-width: 1px;
 }
 
 div.loadout-container ul li.missile {

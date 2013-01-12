@@ -81,13 +81,9 @@
 			<div data-bind="with: mechViewModel, visible: mechChosen" style="display:none;" class="primary-container">
 				<!--Mech Overview-->
 				<div class="content-block" style="float:left;width:135px;">
-					<table>
+					<h3><span data-bind="text: name" /></h3>
+					<table class="lines" cellspacing="0">
 						<tbody>
-							<tr>
-								<td colspan="2">
-									<h3><span data-bind="text: name" /></h3>
-								</td>
-							</tr>
 							<tr>
 								<td>Speed:</td>
 								<td>
@@ -160,6 +156,7 @@
 							</tr>
 						</tbody>
 					</table>
+					<hr />
 					<p>
 						<button data-bind="click: clearItems">Clear Items</button>
 					</p>
@@ -183,20 +180,22 @@
 							<table class="mech-layout">
 								<tbody>
 									<tr>
-										<td></td>
+										<td>
+											<div>
+												<b><span>Engine</span></b>
+											</div>
+											<div>
+												<select data-bind="options: $parent.items.engines, optionsText: 'name', value: engine"></select>
+											</div>
+										</td>
 										<td>
 											<div class="loadout-container" data-bind="template: { name: 'component-template', data: head }"></div>
-											<div>
-												<!-- <span>Engine:</span> -->
-												<select data-bind="options: $parent.items.engines, optionsText: 'name', value: engine">
-												</select>
-											</div>
 										</td>
 										<td>
 											<div class="loadout-container" data-bind="template: { name: 'component-template', data: centerTorso }"></div>
 										</td>
 										<td>
-											<div class="loadout-container" data-bind="template: { name: 'component-template', data: engineComponent }"></div>
+											<div class="loadout-container" data-bind="template: { name: 'component-template', data: engineComponent }, visible: numberOfEngineHeatSinkSlots() > 0"></div>
 										</td>
 									</tr>
 									<tr>
@@ -365,11 +364,10 @@
 							<li><a href="#fragment-3">Equipment</a></li>
 						</ul>
 						<div id="fragment-1">
-							<table>
+							<table class="lines" cellspacing="0">
 								<thead>
 									<tr>
 										<th></th>
-										<!-- <th>Id</th> -->
 										<th>Tons</th>
 										<th>Slots</th>
 										<th>Damage</th>
@@ -381,9 +379,6 @@
 										<td>
 											<span data-bind="text: name"></span>
 										</td>
-										<!-- <td>
-											<span data-bind="text: id"></span>
-										</td> -->
 										<td>
 											<span data-bind="text: tons"></span>
 										</td>
@@ -401,20 +396,32 @@
 							</table>
 						</div>
 						<div id="fragment-2">
-							<ul data-bind="foreach: $parent.items.ammoTypes">
-								<li data-bind="jqueryui: { widget: 'draggable', options: $root.draggableOptions }">
-									<span data-bind="text: name"></span>
-								</li>
-							</ul>
-						</div>
-						<div id="fragment-3">
-							<table>
+							<table class="lines" cellspacing="0">
 								<thead>
 									<tr>
-										<td></td>
-										<!-- <td>ID</td> -->
-										<td>Tons</td>
-										<td>Slots</td>
+										<th></th>
+										<th>Tons</th>
+										<th>Slots</th>
+										<th>Shots/Ton</th>
+									</tr>
+								</thead>
+								<tbody data-bind="foreach: $parent.items.ammoTypes">
+									<tr data-bind="jqueryui: { widget: 'draggable', options: $root.draggableOptions }">
+										<td><span data-bind="text: name"></span></td>
+										<td><span data-bind="text: tons"></span></td>
+										<td><span>1</span></td>
+										<td><span data-bind="text: ammoTypeStats.shotsPerTon"></span></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div id="fragment-3">
+							<table class="lines" cellspacing="0">
+								<thead>
+									<tr>
+										<th></th>
+										<th>Tons</th>
+										<th>Slots</th>
 									</tr>
 								</thead>
 								<tbody data-bind="foreach: $parent.items.equipment">
@@ -422,9 +429,6 @@
 										<td>
 											<span data-bind="text: name"></span>
 										</td>
-										<!-- <td>
-											<span data-bind="text: id"></span>
-										</td> -->
 										<td>
 											<span data-bind="text: tons"></span>
 										</td>

@@ -45,6 +45,9 @@
             return this.weaponStats.cooldown.toFloat() + this.weaponStats.duration.toFloat();
         },
         getDamage: function(){
+            if(this.id == 1014) { // AMS pass
+                return 0; 
+            }
             var multiplier = this.weaponStats.numFiring.toFloat();
             return multiplier * this.weaponStats.damage.toFloat();
         },
@@ -54,6 +57,9 @@
             return hps;
         },
         getDps: function(){
+            if(this.id == 1014) { // AMS pass
+                return 0; 
+            }
             var divisor = this.getCooldownWithDuration() || 1;
             return this.getDamage() / divisor;
         },
@@ -128,6 +134,7 @@
                 case 'CJumpJetStats':
                 case 'CHeatSinkStats':
                 case 'CCASEStats':
+                case 'CDummyHeadStats':
                 case 'CGECMStats':
                     $.extend(item, moduleMethods);
                     items.equipment.push(item);
