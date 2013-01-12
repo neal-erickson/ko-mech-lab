@@ -28,6 +28,18 @@
 
 	mechlab_enums = {};
 
+	mechlab_enums.componentLocations = new Enum([
+		"head",
+		"centerTorso",
+		"rightTorso",
+		"leftTorso",
+		"rightArm",
+		"leftArm",
+		"rightLeg",
+		"leftLeg",
+		"engine"
+	]);
+
 	mechlab_enums.betterWeaponTypes = new Enum([
 		"ballistic",
 		"energy",

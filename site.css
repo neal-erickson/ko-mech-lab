@@ -63,6 +63,11 @@ table.mech-layout td {
 table.lines {
 }
 
+table.lines th,
+table.lines td {
+	padding-right: 10px;
+}
+
 table.lines th {
 	font-weight: bold;
 }

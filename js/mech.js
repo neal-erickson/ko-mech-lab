@@ -60,12 +60,14 @@
 
     	// Constructor for mech 'component' such as left arm, center torso, etc
     	// Includes slot info, hardpoints, other info
-    	var Component = function(name, options){
+    	var Component = function(location, name, options){
     		var component = this;
             var options = options || {}; // prevent errors
 
             // Component specifics
             component.name = ko.observable(name);
+            component.location = ko.observable(location);
+
     		component.criticalSlots = ko.observable(0);//.extend({ logChange: 'criticalSlots'});
     		component.fixedItems = options.fixedItems || ko.observableArray([]);
 
@@ -282,7 +284,7 @@
 
             var checkEquipmentType = function(item) {
                 if(!item.isModule()) return true;
-
+                debugger;
                 switch(item.getModuleType()){
                     case 'jumpJets':
                         return self.canHasJumpJets(); // TODO : Enforce orrect jump jet class
@@ -296,7 +298,13 @@
                     case 'beagle':
                         return true; // TODO
                     case 'case':
-                        return true; // TODO
+                        if(component.location() == mechlab_enums.componentLocations.rightTorso
+                            || component.location() == mechlab_enums.componentLocations.leftTorso){
+                            return true;
+                        }
+                        return false;
+                    case 'commandConsole':
+                        return component.location() == mechlab_enums.componentLocations.head;
                 }
                 return true; // default pass through
             };
@@ -389,7 +397,7 @@
         // Component Declaration/////////////////////////////////////////////////////////////////////////////////////////////
 
         // This is a hacked component for accepting heat sinks only
-        self.engineComponent = new Component('Engine Heat Sinks', {});
+        self.engineComponent = new Component(mechlab_enums.componentLocations.engine, 'Engine Heat Sinks', {});
         self.engineComponent.useItemMultipleSlots(false);
 
         // This manual subscription keeps the engine components critical slots synced
@@ -420,24 +428,24 @@
         };
 
     	// Mech hardpoints
-    	self.head = new Component('Head', {});
-    	self.rightArm = new Component("Right Arm", {});
-        self.leftArm = new Component("Left Arm", {});
+    	self.head = new Component(mechlab_enums.componentLocations.head, 'Head', {});
+    	self.rightArm = new Component(mechlab_enums.componentLocations.rightArm, "Right Arm", {});
+        self.leftArm = new Component(mechlab_enums.componentLocations.leftArm, "Left Arm", {});
         var torsofixedItems = ko.computed(function() {
             if(self.engine() && self.engine().name.indexOf('XL') !== -1){
                 return [new fixedItem("XL Engine", "3", "0")];
             }
             return [];
         });
-        self.rightTorso = new Component("Right Torso", {
+        self.rightTorso = new Component(mechlab_enums.componentLocations.rightTorso, "Right Torso", {
            fixedItems: torsofixedItems 
         });
-		self.leftTorso = new Component("Left Torso", {
+		self.leftTorso = new Component(mechlab_enums.componentLocations.leftTorso, "Left Torso", {
             fixedItems: torsofixedItems
         });
-        self.centerTorso = new Component("Center Torso", {});
-        self.rightLeg = new Component('Right Leg', {});
-        self.leftLeg = new Component('Left Leg', {});
+        self.centerTorso = new Component(mechlab_enums.componentLocations.centerTorso, "Center Torso", {});
+        self.rightLeg = new Component(mechlab_enums.componentLocations.rightLeg, 'Right Leg', {});
+        self.leftLeg = new Component(mechlab_enums.componentLocations.leftLeg, 'Left Leg', {});
 
         // Component abstractions
         self.componentsList = [

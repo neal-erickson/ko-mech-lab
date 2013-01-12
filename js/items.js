@@ -86,8 +86,6 @@
                     return 'beagle';
                 case 'CArtemisIVStats':
                     return 'artemis';
-                case 'CDummyHeadStats':
-                    return 'ccc';
                 default:
                     return '';
             }
