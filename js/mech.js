@@ -14,6 +14,8 @@
 
         // Core mech stats
         self.name = ko.observable();
+        self.nickname = ko.observable();
+
 		self.maxTonnage = ko.observable(20); // this is intentionally not zero to avoid a bunch of awkward checks later
         self.hasHands = ko.observable(true);
         self.canHasJumpJets = ko.observable(false);
@@ -263,7 +265,7 @@
 
 				// Pad out empty critical slots
 				while(placeholders.length < component.criticalSlotsOpen()){
-                    placeholders.push(new Slot('(empty)', {
+                    placeholders.push(new Slot(' ', {
                         empty: true,
                         first: true,
                         last: true
@@ -695,6 +697,7 @@
             self.maxTonnage(mech.tonnage);
             self.hasHands(mech.hasHands);
             self.name(mech.name);
+            self.nickname(mech.nickname);
 
             // Chassis specifics
             self.canHasJumpJets(mech.jumpJets);
@@ -748,9 +751,10 @@
             self.loadMech(self.mech());
         };
 
-        var outputCurrentConfiguration = function() {
+        var outputCurrentConfiguration = function(nickname) {
             var outputMech = {
                 name: self.name(),
+                nickname: nickname,
                 tonnage: self.maxTonnage(),
                 hasHands: self.hasHands(),
                 jumpJets: self.canHasJumpJets(),
@@ -810,7 +814,7 @@
             // }
 
             // Put it in the storage
-            var mechString = outputCurrentConfiguration();
+            var mechString = outputCurrentConfiguration(configName);
             localStorage.setItem(configName, mechString);
             //alert('Saved ' + configName);
 

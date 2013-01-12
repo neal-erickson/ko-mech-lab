@@ -61,10 +61,6 @@
 						<option value="as7">Atlas</option>
 					</optgroup>
 				</select>
-				<!-- <select id="chassisSelect" 
-					style="width: 100px;"
-					data-bind="options: mechChassis, optionsText: function(option){ return option.name; }, value: selectedChassis">
-				</select> -->
 				<select id="variantSelect" 
 					style="width: 100px;"
 					data-bind="options: variantOptions, optionsText: function(option){ return option.name.toUpperCase(); }, value: selectedVariant">
@@ -82,6 +78,9 @@
 				<!--Mech Overview-->
 				<div class="content-block" style="float:left;width:135px;">
 					<h3><span data-bind="text: name" /></h3>
+					<h3 data-bind="visible: !!nickname()">
+						<span data-bind="text: nickname()"></span>
+					</h3>
 					<table class="lines" cellspacing="0">
 						<tbody>
 							<tr>

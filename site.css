@@ -101,16 +101,22 @@ div.loadout-container ul {
 	list-style-type: none;
 	margin-top: 2px;
 	margin-bottom: 2px;
-	padding:2px;
+	padding:0px 2px 2px 2px;
 	border-radius: 5px;
 	border:1px solid black;
+	background-color: #C0C0C0;
+}
+
+div.loadout-container ul.dropHighlight {
+	background-color: #00CC99;
 }
 
 div.loadout-container ul li {
+	border-width: 2px;
 	padding: 2px;
-	border-left: 1px solid black;
-	border-right: 1px solid black;
-	border-bottom: 1px dotted black;
+	border-left:2px solid black;
+	border-right: 2px solid black;
+	border-bottom: 2px dotted black;
 	background-color: white;
 	width:145px;
 }
@@ -127,47 +133,39 @@ div.loadout-container ul li.first {
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 	margin-top:3px;
-	border-top: 1px solid black;
+	border-top: 2px solid black;
 }
 
 div.loadout-container ul li.last {
 	border-bottom-left-radius: 5px;
 	border-bottom-right-radius: 5px;
-	border-bottom: 1px solid black;
+	border-bottom: 2px solid black;
 }
 
 div.loadout-container ul li.empty {
 	border-style: dashed;
+	border-width: 1px;
 	font-style: italic;
-	background-color: #C0C0C0;
+	background: none;
+	height: 14px;
 }
+
 div.loadout-container ul li.energy,
 div.loadout-container ul li.ballistic,
 div.loadout-container ul li.missile {
-	border-width: 1px;
+	border-width: 2px;
 }
 
 div.loadout-container ul li.energy {
-	/*color: #FF3333;*/
-	/*background-color: #FF3333;*/
 	border-color: #E60000;
 }
 
 div.loadout-container ul li.ballistic {
 	border-color: #FFD119;
-	border-width: 1px;
 }
 
 div.loadout-container ul li.missile {
 	border-color: #00B800;
-}
-
-div.loadout-container ul li.removeable {
-	/*background:none;*/
-}
-
-div.loadout-container ul.dropHighlight {
-	background-color: #00CC99;
 }
 
 div.loadout-container .invalid {
