@@ -156,6 +156,18 @@
 						</tbody>
 					</table>
 					<hr />
+					<p>
+						<input type="checkbox" data-bind="checked: endoSteelStructure">Endo-steel structure</input>
+					</p>
+					<p>
+						<input type="checkbox" data-bind="checked: ferroFibrousArmor">Ferro-fibrous armor</input>
+					</p>
+					<p>
+						<input type="checkbox" data-bind="checked: doubleHeatSinks">Double heat sinks</input>
+					</p>
+					<p>
+						<input type="checkbox" data-bind="checked: artemisEquipped">Artemis IV</input>
+					</p>
 					<div data-bind="foreach: featuresList">
 						<p><span data-bind="text: $data"></span></p>
 					</div>
@@ -175,31 +187,20 @@
 					<div data-bind="jqueryui: { widget: 'tabs' }">
 						<ul>
 							<li><a href="#loadout-1">Loadout</a></li>
-							<li><a href="#loadout-2">Armor</a></li>
-							<li><a href="#loadout-3">Upgrades</a></li>
+							<li><a href="#loadout-2">Projections</a></li>
 						</ul>
 
 						<div id="loadout-1">
 							<table class="mech-layout">
 								<tbody>
 									<tr>
-										<td>
-											<div>
-												<b><span>Engine</span></b>
-											</div>
-											<div>
-												<select data-bind="options: $parent.items.engines, optionsText: 'name', value: engine"></select>
-											</div>
-										</td>
+										<td></td>
+										<td></td>
 										<td>
 											<div class="loadout-container" data-bind="template: { name: 'component-template', data: head }"></div>
 										</td>
-										<td>
-											<div class="loadout-container" data-bind="template: { name: 'component-template', data: centerTorso }"></div>
-										</td>
-										<td>
-											<div class="loadout-container" data-bind="template: { name: 'component-template', data: engineComponent }, visible: numberOfEngineHeatSinkSlots() > 0"></div>
-										</td>
+										<td></td>
+										<td></td>
 									</tr>
 									<tr>
 										<td>
@@ -209,17 +210,28 @@
 											<div class="loadout-container" data-bind="template: { name: 'component-template', data: rightTorso }"></div>
 										</td>
 										<td>
+											<div class="loadout-container" data-bind="template: { name: 'component-template', data: centerTorso }"></div>
+											<div class="component-container">
+												<b><span>Engine</span></b>
+												<br />
+												<select data-bind="options: $parent.items.engines, optionsText: 'name', value: engine"></select>
+											</div>
+											<div class="loadout-container" data-bind="template: { name: 'component-template', data: engineComponent }, visible: numberOfEngineHeatSinkSlots() > 0"></div>
+										</td>
+										<td>
 											<div class="loadout-container" data-bind="template: { name: 'component-template', data: leftTorso }"></div>
 										</td>
 										<td>
 											<div class="loadout-container" data-bind="template: { name: 'component-template', data: leftArm }"></div>
 										</td>
+
 									</tr>
 									<tr>
 										<td></td>
 										<td>
 											<div class="loadout-container" data-bind="template: { name: 'component-template', data: rightLeg }"></div>
 										</td>
+										<td></td>
 										<td>
 											<div class="loadout-container" data-bind="template: { name: 'component-template', data: leftLeg }"></div>
 										</td>
@@ -301,57 +313,6 @@
 									<tr>
 										<td>Total</td>
 										<td><span data-bind="text: overallArmorValue" /></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-
-						<div id="loadout-3">
-							<table id="upgrades">
-								<tbody>
-									<tr>
-										<td>
-											<label>Internal Structure</label>
-										</td>
-										<td>
-											<select id="structureSelect" data-bind="booleanValue: endoSteelStructure">
-												<option value="false">Standard</option>
-												<option value="true">Endo Steel</option>
-											</select>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<label>Armor Type</label>
-										</td>
-										<td>
-											<select id="armorSelect" data-bind="booleanValue: ferroFibrousArmor">
-												<option value="false">Standard</option>
-												<option value="true">Ferro-Fibrous</option>
-											</select>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<label>Heat Sinks</label>
-										</td>
-										<td>
-											<select id="heatSinkSelect" data-bind="booleanValue: doubleHeatSinks">
-												<option value="false">Single</option>
-												<option value="true">Double</option>
-											</select>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<label>Artemis</label>
-										</td>
-										<td>
-											<select id="artemisSelect" data-bind="booleanValue: artemisEquipped">
-												<option value="false">None</option>
-												<option value="true">Equipped</option>
-											</select>
-										</td>
 									</tr>
 								</tbody>
 							</table>
@@ -448,22 +409,24 @@
 		</div><!--end primary div-->
 
 		<script type="text/html" id="component-template">
-			<b><span data-bind="text: name, css: { 'invalid': criticalSlotsInvalid }"></span></b>
-			<div class="hardpoint-summary">
-				<div class="ballistic" data-bind="visible: ballisticHardpoints() > 0, text: ballisticHardpointDisplayText"></div>
-				<div class="energy" data-bind="visible: energyHardpoints() > 0, text: energyHardpointDisplayText">E</div>
-				<div class="missile" data-bind="visible: missileHardpoints() > 0, text: missileHardpointDisplayText">M</div>
-				<div data-bind="visible: ams()">AMS</div>
+			<div class="component-container">
+				<b><span data-bind="text: name, css: { 'invalid': criticalSlotsInvalid }"></span></b>
+				<div class="hardpoint-summary">
+					<div class="ballistic" data-bind="visible: ballisticHardpoints() > 0, text: ballisticHardpointDisplayText"></div>
+					<div class="energy" data-bind="visible: energyHardpoints() > 0, text: energyHardpointDisplayText">E</div>
+					<div class="missile" data-bind="visible: missileHardpoints() > 0, text: missileHardpointDisplayText">M</div>
+					<div data-bind="visible: ams()">AMS</div>
+				</div>
+				<div style="clear:both;"></div>
+				<ul class="slot-list" 
+					data-bind="foreach: displaySlots, jqueryui : { widget: 'droppable', options: { accept: accept, activeClass: 'dropHighlight', drop: drop } }, delegatedHandler: 'click'">
+					<li data-bind="css: { 'first': first, 'last': last, 'empty': empty, 'removeable': removeable, 'energy': energy, 'ballistic': ballistic, 'missile': missile }">
+						<span class="name" data-bind="text: name"></span>
+						<a href="#" class="remove-link" style="float:right;" data-bind="visible: removeable"
+							data-click="removeItem">x</a>
+					</li>
+				</ul>
 			</div>
-			<div style="clear:both;"></div>
-			<ul class="slot-list" 
-				data-bind="foreach: displaySlots, jqueryui : { widget: 'droppable', options: { accept: accept, activeClass: 'dropHighlight', drop: drop } }, delegatedHandler: 'click'">
-				<li data-bind="css: { 'first': first, 'last': last, 'empty': empty, 'removeable': removeable, 'energy': energy, 'ballistic': ballistic, 'missile': missile }">
-					<span class="name" data-bind="text: name"></span>
-					<a href="#" style="float:right;" data-bind="visible: removeable"
-						data-click="removeItem">x</a>
-				</li>
-			</ul>
 		</script>
 
 		<script type="text/html" id="armorLocation">

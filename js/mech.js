@@ -69,6 +69,12 @@
 
         // Component Xtor //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+        // Big changes: I'm moving armor into components now. Also, this means there will be more components, and that some will
+        // be armor-only and some will be "real"
+        var basicComponent = {
+            
+        };
+
     	// Constructor for mech 'component' such as left arm, center torso, etc
     	// Includes slot info, hardpoints, other info
     	var Component = function(location, name, options){

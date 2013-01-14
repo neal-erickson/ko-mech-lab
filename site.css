@@ -47,6 +47,13 @@ body.entry-summary p {
 
 /* Primary layout styles */
 
+div.component-container {
+	padding: 1px;
+	border: 1px solid black;
+	border-radius: 5px;
+	margin-bottom: 10px;
+}
+
 div.primary-container {
 	background-color: black;
 }
@@ -65,14 +72,6 @@ div.content-block {
 	border-radius: 10px;
 	padding: 5px;
 	margin-right: 5px;
-}
-
-div.loadout ul {
-	border: solid 1px #666666;
-	min-height: 100px;
-	margin: 0px 0px 0px 0px;
-	padding: 0px 0px 0px 0px;
-	width:165px;
 }
 
 table.mech-layout td {
@@ -125,9 +124,10 @@ div.loadout-container ul {
 	list-style-type: none;
 	margin-top: 2px;
 	margin-bottom: 2px;
-	padding:0px 2px 2px 2px;
-	border-radius: 5px;
-	border:1px solid black;
+	padding-left: 0px;
+	/*padding:0px 2px 2px 2px;*/
+	/*border-radius: 5px;
+	border:1px solid black;*/
 	background-color: #EBEBEB;
 }
 
@@ -142,7 +142,22 @@ div.loadout-container ul li {
 	border-right: 2px solid black;
 	border-bottom: 2px dotted black;
 	background-color: white;
-	width:145px;
+	font-family: 'Tahoma'; sans-serif;
+	/*text-transform: lowercase;*/
+	font-variant: small-caps;
+	font-size: 1.0em;
+	width:139px;
+}
+
+div.loadout-container ul li a.remove-link {
+	font-family: 'Lucida Console'; sans-serif;
+	text-transform: lowercase;
+	font-variant: normal;
+	font-size:1.0em;
+}
+
+div.loadout-container ul li a.remove-link:hover {
+	color:red;
 }
 
 div.loadout-container ul li span.name {
