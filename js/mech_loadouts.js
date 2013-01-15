@@ -11,6 +11,21 @@
 		return mechlab_loadouts.loadouts[id];
 	};
 
+	// Xtor for each component layout
+	mechlab_loadouts.componentLayout = function(options){
+		if(!options) options = {};
+
+		this.criticalSlots = options.slots || null;		
+		this.itemIds = options.items || [];
+		this.ams = options.ams === true;
+		this.ballisticHardpoints = options.ballistic || 0;
+		this.energyHardpoints = options.energy || 0;
+		this.missileHardpoints = options.missile || 0;
+
+		this.armorValue = 0;
+	};
+	var loadout = mechlab_loadouts.componentLayout;
+
 	mechlab_loadouts.mechLoadout = function(name, tonnage, moduleSlots, armorValues, engine_id, components, options){
 		if(!options) options = {};
 
@@ -103,16 +118,23 @@
 		if(!components.engine){
 			components.engine = new mechlab_loadouts.componentLayout({ slots: 0 });
 		}
-	};
 
-	mechlab_loadouts.componentLayout = function(options){
-		if(!options) options = {};
-		this.criticalSlots = options.slots || null;		
-		this.itemIds = options.items || [];
-		this.ams = options.ams === true;
-		this.ballisticHardpoints = options.ballistic || 0;
-		this.energyHardpoints = options.energy || 0;
-		this.missileHardpoints = options.missile || 0;
+		components.centerTorsoRear = new loadout();
+		components.rightTorsoRear = new loadout();
+		components.leftTorsoRear = new loadout();
+
+		// Awkward - assign armor value arrays into components
+		components.head.armorValue = armorValues[0];
+		components.centerTorso.armorValue = armorValues[1];
+		components.centerTorsoRear.armorValue = armorValues[2];
+		components.rightTorso.armorValue = armorValues[3];
+		components.rightTorsoRear.armorValue = armorValues[4];
+		components.leftTorso.armorValue = armorValues[5];
+		components.leftTorsoRear.armorValue = armorValues[6];
+		components.rightArm.armorValue = armorValues[7];
+		components.leftArm.armorValue = armorValues[8];
+		components.rightLeg.armorValue = armorValues[9];
+		components.leftLeg.armorValue = armorValues[10];
 	};
 
 	// Quick id property bags for having fewer hardcoded ids	

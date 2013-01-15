@@ -31,8 +31,11 @@
 	mechlab_enums.componentLocations = new Enum([
 		"head",
 		"centerTorso",
+		"centerTorsoRear",
 		"rightTorso",
+		"rightTorsoRear",
 		"leftTorso",
+		"leftTorsoRear",
 		"rightArm",
 		"leftArm",
 		"rightLeg",

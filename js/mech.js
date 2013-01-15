@@ -69,12 +69,6 @@
 
         // Component Xtor //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        // Big changes: I'm moving armor into components now. Also, this means there will be more components, and that some will
-        // be armor-only and some will be "real"
-        var basicComponent = {
-            
-        };
-
     	// Constructor for mech 'component' such as left arm, center torso, etc
     	// Includes slot info, hardpoints, other info
     	var Component = function(location, name, options){
@@ -87,6 +81,12 @@
 
     		component.criticalSlots = ko.observable(0);//.extend({ logChange: 'criticalSlots'});
     		component.fixedItems = options.fixedItems || ko.observableArray([]);
+
+            // Armor-related
+            component.armorValue = ko.observable(0);
+            component.maximumArmorValue = ko.computed(function(){
+                return 100; // TODO
+            });
 
             // Hardpoint-related members
             component.energyHardpoints = ko.observable(0);
@@ -126,15 +126,6 @@
                 }).length;
             });
 
-            // component.heatDissipatedPerSecond = ko.computed(function(){
-            //     var heatSinks = component.heatSinkCount();
-            //     var multiplier = 0.10;
-            //     if(self.doubleHeatSinks()){
-            //         multiplier = component.name() == 'Engine Heat Sinks' ? 0.2 : 0.14;
-            //     }
-            //     return heatSinks.length * multiplier;
-            // }).extend({logChange: component.name() + '-hdps'});
-
             component.alpha = ko.computed(function(){
                 return component.weapons().reduce(function(previous, current){
                     return previous + current.getDamage();
@@ -146,14 +137,6 @@
                     return previous + current.getDps();
                 }, 0);
             });
-
-            // TODO
-            // component.heatEfficiency = ko.computed(function(){
-            //     // return component.weapons().reduce(function(previous, current){
-            //     //     return previous + (current.weaponStats.heat.toFloat() )
-            //     // }, 0);
-            //     return 0;
-            // });
 
             component.hps = ko.computed(function(){
                 return component.weapons().reduce(function(previous, current){
@@ -396,6 +379,8 @@
                 component.missileHardpoints(componentSpec.missileHardpoints);
                 component.items(getItemsByIds(componentSpec.itemIds));
                 component.ams(componentSpec.ams);
+
+                component.armorValue(componentSpec.armorValue);
             };
 
             component.outputComponentConfig = function(){
@@ -457,10 +442,13 @@
         self.rightTorso = new Component(mechlab_enums.componentLocations.rightTorso, "Right Torso", {
            fixedItems: torsofixedItems 
         });
+        self.rightTorsoRear = new Component(mechlab_enums.componentLocations.rightTorsoRear, "RT Rear", {});
 		self.leftTorso = new Component(mechlab_enums.componentLocations.leftTorso, "Left Torso", {
             fixedItems: torsofixedItems
         });
+        self.leftTorsoRear = new Component(mechlab_enums.componentLocations.leftTorsoRear, "LT Rear", {});
         self.centerTorso = new Component(mechlab_enums.componentLocations.centerTorso, "Center Torso", {});
+        self.centerTorsoRear = new Component(mechlab_enums.componentLocations.centerTorsoRear, "CT Rear", {}); // TODO: Name is too long.
         self.rightLeg = new Component(mechlab_enums.componentLocations.rightLeg, 'Right Leg', {});
         self.leftLeg = new Component(mechlab_enums.componentLocations.leftLeg, 'Left Leg', {});
 
@@ -758,6 +746,10 @@
             self.rightLeg.loadSpec(mech.components.rightLeg);
             self.leftLeg.loadSpec(mech.components.leftLeg);
             self.engineComponent.loadSpec(mech.components.engine);
+
+            self.centerTorsoRear.loadSpec(mech.components.centerTorsoRear);
+            self.rightTorsoRear.loadSpec(mech.components.rightTorsoRear);
+            self.leftTorsoRear.loadSpec(mech.components.leftTorsoRear);
 
             // Load engine
             var engine = mechlab_items.getById(mech.engine_id);

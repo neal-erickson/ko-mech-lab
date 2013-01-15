@@ -204,25 +204,28 @@
 									</tr>
 									<tr>
 										<td>
-											<div class="loadout-container" data-bind="template: { name: 'component-template', data: rightArm }"></div>
+											<div class="loadout-container loadout-container-arm-space" data-bind="template: { name: 'component-template', data: rightArm }"></div>
 										</td>
 										<td>
 											<div class="loadout-container" data-bind="template: { name: 'component-template', data: rightTorso }"></div>
+											<div class="loadout-container" data-bind="template: { name: 'component-template', data: leftTorsoRear }"></div>
 										</td>
 										<td>
 											<div class="loadout-container" data-bind="template: { name: 'component-template', data: centerTorso }"></div>
+											<div class="loadout-container" data-bind="template: { name: 'component-template', data: centerTorsoRear }"></div>
 											<div class="component-container">
 												<b><span>Engine</span></b>
 												<br />
-												<select data-bind="options: $parent.items.engines, optionsText: 'name', value: engine"></select>
+												<select data-bind="options: $parent.items.engines, optionsText: 'name', value: engine" style="width:100%;"></select>
 											</div>
 											<div class="loadout-container" data-bind="template: { name: 'component-template', data: engineComponent }, visible: numberOfEngineHeatSinkSlots() > 0"></div>
 										</td>
 										<td>
 											<div class="loadout-container" data-bind="template: { name: 'component-template', data: leftTorso }"></div>
+											<div class="loadout-container" data-bind="template: { name: 'component-template', data: leftTorsoRear }"></div>
 										</td>
 										<td>
-											<div class="loadout-container" data-bind="template: { name: 'component-template', data: leftArm }"></div>
+											<div class="loadout-container loadout-container-arm-space" data-bind="template: { name: 'component-template', data: leftArm }"></div>
 										</td>
 
 									</tr>
@@ -410,7 +413,10 @@
 
 		<script type="text/html" id="component-template">
 			<div class="component-container">
-				<b><span data-bind="text: name, css: { 'invalid': criticalSlotsInvalid }"></span></b>
+				<b>
+					<span data-bind="text: name, css: { 'invalid': criticalSlotsInvalid }"></span>
+				</b>
+				<input class="armor-input" type="number" style="float:right;" min="0" data-bind="value: armorValue, valueUpdate: 'keyup'"></input>
 				<div class="hardpoint-summary">
 					<div class="ballistic" data-bind="visible: ballisticHardpoints() > 0, text: ballisticHardpointDisplayText"></div>
 					<div class="energy" data-bind="visible: energyHardpoints() > 0, text: energyHardpointDisplayText">E</div>

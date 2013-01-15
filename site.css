@@ -120,6 +120,23 @@ div#itemTabs ul {
 
 /* Loadout editor styles */
 
+.loadout-container-arm-space {
+	margin-top: 30px;
+}
+
+.loadout-container input.armor-input {
+	width: 40px;
+	margin-right: 2px;
+}
+
+div.loadout-container ul {
+	list-style-type: none;
+	margin-top: 2px;
+	margin-bottom: 2px;
+	padding-left: 0px;
+	background-color: #EBEBEB;
+}
+
 div.loadout-container ul {
 	list-style-type: none;
 	margin-top: 2px;
@@ -237,10 +254,6 @@ div.loadout-container .invalid {
 
 .hardpoint-summary .missile {
 	background-color: #00B800;
-}
-
-#upgrades select {
-	width: 140px;
 }
 
 /* jQueryUI tabs overridden */
